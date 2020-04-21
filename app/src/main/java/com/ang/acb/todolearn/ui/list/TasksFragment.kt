@@ -13,11 +13,14 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
+import com.ang.acb.todolearn.util.EventObserver
 
 class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
-        val factory = ViewModelFactory(TasksRepository.getInstance(requireActivity().applicationContext))
+        val factory = ViewModelFactory(
+            TasksRepository.getInstance(requireActivity().applicationContext)
+        )
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
     }
 
@@ -27,7 +30,12 @@ class TasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = TasksFragmentBinding.inflate(inflater, container, false)
+        binding = TasksFragmentBinding.inflate(inflater, container, false).apply {
+            // Give DataBinding access to the view model.
+            tasksViewModel = viewModel
+            // Give DataBinding the possibility to observe LiveData.
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }
@@ -35,23 +43,13 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.tasksViewModel = viewModel
-        binding.lifecycleOwner = this.viewLifecycleOwner
-
-        binding.addNewTaskFab.setOnClickListener{
-            viewModel.navigateToAddTask()
-        }
-
-        viewModel.navigateToAddTask.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                val action = TasksFragmentDirections
-                    .actionTasksFragmentToAddEditTaskFragment(
-                        taskId = -1,
-                        title = resources.getString(R.string.new_task)
-                    )
-                findNavController().navigate(action)
-                viewModel.navigateToAddTaskCompleted()
-            }
+        viewModel.navigateToAddTask.observe(viewLifecycleOwner, EventObserver {
+            val action = TasksFragmentDirections
+                .actionTasksFragmentToAddEditTaskFragment(
+                    taskId = -1,
+                    title = resources.getString(R.string.new_task)
+                )
+            findNavController().navigate(action)
         })
     }
 }

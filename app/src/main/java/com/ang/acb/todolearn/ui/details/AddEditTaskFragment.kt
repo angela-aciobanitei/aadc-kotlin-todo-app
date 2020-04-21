@@ -21,7 +21,9 @@ class AddEditTaskFragment : Fragment() {
     private val args : AddEditTaskFragmentArgs by navArgs()
 
     private val viewModel: AddEditTaskViewModel by lazy {
-        val factory = ViewModelFactory(TasksRepository.getInstance(requireActivity().applicationContext))
+        val factory = ViewModelFactory(
+            TasksRepository.getInstance(requireActivity().applicationContext)
+        )
         ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
     }
 
@@ -29,21 +31,20 @@ class AddEditTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AddEditTaskFragmentBinding.inflate(inflater, container, false)
+        binding = AddEditTaskFragmentBinding.inflate(inflater, container, false).apply {
+            // Give DataBinding access to the view model.
+            addEditTasksViewModel = viewModel
+            // Give DataBinding the possibility to observe LiveData.
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.addEditTasksViewModel = viewModel
-        binding.lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.start(args.taskId, args.title)
-
-        binding.saveTaskFab.setOnClickListener {
-
-        }
 
         viewModel.taskUpdated.observe(viewLifecycleOwner, Observer {
             val action = AddEditTaskFragmentDirections.actionAddEditTaskFragmentToTasksFragment()

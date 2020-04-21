@@ -5,7 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.widget.CompoundButton"/>
+        <variable
+            name="task"
+            type="com.ang.acb.todolearn.data.local.Task" />
 
+        <variable
+            name="tasksViewModel"
+            type="com.ang.acb.todolearn.ui.list.TasksViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
+            android:text="@{task.title}"
             app:layout_constraintEnd_toStartOf="@+id/task_item_completed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,8 +36,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
+            android:checked="@{task.completed}"
+            android:onClick="@{(view) -> tasksViewModel.completeTask(task, ((CompoundButton)view).isChecked())}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:checked="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

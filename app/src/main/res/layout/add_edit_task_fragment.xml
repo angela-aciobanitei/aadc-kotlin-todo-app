@@ -59,7 +59,8 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_done"
-            android:contentDescription="@string/save_task" />
+            android:contentDescription="@string/save_task"
+            android:onClick="@{() -> addEditTasksViewModel.saveTask()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -19,7 +19,9 @@
             android:id="@+id/rv_todos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small" />
+            android:layout_margin="@dimen/margin_small"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_task"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new_task_fab"
@@ -28,7 +30,8 @@
             android:layout_margin="@dimen/fab_margin"
             android:layout_gravity="bottom|end"
             android:src="@drawable/ic_add"
-            android:contentDescription="@string/add_new_task" />
+            android:contentDescription="@string/add_new_task"
+            android:onClick="@{() -> tasksViewModel.navigateToAddTask()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ang.acb.todolearn.data.local.TasksRepository
 
+/**
+ * The [ViewModel] for the  [AddEditTaskFragment]
+ */
 class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
 
     private val _taskUpdated = MutableLiveData<Boolean>()
@@ -15,6 +18,10 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
     val description = MutableLiveData<String>()
 
     fun start(taskId: Int, title: String) {
+
+    }
+
+    fun saveTask(){
 
     }
 
