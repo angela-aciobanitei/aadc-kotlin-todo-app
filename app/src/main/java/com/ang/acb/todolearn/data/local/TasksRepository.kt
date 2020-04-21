@@ -1,5 +1,6 @@
 package com.ang.acb.todolearn.data.local
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
@@ -7,6 +8,26 @@ class TasksRepository(
     private val tasksLocalDataSource: TasksLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
+
+    companion object {
+        @Volatile
+        private var INSTANCE: TasksRepository? = null
+
+        fun getInstance(context: Context): TasksRepository {
+            synchronized(this) {
+                var repository = INSTANCE
+                if (repository == null) {
+                    repository = TasksRepository(TasksLocalDataSource(
+                        TasksDatabase.getInstance(context).tasksDao, Dispatchers.IO)
+                    )
+
+                    INSTANCE = repository
+                }
+
+                return repository
+            }
+        }
+    }
 
     // Note: The `coroutineScope` builder creates a coroutine scope and
     // does not complete until all launched children complete.

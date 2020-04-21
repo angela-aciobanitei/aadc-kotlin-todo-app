@@ -9,15 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.ang.acb.todolearn.data.local.TasksRepository
 
 import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
+import com.ang.acb.todolearn.ui.common.ViewModelFactory
 
 class AddEditTaskFragment : Fragment() {
 
     private lateinit var binding: AddEditTaskFragmentBinding
-    private lateinit var viewModel: AddEditTaskViewModel
 
     private val args : AddEditTaskFragmentArgs by navArgs()
+
+    private val viewModel: AddEditTaskViewModel by lazy {
+        val factory = ViewModelFactory(TasksRepository.getInstance(requireActivity().applicationContext))
+        ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +36,6 @@ class AddEditTaskFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddEditTaskViewModel::class.java)
         binding.addEditTasksViewModel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
 

@@ -10,11 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.data.local.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
+import com.ang.acb.todolearn.ui.common.ViewModelFactory
 
 class TasksFragment : Fragment() {
 
-    private lateinit var viewModel: TasksViewModel
+    private val  viewModel: TasksViewModel by lazy {
+        val factory = ViewModelFactory(TasksRepository.getInstance(requireActivity().applicationContext))
+        ViewModelProvider(this, factory).get(TasksViewModel::class.java)
+    }
+
     private lateinit var binding: TasksFragmentBinding
 
     override fun onCreateView(
@@ -28,7 +34,7 @@ class TasksFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TasksViewModel::class.java)
+
         binding.tasksViewModel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
 
