@@ -4,11 +4,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/tasksFragment">
 
     <fragment
-        android:id="@+id/listFragment"
-        android:name="com.ang.acb.todolearn.ui.ListFragment"
-        android:label="list_fragment"
-        tools:layout="@layout/list_fragment" />
+        android:id="@+id/tasksFragment"
+        android:name="com.ang.acb.todolearn.ui.list.TasksFragment"
+        android:label="@string/tasks"
+        tools:layout="@layout/tasks_fragment" >
+        <action
+            android:id="@+id/action_tasksFragment_to_addEditTaskFragment"
+            app:destination="@id/addEditTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditTaskFragment"
+        android:name="com.ang.acb.todolearn.ui.details.AddEditTaskFragment"
+        android:label="{title}"
+        tools:layout="@layout/add_edit_task_fragment">
+
+        <action
+            android:id="@+id/action_addEditTaskFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+        <argument
+            android:name="taskId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>
