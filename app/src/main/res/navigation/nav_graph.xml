@@ -27,8 +27,8 @@
             app:destination="@id/tasksFragment" />
         <argument
             android:name="taskId"
-            app:argType="string"
-            app:nullable="true" />
+            app:argType="integer"
+            android:defaultValue="-1" />
         <argument
             android:name="title"
             app:argType="string"

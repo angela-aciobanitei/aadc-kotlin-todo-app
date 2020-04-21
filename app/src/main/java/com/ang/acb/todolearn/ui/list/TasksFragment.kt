@@ -40,7 +40,7 @@ class TasksFragment : Fragment() {
             if (it == true) {
                 val action = TasksFragmentDirections
                     .actionTasksFragmentToAddEditTaskFragment(
-                        taskId = null,
+                        taskId = -1,
                         title = resources.getString(R.string.new_task)
                     )
                 findNavController().navigate(action)

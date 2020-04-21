@@ -5,29 +5,46 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
-import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
 
 class AddEditTaskFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AddEditTaskFragment()
-    }
-
+    private lateinit var binding: AddEditTaskFragmentBinding
     private lateinit var viewModel: AddEditTaskViewModel
+
+    private val args : AddEditTaskFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.add_edit_task_fragment, container, false)
+        binding = AddEditTaskFragmentBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddEditTaskViewModel::class.java)
-        // TODO: Use the ViewModel
+        binding.addEditTasksViewModel = viewModel
+        binding.lifecycleOwner = this.viewLifecycleOwner
+
+        viewModel.start(args.taskId, args.title)
+
+        binding.saveTaskFab.setOnClickListener {
+
+        }
+
+        viewModel.taskUpdated.observe(viewLifecycleOwner, Observer {
+            val action = AddEditTaskFragmentDirections.actionAddEditTaskFragmentToTasksFragment()
+            findNavController().navigate(action)
+
+        })
     }
 
 }
