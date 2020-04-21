@@ -15,6 +15,8 @@ import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 
+const val INVALID_TASK_ID = -1
+
 class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
@@ -46,7 +48,7 @@ class TasksFragment : Fragment() {
         viewModel.navigateToAddTask.observe(viewLifecycleOwner, EventObserver {
             val action = TasksFragmentDirections
                 .actionTasksFragmentToAddEditTaskFragment(
-                    taskId = -1,
+                    taskId = INVALID_TASK_ID,
                     title = resources.getString(R.string.new_task)
                 )
             findNavController().navigate(action)

@@ -13,6 +13,7 @@ import com.ang.acb.todolearn.data.local.TasksRepository
 
 import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
+import com.ang.acb.todolearn.util.EventObserver
 
 class AddEditTaskFragment : Fragment() {
 
@@ -44,9 +45,9 @@ class AddEditTaskFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.start(args.taskId, args.title)
+        viewModel.start(args.taskId)
 
-        viewModel.taskUpdated.observe(viewLifecycleOwner, Observer {
+        viewModel.taskUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
             val action = AddEditTaskFragmentDirections.actionAddEditTaskFragmentToTasksFragment()
             findNavController().navigate(action)
 

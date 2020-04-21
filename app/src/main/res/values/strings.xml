@@ -6,4 +6,6 @@
     <string name="save_task">Save task</string>
     <string name="title_hint">Task Title</string>
     <string name="description_hint">Enter your task here</string>
+    <string name="error_message">Could not load task data</string>
+    <string name="empty_task_message">Task cannot be empty</string>
 </resources>

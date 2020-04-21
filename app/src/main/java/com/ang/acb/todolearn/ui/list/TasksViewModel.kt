@@ -12,11 +12,10 @@ import kotlinx.coroutines.launch
 /**
  * The [ViewModel] for the [TasksFragment]
  */
-class TasksViewModel(val tasksRepository: TasksRepository) : ViewModel() {
+class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
     private val _navigateToAddTask = MutableLiveData<Event<Unit>>()
-    val navigateToAddTask: LiveData<Event<Unit>>
-        get() = _navigateToAddTask
+    val navigateToAddTask: LiveData<Event<Unit>> = _navigateToAddTask
 
     fun navigateToAddTask() {
         _navigateToAddTask.value = Event(Unit)
