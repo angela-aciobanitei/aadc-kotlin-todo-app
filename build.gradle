@@ -10,8 +10,7 @@ buildscript {
         version_hamcrest = "1.3"
         version_junit = "4.12"
         version_kotlin = '1.3.72'
-        version_lifecycle_extensions = "2.2.0"
-        version_lifecycle_viewmodel_ktx = "2.3.0-alpha01"
+        version_lifecycle = "2.2.0"
         version_material = '1.1.0'
         version_navigation = "1.0.0"
         version_room = "2.2.5"

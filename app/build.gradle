@@ -59,9 +59,12 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
 
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle_viewmodel_ktx"
+    // ViewModel & LiveData
+
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$version_lifecycle"
 
     // Room
     implementation "androidx.room:room-runtime:$version_room"
