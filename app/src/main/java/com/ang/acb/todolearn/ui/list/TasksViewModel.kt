@@ -1,12 +1,11 @@
 package com.ang.acb.todolearn.ui.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.util.Event
 import kotlinx.coroutines.launch
 
@@ -15,7 +14,14 @@ import kotlinx.coroutines.launch
  */
 class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
-    val tasks = tasksRepository.getLiveTasks()
+    val tasks = tasksRepository.getLiveTasks().map { resultTask ->
+        if (resultTask is Result.Success) {
+            resultTask.data
+        } else {
+            _snackbarText.value = Event(R.string.error_loading_task_message)
+            null
+        }
+    }
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
@@ -60,7 +66,9 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     fun getResultMessage(result: Int) {
         // Prevent showing snackbar message incorrectly
         if (resultMessageShown) return
-        _snackbarText.value = Event(R.string.saved_task_message)
+        if (result == ADD_EDIT_RESULT_OK) {
+            _snackbarText.value = Event(R.string.saved_task_message)
+        }
 
         resultMessageShown = true
     }

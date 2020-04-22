@@ -15,6 +15,11 @@
     <string name="tasks_cleared_message">All tasks cleared</string>
     <string name="completed_tasks_cleared_message">Completed tasks cleared</string>
     <string name="edit_task">Edit task</string>
+    <string name="show_all_tasks">Show All Tasks</string>
+    <string name="show_completed_tasks">Show Completed Tasks</string>
+    <string name="show_active_tasks">Show Active Tasks</string>
+    <string name="clear_all_tasks">Clear All Tasks</string>
+    <string name="clear_completed_tasks">Clear Completed Tasks</string>
 
 
 </resources>

@@ -61,17 +61,7 @@ class TasksFragment : Fragment() {
         binding.rvTasks.adapter = tasksAdapter
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer { tasksResult ->
-            when (tasksResult) {
-                is Result.Success -> {
-                    tasksAdapter.submitList(tasksResult.data)
-                }
-                is Result.Error -> {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.error_loading_tasks_message),
-                        Snackbar.LENGTH_SHORT).show()
-                }
-            }
+            tasksResult?.let { tasksAdapter.submitList(it) }
         })
     }
 
@@ -93,12 +83,12 @@ class TasksFragment : Fragment() {
     }
 
     private fun setupSnackbar() {
-        arguments?.let {
-            viewModel.getResultMessage(args.snackbarMessage)
-        }
-
         viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { messageResId ->
             Snackbar.make(binding.root, messageResId, Snackbar.LENGTH_SHORT).show()
         })
+
+        arguments?.let {
+            viewModel.getResultMessage(args.snackbarMessage)
+        }
     }
 }
