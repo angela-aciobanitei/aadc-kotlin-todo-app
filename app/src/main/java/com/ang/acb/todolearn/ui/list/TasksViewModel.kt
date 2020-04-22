@@ -22,15 +22,17 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
-    private val _navigateToAddTask = MutableLiveData<Event<Unit>>()
-    val navigateToAddTask: LiveData<Event<Unit>> = _navigateToAddTask
+    private var resultMessageShown: Boolean = false
+
+    private val _newTaskEvent = MutableLiveData<Event<Unit>>()
+    val newTaskEvent: LiveData<Event<Unit>> = _newTaskEvent
 
     /**
      * Called by Data Binding in the tasks_fragment.xml layout
      * when the Add New Task FloatingActionButton is clicked.
      */
     fun navigateToAddTask() {
-        _navigateToAddTask.value = Event(Unit)
+        _newTaskEvent.value = Event(Unit)
     }
 
     /**
@@ -48,9 +50,13 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     }
 
     fun getResultMessage(result: Int) {
+        // Prevent showing snackbar message incorrectly
+        if (resultMessageShown) return
         when (result) {
             EDIT_RESULT_OK ->  _snackbarText.value = Event(R.string.updated_task_message)
             ADD_RESULT_OK ->  _snackbarText.value = Event(R.string.created_new_task_message)
         }
+
+        resultMessageShown = true
     }
 }

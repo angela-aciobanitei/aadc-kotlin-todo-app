@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 /**
  * The [ViewModel] for the  [AddEditTaskFragment]
  */
-class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
+class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -29,7 +29,6 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
-
     fun start(id: String?) {
        taskId = id
        if (id == null) {
@@ -38,7 +37,7 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
            return
        }
 
-       // If task ID is valid, this is a task edit
+       // If task ID is not null, this is a task edit
        isNewTask = false
 
        viewModelScope.launch {

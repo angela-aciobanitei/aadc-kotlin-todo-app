@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL
-import androidx.recyclerview.widget.RecyclerView
 
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Result
@@ -21,7 +19,6 @@ import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 
 class TasksFragment : Fragment() {
 
@@ -80,7 +77,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        viewModel.navigateToAddTask.observe(viewLifecycleOwner, EventObserver {
+        viewModel.newTaskEvent.observe(viewLifecycleOwner, EventObserver {
             val action = TasksFragmentDirections
                 .actionTasksFragmentToAddEditTaskFragment(
                     taskId = null,
