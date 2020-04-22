@@ -119,6 +119,5 @@ class TasksFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-
     }
 }

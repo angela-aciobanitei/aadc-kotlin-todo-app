@@ -1,9 +1,7 @@
 package com.ang.acb.todolearn.ui.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.databinding.TaskDetailsFragmentBinding
+import com.ang.acb.todolearn.ui.common.DELETE_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +36,9 @@ class TaskDetailsFragment : Fragment() {
             taskDetailsViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        
+
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -65,6 +66,12 @@ class TaskDetailsFragment : Fragment() {
                 )
             findNavController().navigate(action)
         })
+
+        viewModel.deleteTaskEvent.observe(viewLifecycleOwner, Observer {
+            val action = TaskDetailsFragmentDirections
+                .actionTaskDetailsFragmentToTasksFragment(DELETE_RESULT_OK)
+            findNavController().navigate(action)
+        })
     }
 
     private fun populateUi() {
@@ -75,4 +82,18 @@ class TaskDetailsFragment : Fragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.task_details_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete_task -> {
+                viewModel.deleteTask()
+                true
+            }
+            else ->  super.onOptionsItemSelected(item)
+        }
+    }
 }

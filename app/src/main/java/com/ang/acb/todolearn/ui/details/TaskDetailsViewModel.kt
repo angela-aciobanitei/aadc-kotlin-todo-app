@@ -27,6 +27,9 @@ class TaskDetailsViewModel(private val tasksRepository: TasksRepository) : ViewM
     private val _editTaskEvent = MutableLiveData<Event<String>>()
     val editTaskEvent: LiveData<Event<String>> = _editTaskEvent
 
+    private val _deleteTaskEvent = MutableLiveData<Event<Unit>>()
+    val deleteTaskEvent: LiveData<Event<Unit>> = _deleteTaskEvent
+
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
@@ -55,6 +58,12 @@ class TaskDetailsViewModel(private val tasksRepository: TasksRepository) : ViewM
             _snackbarText.value = Event(R.string.task_marked_active_message)
         }
     }
-}
 
+    fun deleteTask () = viewModelScope.launch {
+        _taskId.value?.let {
+            tasksRepository.deleteTaskById(it)
+            _deleteTaskEvent.value = Event(Unit)
+        }
+    }
+}
 
