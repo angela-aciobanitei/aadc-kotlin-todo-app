@@ -10,13 +10,13 @@ interface TasksDao {
     fun getLiveTasks(): LiveData<List<Task>>
 
     @Query("SELECT * FROM tasks WHERE id = :taskId")
-    fun getLiveTaskById(taskId: Int): LiveData<Task>
+    fun getLiveTaskById(taskId: String): LiveData<Task>
 
     @Query("SELECT * FROM tasks")
     suspend fun getTasks(): List<Task>?
 
     @Query("SELECT * FROM tasks WHERE id = :taskId")
-    suspend fun getTaskById(taskId: Int): Task?
+    suspend fun getTaskById(taskId: String): Task?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: Task)
@@ -28,13 +28,13 @@ interface TasksDao {
     suspend fun update(task: Task)
 
     @Query("UPDATE tasks SET completed = :isCompleted WHERE id = :taskId")
-    suspend fun updateCompleted(taskId: Int, isCompleted: Boolean)
+    suspend fun updateCompleted(taskId: String, isCompleted: Boolean)
 
     @Delete
     suspend fun delete(task: Task)
 
     @Query("DELETE FROM tasks WHERE id = :taskId")
-    suspend fun deleteTaskById(taskId: Int)
+    suspend fun deleteTaskById(taskId: String)
 
     @Query("DELETE FROM tasks")
     suspend fun deleteAllTasks(): Int

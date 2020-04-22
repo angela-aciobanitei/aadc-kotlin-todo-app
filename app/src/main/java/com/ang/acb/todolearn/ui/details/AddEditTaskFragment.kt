@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.ang.acb.todolearn.data.local.TasksRepository
+import com.ang.acb.todolearn.data.repo.TasksRepository
 
 import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
+import com.ang.acb.todolearn.ui.common.ADD_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
+import com.google.android.material.snackbar.Snackbar
 
 class AddEditTaskFragment : Fragment() {
 
@@ -47,11 +48,21 @@ class AddEditTaskFragment : Fragment() {
 
         viewModel.start(args.taskId)
 
-        viewModel.taskUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = AddEditTaskFragmentDirections.actionAddEditTaskFragmentToTasksFragment()
-            findNavController().navigate(action)
+        setupSnackbar()
+        setupNavigation()
+    }
 
+    private fun setupSnackbar() {
+        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { stringResId ->
+            Snackbar.make(binding.root, stringResId, Snackbar.LENGTH_SHORT).show()
         })
     }
 
+    private fun setupNavigation() {
+        viewModel.taskUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
+            val action = AddEditTaskFragmentDirections
+                .actionAddEditTaskFragmentToTasksFragment(ADD_RESULT_OK)
+            findNavController().navigate(action)
+        })
+    }
 }

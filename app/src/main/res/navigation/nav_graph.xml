@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_tasksFragment_to_addEditTaskFragment"
             app:destination="@id/addEditTaskFragment" />
+        <argument
+            android:name="snackbarMessage"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
     <fragment
@@ -27,8 +31,8 @@
             app:destination="@id/tasksFragment" />
         <argument
             android:name="taskId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="title"
             app:argType="string"

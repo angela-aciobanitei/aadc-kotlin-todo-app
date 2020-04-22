@@ -5,17 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.local.TasksRepository
+import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
-
-const val INVALID_TASK_ID = -1
+import com.google.android.material.snackbar.Snackbar
 
 class TasksFragment : Fragment() {
 
@@ -25,6 +24,8 @@ class TasksFragment : Fragment() {
         )
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
     }
+
+    private val args: TasksFragmentArgs by navArgs()
 
     private lateinit var binding: TasksFragmentBinding
 
@@ -45,13 +46,27 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setupSnackbar()
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
         viewModel.navigateToAddTask.observe(viewLifecycleOwner, EventObserver {
             val action = TasksFragmentDirections
                 .actionTasksFragmentToAddEditTaskFragment(
-                    taskId = INVALID_TASK_ID,
+                    taskId = null,
                     title = resources.getString(R.string.new_task)
                 )
             findNavController().navigate(action)
+        })
+    }
+
+    private fun setupSnackbar() {
+        arguments?.let {
+            viewModel.getResultMessage(args.snackbarMessage)
+        }
+        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { stringResId ->
+            Snackbar.make(binding.root, stringResId, Snackbar.LENGTH_SHORT).show()
         })
     }
 }

@@ -2,7 +2,7 @@ package com.ang.acb.todolearn.ui.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ang.acb.todolearn.data.local.TasksRepository
+import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.ui.details.AddEditTaskViewModel
 import com.ang.acb.todolearn.ui.list.TasksViewModel
 

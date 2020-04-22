@@ -35,7 +35,7 @@ class TasksLocalDataSource(
         tasksDao.delete(task)
     }
 
-    suspend fun deleteTaskById(taskId: Int) = withContext(ioDispatcher) {
+    suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {
         tasksDao.deleteTaskById(taskId)
     }
 
@@ -47,7 +47,7 @@ class TasksLocalDataSource(
         tasksDao.deleteCompletedTasks()
     }
 
-    suspend fun getTask(taskId: Int): Result<Task> = withContext(ioDispatcher) {
+    suspend fun getTask(taskId: String): Result<Task> = withContext(ioDispatcher) {
         try {
             val task = tasksDao.getTaskById(taskId)
             if (task != null) return@withContext Result.Success(task)
@@ -67,7 +67,7 @@ class TasksLocalDataSource(
         }
     }
 
-    fun getLiveTask(taskId: Int): LiveData<Result<Task>> {
+    fun getLiveTask(taskId: String): LiveData<Result<Task>> {
         // Note: instead of Transformations.map(), you can use the
         // map() function from the "androidx.lifecycle" library.
         val task = tasksDao.getLiveTaskById(taskId)

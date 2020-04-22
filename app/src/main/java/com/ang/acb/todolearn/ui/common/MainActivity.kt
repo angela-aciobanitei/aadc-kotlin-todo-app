@@ -1,5 +1,6 @@
 package com.ang.acb.todolearn.ui.common
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -8,6 +9,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.ang.acb.todolearn.R
+
+
+// https://stackoverflow.com/questions/32013948/will-someone-please-explain-result-first-user
+const val ADD_RESULT_OK = Activity.RESULT_FIRST_USER + 1
+const val EDIT_RESULT_OK = Activity.RESULT_FIRST_USER + 2
+const val DELETE_RESULT_OK = Activity.RESULT_FIRST_USER + 3
+
 
 class MainActivity : AppCompatActivity() {
 

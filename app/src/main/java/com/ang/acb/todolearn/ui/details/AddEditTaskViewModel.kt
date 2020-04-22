@@ -7,8 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.local.TasksRepository
-import com.ang.acb.todolearn.ui.list.INVALID_TASK_ID
+import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.util.Event
 import kotlinx.coroutines.launch
 
@@ -20,7 +19,7 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
-    private var taskId: Int? = null
+    private var taskId: String? = null
     private var isNewTask: Boolean = false
     private var isCompleted = false
 
@@ -31,9 +30,9 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
 
-    fun start(id: Int) {
+    fun start(id: String?) {
        taskId = id
-       if (taskId == INVALID_TASK_ID) {
+       if (id == null) {
            // This is a new task, no need to populate
            isNewTask = true
            return
@@ -49,43 +48,52 @@ class AddEditTaskViewModel(val tasksRepository: TasksRepository) : ViewModel() {
                    description.value = result.data.description
                    isCompleted = result.data.isCompleted
                } else {
-                   _snackbarText.value = Event(R.string.error_message)
+                   _snackbarText.value = Event(R.string.error_loading_task_message)
                }
            }
        }
     }
 
+    /**
+     * Called by Data Binding when the Save Task FloatingActionButton is clicked.
+     *
+     */
     fun saveTask(){
         val currentTitle = title.value
         val currentDescription = description.value
         val currentId = taskId
 
-        if(currentTitle == null || currentDescription == null) {
+        if (currentTitle == null || currentDescription == null) {
             _snackbarText.value = Event(R.string.empty_task_message)
             return
         }
 
-        if(currentTitle.isEmpty() || currentDescription.isEmpty()) {
+        if (currentTitle.isEmpty() || currentDescription.isEmpty()) {
             _snackbarText.value = Event(R.string.empty_task_message)
             return
         }
 
-        if (isNewTask || currentId == INVALID_TASK_ID) {
-            // https://developer.android.com/reference/androidx/room/PrimaryKey#autoGenerate()
-            createTask(Task(null, currentTitle, currentDescription))
+        if (isNewTask || currentId == null) {
+            createTask(Task(currentTitle, currentDescription))
         } else {
             updateTask(Task(currentId, currentTitle, currentDescription, isCompleted))
         }
     }
 
-    fun createTask(task: Task) =  viewModelScope.launch {
+    private fun createTask(task: Task) =  viewModelScope.launch {
         tasksRepository.saveTask(task)
+        _snackbarText.value = Event(R.string.created_new_task_message)
         _taskUpdatedEvent.value = Event(Unit)
     }
 
-    fun updateTask(task: Task) = viewModelScope.launch {
-        tasksRepository.updateTask(task)
-        _taskUpdatedEvent.value = Event(Unit)
+    private fun updateTask(task: Task) {
+        if (isNewTask) throw RuntimeException("Task is new, cannot call updateTask().")
+
+        viewModelScope.launch {
+            tasksRepository.updateTask(task)
+            _snackbarText.value = Event(R.string.updated_task_message)
+            _taskUpdatedEvent.value = Event(Unit)
+        }
     }
 }
 

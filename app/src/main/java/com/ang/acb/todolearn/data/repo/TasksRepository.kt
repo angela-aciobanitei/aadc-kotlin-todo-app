@@ -1,7 +1,11 @@
-package com.ang.acb.todolearn.data.local
+package com.ang.acb.todolearn.data.repo
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import com.ang.acb.todolearn.data.local.Result
+import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.data.local.TasksDatabase
+import com.ang.acb.todolearn.data.local.TasksLocalDataSource
 import kotlinx.coroutines.*
 
 class TasksRepository(
@@ -15,10 +19,15 @@ class TasksRepository(
 
         fun getInstance(context: Context): TasksRepository {
             synchronized(this) {
-                var repository = INSTANCE
+                var repository =
+                    INSTANCE
                 if (repository == null) {
-                    repository = TasksRepository(TasksLocalDataSource(
-                        TasksDatabase.getInstance(context).tasksDao, Dispatchers.IO)
+                    repository = TasksRepository(
+                        TasksLocalDataSource(
+                            TasksDatabase.getInstance(
+                                context
+                            ).tasksDao, Dispatchers.IO
+                        )
                     )
 
                     INSTANCE = repository
@@ -52,7 +61,7 @@ class TasksRepository(
         launch { tasksLocalDataSource.deleteTask(task) }
     }
 
-    suspend fun deleteTaskById(taskId: Int) = coroutineScope {
+    suspend fun deleteTaskById(taskId: String) = coroutineScope {
         launch { tasksLocalDataSource.deleteTaskById(taskId) }
     }
 
@@ -64,11 +73,11 @@ class TasksRepository(
         launch { tasksLocalDataSource.deleteCompletedTasks() }
     }
 
-    suspend fun getTask(taskId: Int): Result<Task> = tasksLocalDataSource.getTask(taskId)
+    suspend fun getTask(taskId: String): Result<Task> = tasksLocalDataSource.getTask(taskId)
 
     suspend fun getTasks(): Result<List<Task>> = tasksLocalDataSource.getTasks()
 
-    fun getLiveTask(taskId: Int): LiveData<Result<Task>> = tasksLocalDataSource.getLiveTask(taskId)
+    fun getLiveTask(taskId: String): LiveData<Result<Task>> = tasksLocalDataSource.getLiveTask(taskId)
 
     fun getLiveTasks(): LiveData<Result<List<Task>>> = tasksLocalDataSource.getLiveTasks()
 }
