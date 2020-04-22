@@ -27,12 +27,22 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     private val _newTaskEvent = MutableLiveData<Event<Unit>>()
     val newTaskEvent: LiveData<Event<Unit>> = _newTaskEvent
 
+    private val _openTaskDetails = MutableLiveData<Event<String>>()
+    val openTaskDetails: LiveData<Event<String>> = _openTaskDetails
+
     /**
      * Called by Data Binding in the tasks_fragment.xml layout
      * when the Add New Task FloatingActionButton is clicked.
      */
     fun navigateToAddTask() {
         _newTaskEvent.value = Event(Unit)
+    }
+
+    /**
+     * Called by Data Binding in the item_task.xml layout when a Task item is clicked.
+     */
+    fun navigateToTaskDetails(id: String) {
+        _openTaskDetails.value = Event(id)
     }
 
     /**
@@ -54,7 +64,7 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         if (resultMessageShown) return
         when (result) {
             EDIT_RESULT_OK ->  _snackbarText.value = Event(R.string.updated_task_message)
-            ADD_RESULT_OK ->  _snackbarText.value = Event(R.string.created_new_task_message)
+            ADD_RESULT_OK ->  _snackbarText.value = Event(R.string.new_task_saved_message)
         }
 
         resultMessageShown = true

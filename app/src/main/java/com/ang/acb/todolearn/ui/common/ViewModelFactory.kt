@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.ui.details.AddEditTaskViewModel
+import com.ang.acb.todolearn.ui.details.TaskDetailsViewModel
 import com.ang.acb.todolearn.ui.list.TasksViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -15,6 +16,8 @@ class ViewModelFactory(
             return AddEditTaskViewModel(tasksRepository) as T
         } else if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
             return TasksViewModel(tasksRepository) as T
+        } else if (modelClass.isAssignableFrom(TaskDetailsViewModel::class.java)) {
+            return TaskDetailsViewModel(tasksRepository) as T
         }
         throw IllegalArgumentException("Unable to construct view model")
     }

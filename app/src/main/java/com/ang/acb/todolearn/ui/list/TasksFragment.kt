@@ -59,7 +59,6 @@ class TasksFragment : Fragment() {
     private fun setupRecycler() {
         tasksAdapter = TasksAdapter(viewModel)
         binding.rvTasks.adapter = tasksAdapter
-        binding.rvTasks.addItemDecoration(DividerItemDecoration(requireContext(), HORIZONTAL))
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer { tasksResult ->
             when (tasksResult) {
@@ -85,12 +84,19 @@ class TasksFragment : Fragment() {
                 )
             findNavController().navigate(action)
         })
+
+        viewModel.openTaskDetails.observe(viewLifecycleOwner, EventObserver { taskId ->
+            val action = TasksFragmentDirections
+                .actionTasksFragmentToTaskDetailsFragment(taskId)
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupSnackbar() {
         arguments?.let {
             viewModel.getResultMessage(args.snackbarMessage)
         }
+
         viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { stringResId ->
             Snackbar.make(binding.root, stringResId, Snackbar.LENGTH_SHORT).show()
         })

@@ -81,7 +81,7 @@ class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewM
 
     private fun createTask(task: Task) =  viewModelScope.launch {
         tasksRepository.saveTask(task)
-        _snackbarText.value = Event(R.string.created_new_task_message)
+        _snackbarText.value = Event(R.string.new_task_saved_message)
         _taskUpdatedEvent.value = Event(Unit)
     }
 
