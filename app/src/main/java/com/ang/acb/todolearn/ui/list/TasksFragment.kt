@@ -97,8 +97,8 @@ class TasksFragment : Fragment() {
             viewModel.getResultMessage(args.snackbarMessage)
         }
 
-        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { stringResId ->
-            Snackbar.make(binding.root, stringResId, Snackbar.LENGTH_SHORT).show()
+        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { messageResId ->
+            Snackbar.make(binding.root, messageResId, Snackbar.LENGTH_SHORT).show()
         })
     }
 }

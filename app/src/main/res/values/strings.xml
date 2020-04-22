@@ -9,12 +9,12 @@
     <string name="error_loading_task_message">Could not load task data</string>
     <string name="error_loading_tasks_message">Could not load tasks</string>
     <string name="empty_task_message">Tasks cannot be empty</string>
-    <string name="new_task_saved_message">The new task was saved</string>
-    <string name="updated_task_message">Task updated</string>
+    <string name="saved_task_message">Task saved</string>
     <string name="task_marked_completed_message">Task marked as completed</string>
     <string name="task_marked_active_message">Task marked as active</string>
     <string name="tasks_cleared_message">All tasks cleared</string>
     <string name="completed_tasks_cleared_message">Completed tasks cleared</string>
+    <string name="edit_task">Edit task</string>
 
 
 </resources>

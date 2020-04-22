@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.ang.acb.todolearn.data.repo.TasksRepository
 
 import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
-import com.ang.acb.todolearn.ui.common.ADD_RESULT_OK
+import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
@@ -61,7 +61,7 @@ class AddEditTaskFragment : Fragment() {
     private fun setupNavigation() {
         viewModel.taskUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
             val action = AddEditTaskFragmentDirections
-                .actionAddEditTaskFragmentToTasksFragment(ADD_RESULT_OK)
+                .actionAddEditTaskFragmentToTasksFragment(ADD_EDIT_RESULT_OK)
             findNavController().navigate(action)
         })
     }

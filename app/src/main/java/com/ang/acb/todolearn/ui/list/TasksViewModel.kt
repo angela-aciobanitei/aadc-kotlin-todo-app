@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.TasksRepository
-import com.ang.acb.todolearn.ui.common.ADD_RESULT_OK
-import com.ang.acb.todolearn.ui.common.EDIT_RESULT_OK
 import com.ang.acb.todolearn.util.Event
 import kotlinx.coroutines.launch
 
@@ -62,10 +60,7 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     fun getResultMessage(result: Int) {
         // Prevent showing snackbar message incorrectly
         if (resultMessageShown) return
-        when (result) {
-            EDIT_RESULT_OK ->  _snackbarText.value = Event(R.string.updated_task_message)
-            ADD_RESULT_OK ->  _snackbarText.value = Event(R.string.new_task_saved_message)
-        }
+        _snackbarText.value = Event(R.string.saved_task_message)
 
         resultMessageShown = true
     }

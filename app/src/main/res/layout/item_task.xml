@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <import type="android.widget.CompoundButton"/>
+
         <variable
             name="task"
             type="com.ang.acb.todolearn.data.local.Task" />
@@ -44,7 +46,7 @@
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:checked="@{task.completed}"
-            android:onClick="@{(view) -> tasksViewModel.completeTask(task, ((CompoundButton)view).isChecked())}"
+            android:onClick="@{(view) -> tasksViewModel.completeTask(task, ((CompoundButton) view).isChecked())}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
