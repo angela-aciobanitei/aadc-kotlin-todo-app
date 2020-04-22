@@ -14,15 +14,6 @@ import kotlinx.coroutines.launch
  */
 class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
-    val tasks = tasksRepository.getLiveTasks().map { resultTask ->
-        if (resultTask is Result.Success) {
-            resultTask.data
-        } else {
-            _snackbarText.value = Event(R.string.error_loading_task_message)
-            null
-        }
-    }
-
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
@@ -34,6 +25,35 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     private val _openTaskDetails = MutableLiveData<Event<String>>()
     val openTaskDetails: LiveData<Event<String>> = _openTaskDetails
 
+    private val _currentFilter = MutableLiveData<Int>()
+    val currentFilter: LiveData<Int> = _currentFilter
+
+    private val allTasks = tasksRepository.getLiveTasks().map { resultTask ->
+        if (resultTask is Result.Success) {
+            resultTask.data
+        } else {
+            _snackbarText.value = Event(R.string.error_loading_task_message)
+            null
+        }
+    }
+
+    private val activeTasks = allTasks.map { taskList ->
+        taskList?.filter { !it.isCompleted }
+    }
+
+    private val completedTasks = allTasks.map { taskList ->
+        taskList?.filter { it.isCompleted }
+    }
+
+    val tasks = _currentFilter.switchMap {
+        getFilteredTasks(it)
+    }
+
+    init {
+        // Set initial state
+        _currentFilter.value = TasksFilter.ALL_TASKS.value
+    }
+
     /**
      * Called by Data Binding in the tasks_fragment.xml layout
      * when the Add New Task FloatingActionButton is clicked.
@@ -43,7 +63,8 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     }
 
     /**
-     * Called by Data Binding in the item_task.xml layout when a Task item is clicked.
+     * Called by Data Binding in the item_task.xml layout when
+     * a Task item is clicked.
      */
     fun navigateToTaskDetails(id: String) {
         _openTaskDetails.value = Event(id)
@@ -71,5 +92,31 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         }
 
         resultMessageShown = true
+    }
+
+    fun updateFilter(filter: TasksFilter) {
+        _currentFilter.value = filter.value
+    }
+
+    private fun getFilteredTasks(filter: Int) :  LiveData<List<Task>?>{
+        return when (filter) {
+            TasksFilter.ACTIVE_TASKS.value -> activeTasks
+            TasksFilter.COMPLETED_TASKS.value -> completedTasks
+            else -> allTasks
+        }
+    }
+
+    fun clearAllTasks() {
+        viewModelScope.launch {
+            tasksRepository.deleteAllTasks()
+            _snackbarText.value = Event(R.string.tasks_cleared_message)
+        }
+    }
+
+    fun clearCompletedTasks() {
+        viewModelScope.launch {
+            tasksRepository.deleteCompletedTasks()
+            _snackbarText.value = Event(R.string.completed_tasks_cleared_message)
+        }
     }
 }

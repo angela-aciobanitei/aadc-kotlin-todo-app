@@ -1,19 +1,14 @@
 package com.ang.acb.todolearn.ui.list
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL
 
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
@@ -44,6 +39,8 @@ class TasksFragment : Fragment() {
             // Give DataBinding the possibility to observe LiveData.
             lifecycleOwner = viewLifecycleOwner
         }
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -90,5 +87,38 @@ class TasksFragment : Fragment() {
         arguments?.let {
             viewModel.getResultMessage(args.snackbarMessage)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.filter_tasks_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    // https://developer.android.com/guide/topics/ui/menus#kotlin
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.show_all_tasks ->  {
+                viewModel.updateFilter(TasksFilter.ALL_TASKS)
+                true
+            }
+            R.id.show_active_tasks -> {
+                viewModel.updateFilter(TasksFilter.ACTIVE_TASKS)
+                true
+            }
+            R.id.show_completed_tasks -> {
+                viewModel.updateFilter(TasksFilter.COMPLETED_TASKS)
+                true
+            }
+            R.id.clear_all_tasks -> {
+                viewModel.clearAllTasks()
+                true
+            }
+            R.id.clear_completed -> {
+                viewModel.clearCompletedTasks()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 }
