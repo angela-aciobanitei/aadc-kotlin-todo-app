@@ -7,12 +7,12 @@ import java.util.*
 
 @Entity(tableName = "tasks")
 data class Task(
-    @PrimaryKey
-    val id: String = UUID.randomUUID().toString(),
     val title: String = "",
     val description: String = "",
     @ColumnInfo(name = "completed")
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString()
 )
 
 // See: https://developer.android.com/reference/kotlin/java/util/UUID

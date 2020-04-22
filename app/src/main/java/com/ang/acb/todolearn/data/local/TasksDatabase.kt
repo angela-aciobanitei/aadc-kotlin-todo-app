@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Task::class], version = 4, exportSchema = false)
+@Database(entities = [Task::class], version = 5, exportSchema = false)
 abstract class TasksDatabase: RoomDatabase() {
 
     // Create an abstract val to get a reference to the DAO.

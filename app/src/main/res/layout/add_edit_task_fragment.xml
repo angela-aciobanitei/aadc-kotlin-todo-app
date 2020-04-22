@@ -22,13 +22,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/padding_normal">
+                android:layout_margin="@dimen/padding_normal">
 
                 <EditText
                     android:id="@+id/add_task_title_edit_text"
                     android:background="@null"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
                     android:hint="@string/title_hint"
                     android:imeOptions="flagNoExtractUi"
                     android:importantForAutofill="no"
@@ -42,7 +43,8 @@
                     android:id="@+id/add_task_description_edit_text"
                     android:background="@null"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="150dp"
+                    android:padding="@dimen/padding_small"
                     android:gravity="top"
                     android:hint="@string/description_hint"
                     android:imeOptions="flagNoExtractUi"

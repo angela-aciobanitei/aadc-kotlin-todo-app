@@ -75,7 +75,7 @@ class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewM
         if (isNewTask || currentId == null) {
             createTask(Task(currentTitle, currentDescription))
         } else {
-            updateTask(Task(currentId, currentTitle, currentDescription, isCompleted))
+            updateTask(Task(currentTitle, currentDescription, isCompleted, currentId))
         }
     }
 
