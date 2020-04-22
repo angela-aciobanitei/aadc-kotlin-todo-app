@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
  */
 class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
+    val tasks = tasksRepository.getLiveTasks()
+
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 

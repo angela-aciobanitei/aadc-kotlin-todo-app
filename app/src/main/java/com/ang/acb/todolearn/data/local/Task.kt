@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "tasks")
-class Task(
+data class Task(
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
     val title: String = "",

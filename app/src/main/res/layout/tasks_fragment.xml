@@ -16,7 +16,7 @@
         tools:context=".ui.list.TasksFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_todos"
+            android:id="@+id/rv_tasks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"

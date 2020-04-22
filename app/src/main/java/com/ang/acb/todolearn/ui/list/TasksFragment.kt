@@ -5,16 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL
+import androidx.recyclerview.widget.RecyclerView
 
 import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class TasksFragment : Fragment() {
 
@@ -28,6 +35,7 @@ class TasksFragment : Fragment() {
     private val args: TasksFragmentArgs by navArgs()
 
     private lateinit var binding: TasksFragmentBinding
+    private lateinit var tasksAdapter: TasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,8 +54,29 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setupRecycler()
         setupSnackbar()
         setupNavigation()
+    }
+
+    private fun setupRecycler() {
+        tasksAdapter = TasksAdapter(viewModel)
+        binding.rvTasks.adapter = tasksAdapter
+        binding.rvTasks.addItemDecoration(DividerItemDecoration(requireContext(), HORIZONTAL))
+
+        viewModel.tasks.observe(viewLifecycleOwner, Observer { tasksResult ->
+            when (tasksResult) {
+                is Result.Success -> {
+                    tasksAdapter.submitList(tasksResult.data)
+                }
+                is Result.Error -> {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.error_loading_tasks_message),
+                        Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun setupNavigation() {
