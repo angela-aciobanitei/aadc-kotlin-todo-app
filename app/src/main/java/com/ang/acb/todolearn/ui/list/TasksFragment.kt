@@ -22,10 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 
-class TasksFragment : Fragment(),
-    SharedPreferences.OnSharedPreferenceChangeListener,
-    Preference.OnPreferenceChangeListener
-{
+class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
 
     private val  viewModel: TasksViewModel by lazy {
         val factory = TasksViewModelFactory(
@@ -40,6 +37,14 @@ class TasksFragment : Fragment(),
     private lateinit var binding: TasksFragmentBinding
     private lateinit var tasksAdapter: TasksAdapter
     private lateinit var preferences : SharedPreferences
+
+    // https://developer.android.com/guide/topics/ui/settings/use-saved-values
+    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == resources.getString(R.string.show_notifications_pref_key)) {
+                triggerNotifications()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,11 +64,17 @@ class TasksFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setupPreferences()
         setupRecycler()
         setupSnackbar()
         setupNavigation()
         setupNotificationChannel()
-        triggerNotifications()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     private fun setupRecycler() {
@@ -125,16 +136,17 @@ class TasksFragment : Fragment(),
         Timber.d("Notification channel created")
     }
 
-    private fun triggerNotifications() {
-        // https://developer.android.com/guide/topics/ui/settings/use-saved-values#reading_preference_values
+    private fun setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    private fun triggerNotifications() {
         val prefKey = resources.getString(R.string.show_notifications_pref_key)
         val prefValue = preferences.getBoolean(prefKey, false)
         viewModel.setAlarm(prefValue)
         Timber.d("Preference key = $prefKey, value = $prefValue")
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.filter_tasks_menu, menu)
@@ -172,25 +184,10 @@ class TasksFragment : Fragment(),
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == resources.getString(R.string.show_notifications_pref_key)) {
-            val isOn = sharedPreferences.getBoolean(
-                resources.getString(R.string.show_notifications_pref_key), false
-            )
-            Timber.d("Changed preference key = $key, value = $isOn")
-
-            viewModel.setAlarm(isOn)
-        }
-    }
-
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         Timber.d("Pending preference key = ${preference.key}, value = $newValue")
         if (preference.key == resources.getString(R.string.show_notifications_pref_key)) {
-            val isOn = preference.sharedPreferences.getBoolean(
-                resources.getString(R.string.show_notifications_pref_key), false
-            )
-
-            viewModel.setAlarm(isOn)
+            triggerNotifications()
         }
 
         return true
