@@ -35,8 +35,6 @@ class TasksViewModel(
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
-    private var resultMessageShown: Boolean = false
-
     private val _newTaskEvent = MutableLiveData<Event<Unit>>()
     val newTaskEvent: LiveData<Event<Unit>> = _newTaskEvent
 
@@ -46,12 +44,12 @@ class TasksViewModel(
     private val _openSettingsEvent = MutableLiveData<Event<Unit>>()
     val openSettingsEvent: LiveData<Event<Unit>> = _openSettingsEvent
 
-    // The state of the switch that turns on or off the alarm.
-    private var _alarmOn = MutableLiveData<Boolean>()
-    val isAlarmOn: LiveData<Boolean> = _alarmOn
-
     private val _currentFilter = MutableLiveData<Int>()
     val currentFilter: LiveData<Int> = _currentFilter
+
+    private var resultMessageShown: Boolean = false
+    private var alarmOn : Boolean = false
+    private val testingTime = 10_000L // seconds
 
     private val allTasks = tasksRepository.getLiveTasks().map { resultTask ->
         if (resultTask is Result.Success) {
@@ -93,7 +91,7 @@ class TasksViewModel(
         // Set initial state
         _currentFilter.value = TasksFilter.ALL_TASKS.value
 
-        _alarmOn.value = PendingIntent.getBroadcast(
+        alarmOn = PendingIntent.getBroadcast(
             app,
             ALARM_REQUEST_CODE,
             notifyIntent,
@@ -115,47 +113,45 @@ class TasksViewModel(
         }
     }
 
-    fun setAlarm(isChecked: Boolean) {
-        when (isChecked) {
-            true -> scheduleNotification()
-            false -> cancelNotification()
+    fun setAlarm(isOn: Boolean) {
+        when (isOn) {
+            true -> fireAlarm()
+            false -> cancelAlarm()
         }
     }
 
     /**
-     * Creates a new alarm to schedule a  notification.
+     * Creates a new alarm to schedule a notification.
      */
-    private fun scheduleNotification() {
-        _alarmOn.value?.let {
-            if (!it) {
-                // Now the switcher is on.
-                _alarmOn.value = true
+    private fun fireAlarm() {
+        if (!alarmOn) {
+            // Now the switcher is on.
+            alarmOn = true
 
-                // Determine when to trigger the alarm.
-                val triggerTime = SystemClock.elapsedRealtime() + 10_000L // in 10 seconds
+            // Determine when to trigger the alarm.
+            val triggerTime = SystemClock.elapsedRealtime() + testingTime
 
-                // Cancel previous notifications when starting the timer.
-                val notificationManager =  ContextCompat.getSystemService(
-                    app, NotificationManager::class.java
-                ) as NotificationManager
-                notificationManager.cancelNotifications()
+            // Cancel previous notifications.
+            val notificationManager =  ContextCompat.getSystemService(
+                app, NotificationManager::class.java
+            ) as NotificationManager
+            notificationManager.cancelNotifications()
 
-                // Schedule an alarm to be delivered precisely at the stated time. This alarm
-                // will be allowed to execute even when the system is in low-power idle modes.
-                AlarmManagerCompat.setExactAndAllowWhileIdle(
-                    alarmManager,
-                    // Because we used SystemClock.elapsedRealtime()
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    triggerTime,
-                    notifyPendingIntent
-                )
-            }
+            // Schedule an alarm to be delivered precisely at the stated time. This alarm
+            // will be allowed to execute even when the system is in low-power idle modes.
+            AlarmManagerCompat.setExactAndAllowWhileIdle(
+                alarmManager,
+                // Because we used SystemClock.elapsedRealtime()
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                triggerTime,
+                notifyPendingIntent
+            )
         }
     }
 
-    private fun cancelNotification() {
+    private fun cancelAlarm() {
         // Reset the alarm value to false.
-        _alarmOn.value = false
+        alarmOn = false
         alarmManager.cancel(notifyPendingIntent)
     }
 

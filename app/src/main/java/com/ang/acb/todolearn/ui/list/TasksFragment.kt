@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 
-class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
+class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
         val factory = TasksViewModelFactory(
@@ -77,6 +77,11 @@ class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
         preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
+    private fun setupPreferences() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
     private fun setupRecycler() {
         tasksAdapter = TasksAdapter(viewModel)
         binding.rvTasks.adapter = tasksAdapter
@@ -84,6 +89,14 @@ class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
         viewModel.tasks.observe(viewLifecycleOwner, Observer { tasksResult ->
             tasksResult?.let { tasksAdapter.submitList(it) }
         })
+    }
+
+    private fun setupSnackbar() {
+        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { messageResId ->
+            Snackbar.make(binding.root, messageResId, Snackbar.LENGTH_SHORT).show()
+        })
+
+        arguments?.let { viewModel.getResultMessage(args.snackbarMessage) }
     }
 
     private fun setupNavigation() {
@@ -109,16 +122,6 @@ class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
         })
     }
 
-    private fun setupSnackbar() {
-        viewModel.snackbarText.observe(viewLifecycleOwner, EventObserver { messageResId ->
-            Snackbar.make(binding.root, messageResId, Snackbar.LENGTH_SHORT).show()
-        })
-
-        arguments?.let {
-            viewModel.getResultMessage(args.snackbarMessage)
-        }
-    }
-
     private fun setupNotificationChannel() {
         // If you target Android 8.0 (API level 26) and post a notification without
         // specifying a channel, the notification will not appear and the system will
@@ -134,11 +137,6 @@ class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
         )
 
         Timber.d("Notification channel created")
-    }
-
-    private fun setupPreferences() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        preferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
     private fun triggerNotifications() {
@@ -182,14 +180,5 @@ class TasksFragment : Fragment(), Preference.OnPreferenceChangeListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        Timber.d("Pending preference key = ${preference.key}, value = $newValue")
-        if (preference.key == resources.getString(R.string.show_notifications_pref_key)) {
-            triggerNotifications()
-        }
-
-        return true
     }
 }
