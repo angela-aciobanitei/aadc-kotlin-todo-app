@@ -4,6 +4,7 @@
 
     <SwitchPreferenceCompat
         app:key="@string/show_notifications_pref_key"
-        app:title="@string/show_notifications_pref_title"/>
+        app:title="@string/show_notifications_pref_title"
+        app:defaultValue="false"/>
 
 </PreferenceScreen>

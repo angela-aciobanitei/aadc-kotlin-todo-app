@@ -1,7 +1,16 @@
 package com.ang.acb.todolearn.ui.list
 
+import android.app.AlarmManager
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.*
+import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,14 +20,19 @@ import androidx.navigation.fragment.navArgs
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
+import com.ang.acb.todolearn.receiver.AlarmReceiver
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
+import com.ang.acb.todolearn.util.cancelNotifications
+import com.ang.acb.todolearn.util.createChannel
 import com.google.android.material.snackbar.Snackbar
 
-class TasksFragment : Fragment() {
+
+class TasksFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val  viewModel: TasksViewModel by lazy {
-        val factory = ViewModelFactory(
+        val factory = TasksViewModelFactory(
+            requireActivity().application,
             TasksRepository.getInstance(requireActivity().applicationContext)
         )
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
@@ -28,6 +42,11 @@ class TasksFragment : Fragment() {
 
     private lateinit var binding: TasksFragmentBinding
     private lateinit var tasksAdapter: TasksAdapter
+
+    private val onSharedPreferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +69,7 @@ class TasksFragment : Fragment() {
 
         setupRecycler()
         setupSnackbar()
+        setupNotificationChannel()
         setupNavigation()
     }
 
@@ -95,6 +115,26 @@ class TasksFragment : Fragment() {
         }
     }
 
+    private fun setupNotificationChannel() {
+        // If you target Android 8.0 (API level 26) and post a notification without
+        // specifying a channel, the notification will not appear and the system will
+        // log an error message saying "No channel found ...".
+        val notificationManager = ContextCompat.getSystemService(
+            requireContext(),
+            NotificationManager::class.java
+        ) as NotificationManager
+        notificationManager.createChannel(
+            getString(R.string.task_notification_channel_id),
+            getString(R.string.task_notification_channel_name),
+            getString(R.string.task_notification_channel_description)
+        )
+
+        // FIXME: THIS IS WORKING
+        viewModel.setAlarm(true)
+    }
+
+
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.filter_tasks_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -128,6 +168,17 @@ class TasksFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == resources.getString(R.string.show_notifications_pref_key)) {
+            val isOn = sharedPreferences.getBoolean(
+                resources.getString(R.string.show_notifications_pref_key), false
+            )
+
+            // FIXME: THIS IS NOT WORKING
+            viewModel.setAlarm(true)
         }
     }
 }

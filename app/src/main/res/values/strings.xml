@@ -4,8 +4,13 @@
     <string name="tasks">Tasks</string>
     <string name="new_task">New Task</string>
     <string name="save_task">Save task</string>
+    <string name="edit_task">Edit task</string>
+
+    <!-- EditText hints-->
     <string name="title_hint">Task Title</string>
     <string name="description_hint">Enter your task here</string>
+
+    <!-- User messages shown via Snackbar -->
     <string name="error_loading_task_message">Could not load task data</string>
     <string name="error_loading_tasks_message">Could not load tasks</string>
     <string name="empty_task_message">Tasks cannot be empty</string>
@@ -15,22 +20,30 @@
     <string name="task_marked_active_message">Task marked as active</string>
     <string name="tasks_cleared_message">All tasks cleared</string>
     <string name="completed_tasks_cleared_message">Completed tasks cleared</string>
-    <string name="edit_task">Edit task</string>
+
+    <!-- Menu items titles-->
     <string name="show_all_tasks">Show All Tasks</string>
     <string name="show_completed_tasks">Show Completed Tasks</string>
     <string name="show_active_tasks">Show Active Tasks</string>
     <string name="clear_all_tasks">Clear All Tasks</string>
     <string name="clear_completed_tasks">Clear Completed Tasks</string>
-    <string name="all_tasks">All tasks</string>
-    <string name="active_tasks">Active tasks</string>
-    <string name="completed_tasks">CompletedTasks</string>
     <string name="delete_task">Delete Task</string>
     <string name="settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="show_notifications_pref_key">notifications</string>
+    <!-- Tasks filter types values -->
+    <string name="all_tasks">All tasks</string>
+    <string name="active_tasks">Active tasks</string>
+    <string name="completed_tasks">Completed Tasks</string>
+
+    <!-- Preferences -->
+    <string name="show_notifications_pref_key" translatable="false">show_notifications_pref_key</string>
     <string name="show_notifications_pref_title">Enable message notifications</string>
 
+    <!-- Notifications -->
+    <string name="notification_title">Your TODOs</string>
+    <string name="task_notification_channel_id">task_notification_channel_id</string>
+    <string name="task_notification_channel_name" translatable="true">Tasks</string>
+    <string name="task_notification_channel_description">Tasks Reminder</string>
+    <string name="notification_message">"Time to evaluate your priorities today. "</string>
 
 </resources>

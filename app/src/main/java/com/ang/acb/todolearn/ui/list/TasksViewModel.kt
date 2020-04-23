@@ -1,19 +1,36 @@
 package com.ang.acb.todolearn.ui.list
 
+import android.app.AlarmManager
+import android.app.Application
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.SystemClock
+import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.receiver.AlarmReceiver
 import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.DELETE_RESULT_OK
 import com.ang.acb.todolearn.util.Event
+import com.ang.acb.todolearn.util.cancelNotifications
 import kotlinx.coroutines.launch
+
+
+private const val ALARM_REQUEST_CODE = 0
 
 /**
  * The [ViewModel] for the [TasksFragment]
  */
-class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class TasksViewModel(
+    private val app: Application,
+    private val tasksRepository: TasksRepository
+) : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
@@ -28,6 +45,10 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
 
     private val _openSettingsEvent = MutableLiveData<Event<Unit>>()
     val openSettingsEvent: LiveData<Event<Unit>> = _openSettingsEvent
+
+    // The state of the switch that turns on or off the alarm.
+    private var _alarmOn = MutableLiveData<Boolean>()
+    val isAlarmOn: LiveData<Boolean> = _alarmOn
 
     private val _currentFilter = MutableLiveData<Int>()
     val currentFilter: LiveData<Int> = _currentFilter
@@ -53,9 +74,33 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         getFilteredTasks(it)
     }
 
+    private val alarmManager = app.getSystemService(
+        Context.ALARM_SERVICE) as AlarmManager
+
+    // An explicit intent for the AlarmReceiver.
+    private val notifyIntent = Intent(app.applicationContext, AlarmReceiver::class.java)
+
+    // A PendingIntent for the Broadcast Receiver that handles notifications.
+    private val notifyPendingIntent: PendingIntent by lazy {
+        PendingIntent.getBroadcast(
+            app.applicationContext,
+            ALARM_REQUEST_CODE,
+            notifyIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
     init {
         // Set initial state
         _currentFilter.value = TasksFilter.ALL_TASKS.value
+
+        _alarmOn.value = PendingIntent.getBroadcast(
+            app,
+            ALARM_REQUEST_CODE,
+            notifyIntent,
+            // Flag indicating that if the described PendingIntent does not
+            // already exist, then simply return null instead of creating it.
+            PendingIntent.FLAG_NO_CREATE
+        ) != null
     }
 
     fun updateFilter(filter: TasksFilter) {
@@ -68,6 +113,50 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
             TasksFilter.COMPLETED_TASKS.value -> completedTasks
             else -> allTasks
         }
+    }
+
+    fun setAlarm(isChecked: Boolean) {
+        when (isChecked) {
+            true -> scheduleNotification()
+            false -> cancelNotification()
+        }
+    }
+
+    /**
+     * Creates a new alarm to schedule a  notification.
+     */
+    private fun scheduleNotification() {
+        _alarmOn.value?.let {
+            if (!it) {
+                // Now the switcher is on.
+                _alarmOn.value = true
+
+                // Determine when to trigger the alarm.
+                val triggerTime = SystemClock.elapsedRealtime() + 10_000L // in 10 seconds
+
+                // Cancel previous notifications when starting the timer.
+                val notificationManager =  ContextCompat.getSystemService(
+                    app, NotificationManager::class.java
+                ) as NotificationManager
+                notificationManager.cancelNotifications()
+
+                // Schedule an alarm to be delivered precisely at the stated time. This alarm
+                // will be allowed to execute even when the system is in low-power idle modes.
+                AlarmManagerCompat.setExactAndAllowWhileIdle(
+                    alarmManager,
+                    // Because we used SystemClock.elapsedRealtime()
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime,
+                    notifyPendingIntent
+                )
+            }
+        }
+    }
+
+    private fun cancelNotification() {
+        // Reset the alarm value to false.
+        _alarmOn.value = false
+        alarmManager.cancel(notifyPendingIntent)
     }
 
     /**
@@ -127,5 +216,19 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
             tasksRepository.deleteCompletedTasks()
             _snackbarText.value = Event(R.string.completed_tasks_cleared_message)
         }
+    }
+}
+
+
+@Suppress("UNCHECKED_CAST")
+class TasksViewModelFactory(
+    private val app : Application,
+    private val tasksRepository: TasksRepository
+): ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
+            return TasksViewModel(app, tasksRepository) as T
+        }
+        throw IllegalArgumentException("Unable to construct view model")
     }
 }

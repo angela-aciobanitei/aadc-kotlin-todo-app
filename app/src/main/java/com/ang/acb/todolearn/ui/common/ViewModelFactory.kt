@@ -12,13 +12,14 @@ class ViewModelFactory(
     private val tasksRepository: TasksRepository
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddEditTaskViewModel::class.java)) {
-            return AddEditTaskViewModel(tasksRepository) as T
-        } else if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
-            return TasksViewModel(tasksRepository) as T
-        } else if (modelClass.isAssignableFrom(TaskDetailsViewModel::class.java)) {
-            return TaskDetailsViewModel(tasksRepository) as T
+        return when {
+            modelClass.isAssignableFrom(AddEditTaskViewModel::class.java) -> {
+                AddEditTaskViewModel(tasksRepository) as T
+            }
+            modelClass.isAssignableFrom(TaskDetailsViewModel::class.java) -> {
+                TaskDetailsViewModel(tasksRepository) as T
+            }
+            else -> throw IllegalArgumentException("Unable to construct view model")
         }
-        throw IllegalArgumentException("Unable to construct view model")
     }
 }
