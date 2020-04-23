@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_tasksFragment_to_taskDetailsFragment"
             app:destination="@id/taskDetailsFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -55,4 +58,9 @@
             android:id="@+id/action_taskDetailsFragment_to_addEditTaskFragment"
             app:destination="@id/addEditTaskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ang.acb.todolearn.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

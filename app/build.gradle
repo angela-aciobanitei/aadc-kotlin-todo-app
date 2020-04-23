@@ -47,6 +47,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$version_appcompat"
     implementation "androidx.fragment:fragment:$version_fragment"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+    implementation "androidx.preference:preference-ktx:$version_preference"
 
     // Android KTX
     implementation "androidx.core:core-ktx:$version_core"

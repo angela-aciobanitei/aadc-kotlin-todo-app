@@ -13,6 +13,7 @@ buildscript {
         version_lifecycle = "2.2.0"
         version_material = '1.1.0'
         version_navigation = "1.0.0"
+        version_preference = "1.1.1"
         version_room = "2.2.5"
         version_safe_args = "2.3.0-alpha04"
         version_timber = "4.7.1"

@@ -26,6 +26,9 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     private val _openTaskDetails = MutableLiveData<Event<String>>()
     val openTaskDetails: LiveData<Event<String>> = _openTaskDetails
 
+    private val _openSettingsEvent = MutableLiveData<Event<Unit>>()
+    val openSettingsEvent: LiveData<Event<Unit>> = _openSettingsEvent
+
     private val _currentFilter = MutableLiveData<Int>()
     val currentFilter: LiveData<Int> = _currentFilter
 
@@ -34,16 +37,16 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
             resultTask.data
         } else {
             _snackbarText.value = Event(R.string.error_loading_task_message)
-            null
+            emptyList()
         }
     }
 
     private val activeTasks = allTasks.map { taskList ->
-        taskList?.filter { !it.isCompleted }
+        taskList.filter { !it.isCompleted }
     }
 
     private val completedTasks = allTasks.map { taskList ->
-        taskList?.filter { it.isCompleted }
+        taskList.filter { it.isCompleted }
     }
 
     val tasks = _currentFilter.switchMap {
@@ -53,6 +56,18 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
     init {
         // Set initial state
         _currentFilter.value = TasksFilter.ALL_TASKS.value
+    }
+
+    fun updateFilter(filter: TasksFilter) {
+        _currentFilter.value = filter.value
+    }
+
+    private fun getFilteredTasks(filter: Int) :  LiveData<List<Task>>{
+        return when (filter) {
+            TasksFilter.ACTIVE_TASKS.value -> activeTasks
+            TasksFilter.COMPLETED_TASKS.value -> completedTasks
+            else -> allTasks
+        }
     }
 
     /**
@@ -69,6 +84,10 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
      */
     fun navigateToTaskDetails(id: String) {
         _openTaskDetails.value = Event(id)
+    }
+
+    fun navigateToSettingsScreen() {
+        _openSettingsEvent.value = Event(Unit)
     }
 
     /**
@@ -94,18 +113,6 @@ class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel()
         }
 
         resultMessageShown = true
-    }
-
-    fun updateFilter(filter: TasksFilter) {
-        _currentFilter.value = filter.value
-    }
-
-    private fun getFilteredTasks(filter: Int) :  LiveData<List<Task>?>{
-        return when (filter) {
-            TasksFilter.ACTIVE_TASKS.value -> activeTasks
-            TasksFilter.COMPLETED_TASKS.value -> completedTasks
-            else -> allTasks
-        }
     }
 
     fun clearAllTasks() {

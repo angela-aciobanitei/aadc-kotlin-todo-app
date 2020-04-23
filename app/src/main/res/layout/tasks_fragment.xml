@@ -15,13 +15,34 @@
         android:layout_height="match_parent"
         tools:context=".ui.list.TasksFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tasks"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_task"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:text="@{tasksViewModel.currentFilter}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                tools:text="All Tasks"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_task"/>
+
+        </LinearLayout>
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new_task_fab"

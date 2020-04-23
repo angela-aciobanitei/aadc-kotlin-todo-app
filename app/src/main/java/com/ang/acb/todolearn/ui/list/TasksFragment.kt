@@ -77,6 +77,12 @@ class TasksFragment : Fragment() {
                 .actionTasksFragmentToTaskDetailsFragment(taskId)
             findNavController().navigate(action)
         })
+
+        viewModel.openSettingsEvent.observe(viewLifecycleOwner, EventObserver {
+            val action = TasksFragmentDirections
+                .actionTasksFragmentToSettingsFragment()
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupSnackbar() {
@@ -97,6 +103,10 @@ class TasksFragment : Fragment() {
     // https://developer.android.com/guide/topics/ui/menus#kotlin
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.settings -> {
+                viewModel.navigateToSettingsScreen()
+                true
+            }
             R.id.show_all_tasks ->  {
                 viewModel.updateFilter(TasksFilter.ALL_TASKS)
                 true
