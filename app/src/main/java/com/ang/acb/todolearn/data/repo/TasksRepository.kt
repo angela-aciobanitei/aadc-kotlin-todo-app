@@ -8,7 +8,7 @@ import com.ang.acb.todolearn.data.local.TasksDatabase
 import com.ang.acb.todolearn.data.local.TasksLocalDataSource
 import kotlinx.coroutines.*
 
-class TasksRepository(
+class TasksRepository private constructor(
     private val tasksLocalDataSource: TasksLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

@@ -13,4 +13,6 @@
     <dimen name="padding_xlarge">48dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="header_height">192dp</dimen>
+    <dimen name="header_image_size">120dp</dimen>
 </resources>

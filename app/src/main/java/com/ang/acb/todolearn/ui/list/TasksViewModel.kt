@@ -75,6 +75,9 @@ class TasksViewModel(
     private val alarmManager = app.getSystemService(
         Context.ALARM_SERVICE) as AlarmManager
 
+    private val notificationManager =  ContextCompat.getSystemService(
+        app, NotificationManager::class.java) as NotificationManager
+
     // An explicit intent for the AlarmReceiver.
     private val notifyIntent = Intent(app.applicationContext, AlarmReceiver::class.java)
 
@@ -128,14 +131,11 @@ class TasksViewModel(
             // Now the switcher is on.
             alarmOn = true
 
+            // Cancel previous notifications.
+            notificationManager.cancelNotifications()
+
             // Determine when to trigger the alarm.
             val triggerTime = SystemClock.elapsedRealtime() + testingTime
-
-            // Cancel previous notifications.
-            val notificationManager =  ContextCompat.getSystemService(
-                app, NotificationManager::class.java
-            ) as NotificationManager
-            notificationManager.cancelNotifications()
 
             // Schedule an alarm to be delivered precisely at the stated time. This alarm
             // will be allowed to execute even when the system is in low-power idle modes.
@@ -150,7 +150,7 @@ class TasksViewModel(
     }
 
     private fun cancelAlarm() {
-        // Reset the alarm value to false.
+        // Reset the alarm ON flag to false.
         alarmOn = false
         alarmManager.cancel(notifyPendingIntent)
     }

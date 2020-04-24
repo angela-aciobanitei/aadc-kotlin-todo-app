@@ -58,8 +58,14 @@
             android:id="@+id/action_taskDetailsFragment_to_addEditTaskFragment"
             app:destination="@id/addEditTaskFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.ang.acb.todolearn.ui.settings.SettingsFragment"
         android:label="@string/settings" />
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.ang.acb.todolearn.ui.statistics.StatisticsFragment"
+        android:label="@string/statistics" />
 </navigation>
