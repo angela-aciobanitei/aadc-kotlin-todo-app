@@ -7,7 +7,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="statsViewModel"
+            name="viewModel"
             type="com.ang.acb.todolearn.ui.statistics.StatisticsViewModel" />
     </data>
 
@@ -22,16 +22,16 @@
             android:layout_height="wrap_content"
             android:text="@string/statistics_no_tasks"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            app:visibleGone="@{statsViewModel.empty}" />
+            app:visibleGone="@{viewModel.empty}" />
 
         <TextView
             android:id="@+id/stats_active_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/padding_mini"
-            android:text="@{@string/statistics_active_tasks(statsViewModel.activeTasksPercent)}"
+            android:text="@{@string/statistics_active_tasks(viewModel.activeTasksPercent)}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            app:visibleGone="@{!statsViewModel.empty}"
+            app:visibleGone="@{!viewModel.empty}"
             tools:text="Active tasks: 50%"/>
 
         <TextView
@@ -39,9 +39,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/padding_mini"
-            android:text="@{@string/statistics_completed_tasks(statsViewModel.completedTasksPercent)}"
+            android:text="@{@string/statistics_completed_tasks(viewModel.completedTasksPercent)}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            app:visibleGone="@{!statsViewModel.empty}"
+            app:visibleGone="@{!viewModel.empty}"
             tools:text="Completed tasks: 50%"/>
 
     </LinearLayout>

@@ -62,5 +62,6 @@
     <!-- Content descriptions -->
     <string name="navigation_view_header_title">Tasks</string>
     <string name="tasks_header_image_content_description">Tasks header image</string>
+    <string name="pie_chart">Pie Chart</string>
 
 </resources>

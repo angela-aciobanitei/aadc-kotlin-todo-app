@@ -69,4 +69,10 @@
         android:id="@+id/statisticsFragment"
         android:name="com.ang.acb.todolearn.ui.statistics.StatisticsFragment"
         android:label="@string/statistics_title" />
+    <fragment
+        android:id="@+id/pieFragment"
+        android:name="com.ang.acb.todolearn.ui.statistics.PieFragment"
+        android:label="@string/pie_chart" />
+
+
 </navigation>

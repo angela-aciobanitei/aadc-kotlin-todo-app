@@ -5,4 +5,9 @@
         android:id="@+id/statisticsFragment"
         android:icon="@drawable/ic_assessment"
         android:title="@string/statistics_title" />
+
+    <item
+        android:id="@+id/pieFragment"
+        android:icon="@drawable/ic_pie_chart"
+        android:title="@string/pie_chart" />
 </menu>

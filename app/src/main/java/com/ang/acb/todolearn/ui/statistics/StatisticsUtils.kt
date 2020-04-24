@@ -1,5 +1,6 @@
 package com.ang.acb.todolearn.ui.statistics
 
+import androidx.databinding.BindingAdapter
 import com.ang.acb.todolearn.data.local.Task
 
 
@@ -16,6 +17,7 @@ internal fun getTasksStats(tasks: List<Task>?): StatsResult {
         )
     }
 }
+
 
 data class StatsResult(
     val activeTasksPercent: Float,
