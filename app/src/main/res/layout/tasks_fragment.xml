@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-       <variable
-           name="tasksViewModel"
-           type="com.ang.acb.todolearn.ui.list.TasksViewModel" />
+        <variable
+            name="tasksViewModel"
+            type="com.ang.acb.todolearn.ui.list.TasksViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -27,9 +27,22 @@
                 android:layout_marginEnd="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginBottom="@dimen/margin_small"
+                android:text="@string/no_tasks_yet"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                app:visibleGone="@{tasksViewModel.empty}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
                 android:text="@{tasksViewModel.currentFilter}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
+                app:visibleGone="@{!tasksViewModel.empty}"
                 tools:text="All Tasks"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -38,11 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_task"/>
+                tools:listitem="@layout/item_task"
+                app:visibleGone="@{!tasksViewModel.empty}"/>
 
         </LinearLayout>
-
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new_task_fab"

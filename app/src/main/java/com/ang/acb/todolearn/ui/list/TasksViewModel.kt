@@ -72,6 +72,8 @@ class TasksViewModel(
         getFilteredTasks(it)
     }
 
+    val empty: LiveData<Boolean> = tasks.map { it.isNullOrEmpty() }
+
     private val alarmManager = app.getSystemService(
         Context.ALARM_SERVICE) as AlarmManager
 

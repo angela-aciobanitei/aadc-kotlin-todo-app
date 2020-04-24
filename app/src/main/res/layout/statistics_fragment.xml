@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/statistics_no_tasks"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="@{statsViewModel.empty ? View.VISIBLE : View.GONE}" />
+            app:visibleGone="@{statsViewModel.empty}" />
 
         <TextView
             android:id="@+id/stats_active_text"
@@ -31,7 +31,7 @@
             android:paddingTop="@dimen/padding_mini"
             android:text="@{@string/statistics_active_tasks(statsViewModel.activeTasksPercent)}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="@{statsViewModel.empty ? View.GONE : View.VISIBLE}"
+            app:visibleGone="@{!statsViewModel.empty}"
             tools:text="Active tasks: 50%"/>
 
         <TextView
@@ -41,7 +41,7 @@
             android:paddingTop="@dimen/padding_mini"
             android:text="@{@string/statistics_completed_tasks(statsViewModel.completedTasksPercent)}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="@{statsViewModel.empty ? View.GONE : View.VISIBLE}"
+            app:visibleGone="@{!statsViewModel.empty}"
             tools:text="Completed tasks: 50%"/>
 
     </LinearLayout>

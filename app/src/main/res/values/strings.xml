@@ -5,6 +5,7 @@
     <string name="new_task">New Task</string>
     <string name="save_task">Save task</string>
     <string name="edit_task">Edit task</string>
+    <string name="no_tasks_yet">You have no tasks yet</string>
 
     <!-- EditText hints-->
     <string name="title_hint">Task Title</string>
@@ -52,6 +53,11 @@
     <string name="statistics_active_tasks">Active tasks: %.1f%%</string>
     <string name="statistics_completed_tasks">Completed tasks: %.1f%%</string>
     <string name="statistics_error">Error loading statistics.</string>
+
+    <!-- Alert dialog-->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_task_confirmation_message">Are you sure you want to delete this task?</string>
 
     <!-- Content descriptions -->
     <string name="navigation_view_header_title">Tasks</string>

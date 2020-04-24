@@ -6,13 +6,13 @@
     <data>
         <import type="android.view.View" />
         <import type="android.widget.CompoundButton"/>
+
         <variable
             name="taskDetailsViewModel"
             type="com.ang.acb.todolearn.ui.details.TaskDetailsViewModel" />
         <variable
             name="task"
             type="com.ang.acb.todolearn.data.local.Task" />
-
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
