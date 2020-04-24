@@ -4,5 +4,5 @@
     <item
         android:id="@+id/statisticsFragment"
         android:icon="@drawable/ic_assessment"
-        android:title="@string/statistics" />
+        android:title="@string/statistics_title" />
 </menu>

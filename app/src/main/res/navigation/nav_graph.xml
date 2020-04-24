@@ -44,6 +44,7 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.ang.acb.todolearn.ui.details.TaskDetailsFragment"
@@ -67,5 +68,5 @@
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.ang.acb.todolearn.ui.statistics.StatisticsFragment"
-        android:label="@string/statistics" />
+        android:label="@string/statistics_title" />
 </navigation>

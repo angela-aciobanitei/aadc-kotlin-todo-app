@@ -35,7 +35,7 @@
     <string name="active_tasks">Active tasks</string>
     <string name="completed_tasks">Completed Tasks</string>
 
-    <!-- Preferences -->
+    <!-- Preferences screen-->
     <string name="show_notifications_pref_key" translatable="false">show_notifications_pref_key</string>
     <string name="show_notifications_pref_title">Enable message notifications</string>
 
@@ -45,7 +45,15 @@
     <string name="task_notification_channel_name" translatable="true">Tasks</string>
     <string name="task_notification_channel_description">Tasks Reminder</string>
     <string name="notification_message">"Time to evaluate your priorities today. "</string>
-    <string name="statistics">Statistics</string>
+
+    <!--Statistics screen -->
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_no_tasks">You have no tasks.</string>
+    <string name="statistics_active_tasks">Active tasks: %.1f%%</string>
+    <string name="statistics_completed_tasks">Completed tasks: %.1f%%</string>
+    <string name="statistics_error">Error loading statistics.</string>
+
+    <!-- Content descriptions -->
     <string name="navigation_view_header_title">Tasks</string>
     <string name="tasks_header_image_content_description">Tasks header image</string>
 

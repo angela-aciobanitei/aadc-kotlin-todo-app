@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.databinding.StatisticsFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 
 class StatisticsFragment : Fragment() {
@@ -20,16 +21,16 @@ class StatisticsFragment : Fragment() {
         ViewModelProvider(this, factory).get(StatisticsViewModel::class.java)
     }
 
+    private lateinit var binding : StatisticsFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.statistics_fragment, container, false)
+        binding = StatisticsFragmentBinding.inflate(inflater,container, false)
+        binding.statsViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
 }
