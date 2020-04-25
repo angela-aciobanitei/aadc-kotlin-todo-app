@@ -7,12 +7,12 @@ A toy app created when preparing for the AADC Exam
 *   Mediate data operations with the [Repository Pattern](https://www.raywenderlich.com/3595916-clean-architecture-tutorial-for-android-getting-started) 
 *   Observe and respond to changing data using [LiveData](https://developer.android.com/topic/libraries/architecture/livedata).
 *   Persist data with [Room](https://developer.android.com/topic/libraries/architecture/room)
-*   Improve app performance with [Kotlin coroutines](https://developer.android.com/kotlin/coroutines) to manage [long-running tasks](https://codelabs.developers.google.com/codelabs/kotlin-coroutines)
+*   Manage [long-running tasks](https://codelabs.developers.google.com/codelabs/kotlin-coroutines) with [Kotlin coroutines](https://developer.android.com/kotlin/coroutines)
 *   Handle app navigation with [Navigation Component](https://developer.android.com/guide/navigation) and [SafeArgs](https://developer.android.com/guide/navigation/navigation-pass-data) 
 *   Display [Menus](https://developer.android.com/guide/topics/ui/menus) and handle [menu-based navigation](https://developer.android.com/guide/navigation/navigation-ui#Tie-navdrawer)
 *   Add a navigation drawer and implement [drawer navigation](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer) 
 *   Display simple messages in a popup using a [Toast](https://developer.android.com/guide/topics/ui/notifiers/toasts) or a [Snackbar](https://developer.android.com/reference/android/support/design/widget/Snackbar)
-*   Display a message outside app's UI using Notifications [Notifications](https://developer.android.com/guide/topics/ui/notifiers/notifications)
+*   Display a message outside app's UI using [Notifications](https://developer.android.com/guide/topics/ui/notifiers/notifications)
 *   Schedule repeating alarms with [AlarmManager](https://developer.android.com/training/scheduling/alarms) and [BroadcastReceivers](https://developer.android.com/guide/components/broadcasts)
 *   Display items in a [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 *   Bind local data to a RecyclerView list using the [Paging Library](https://codelabs.developers.google.com/codelabs/android-paging) 
@@ -38,7 +38,7 @@ A toy app created when preparing for the AADC Exam
 - [x] Implement [menu-based navigation](https://developer.android.com/guide/navigation/navigation-ui#Tie-navdrawer)
 - [x] Implement [drawer navigation](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer)
 - [x] Implement a [custom](https://codelabs.developers.google.com/codelabs/kotlin-android-training-styles-and-themes) app [theme](https://developer.android.com/guide/topics/ui/look-and-feel/themes)
-- [ ] Create a [custom View](https://developer.android.com/guide/topics/ui/custom-components) class and add it to a Layout
+- [x] Create a [custom View](https://developer.android.com/guide/topics/ui/custom-components) class and add it to a Layout
 - [ ] Add [accessibility hooks](https://developer.android.com/guide/topics/ui/accessibility/custom-views) to a custom View
 - [ ] Apply content descriptions to views for [accessibility](https://codelabs.developers.google.com/codelabs/basic-android-accessibility)
 
@@ -62,9 +62,8 @@ A toy app created when preparing for the AADC Exam
 - [x] Thoroughly understand the [fundamentals of testing](https://developer.android.com/training/testing/fundamentals)
 - [x] Write useful [local JUnit tests](https://developer.android.com/training/testing/unit-testing/local-unit-tests) 
 - [x] Build [instrumented unit tests](https://developer.android.com/training/testing/unit-testing/instrumented-unit-tests)
-- [x] Use [Test doubles](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-testing-test-doubles)
 - [x] Understand the [Espresso](https://developer.android.com/training/testing/espresso) UI test framework
-- [x] Write useful [automated](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-testing-survey) Android tests
+- [x] Write useful automated Android tests
 
 
 
