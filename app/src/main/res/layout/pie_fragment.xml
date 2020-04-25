@@ -5,16 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ang.acb.todolearn.ui.statistics.PieChartView
-        android:layout_width="250dp"
+    <com.ang.acb.todolearn.ui.statistics.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_margin="@dimen/margin_small"
-        app:activeTasksColor="@color/colorPrimary"
-        app:completedTasksColor="@color/colorAccent"
-        app:noTasksColor="@color/colorGrey"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

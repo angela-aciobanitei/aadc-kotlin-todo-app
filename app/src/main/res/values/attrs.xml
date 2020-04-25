@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="PieChartView">
-        <attr name="activeTasksColor" format="color" />
-        <attr name="completedTasksColor" format="color" />
-        <attr name="noTasksColor" format="color" />
-    </declare-styleable>
-</resources>
