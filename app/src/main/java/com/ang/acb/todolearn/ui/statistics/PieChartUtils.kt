@@ -14,20 +14,20 @@ enum class IndicatorAlignment {
 /**
  * Model for a single pie slice
  *
- * @param label: the data label that will appear next to the pie slice (active/completed tasks)
+ * @param indicatorText: the text that will appear next to the pie slice (active/completed tasks)
  * @param value: the data value that the pie slice represents
  * @param startAngle: the angle that the arc of the pie slice will begin at
  * @param sweepAngle: the number of degrees the arc of the pie slice will travel
- * @param markerPosition: the position of the marker on each pie slice, which will be
+ * @param indicatorCirclePosition: the position of the marker on each pie slice, which will be
  *                        connected to label and value with a straight line.
  * @param paint: the paint used to draw the pie slice.
  */
 data class PieSlice(
-    val label: String,
+    val indicatorText: String,
     var value: Double,
     var startAngle: Float,
     var sweepAngle: Float,
-    var markerPosition: PointF,
+    var indicatorCirclePosition: PointF,
     val paint: Paint
 )
 
@@ -38,19 +38,21 @@ data class PieSlice(
  * easily assign, add, and delete data from the pie chart.
  */
 class PieData {
+    // Stores the PieSlice objects that will populate the PieChart.
     val pieSlices = HashMap<String, PieSlice>()
+
     // Keeps track of the total value to be associated with the PieChart.
-    // This is important when calculating the dimensions of the pie slices.
+    // This is important when calculating the dimensions of each pie slice.
     var totalValue = 0.0
 
-    fun add(label: String, value: Double, color: String? = null) {
-        if (pieSlices.containsKey(label)) {
-            pieSlices[label]?.let { it.value += value }
+    fun add(text: String, value: Double, color: String? = null) {
+        if (pieSlices.containsKey(text)) {
+            pieSlices[text]?.let { it.value += value }
         } else {
             color?.let {
-                pieSlices[label] = PieSlice(label, value, 0f, 0f, PointF(), createPaint(it))
+                pieSlices[text] = PieSlice(text, value, 0f, 0f, PointF(), createPaint(it))
             } ?: run {
-                pieSlices[label] = PieSlice(label, value, 0f, 0f, PointF(), createPaint(null))
+                pieSlices[text] = PieSlice(text, value, 0f, 0f, PointF(), createPaint(null))
             }
         }
         totalValue += value

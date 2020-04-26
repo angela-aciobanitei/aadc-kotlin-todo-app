@@ -32,11 +32,14 @@ class TasksFragment : Fragment() {
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
     }
 
+    private val preferences : SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext)
+    }
+
     private val args: TasksFragmentArgs by navArgs()
 
     private lateinit var binding: TasksFragmentBinding
     private lateinit var tasksAdapter: TasksAdapter
-    private lateinit var preferences : SharedPreferences
 
     // https://developer.android.com/guide/topics/ui/settings/use-saved-values
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
@@ -73,15 +76,10 @@ class TasksFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
-        // FIXME: On config changes from PieFragment:
-        //  RuntimeException: Unable to destroy activity
-        //  lateinit property preferences has not been initialized
         preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     private fun setupPreferences() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         preferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
