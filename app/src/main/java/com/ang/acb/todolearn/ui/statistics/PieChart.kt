@@ -1,10 +1,7 @@
 package com.ang.acb.todolearn.ui.statistics
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import kotlin.math.cos
@@ -17,46 +14,54 @@ import kotlin.math.sin
  * See: https://qa.blog.grio.com/2019/08/12/android-custom-views-creating-an-animated-pie-chart-from-scratch-part-4-of-4
  */
 class PieChart @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     // Data
     private var data: PieData? = null
 
-    // Graphics
+    // Used to paint the lines that divide the pie slices.
     private val borderPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
         color = Color.WHITE
     }
 
+    // Used to paint markers on each pie slice, which will be
+    // connected to data labels with a straight line.
+    private val markerPaint = Paint().apply {
+        style = Paint.Style.FILL
+        isAntiAlias = true
+        color = Color.BLACK
+    }
+
+    // Used to paint the straight line connecting the markers
+    // on each pie slice to their associated data label.
     private val linePaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
-        color = Color.LTGRAY
-        alpha = 0
+        color = Color.BLACK
     }
 
-    private val indicatorCirclePaint = Paint().apply {
-        style = Paint.Style.FILL
-        isAntiAlias = true
-        color = Color.LTGRAY
-        alpha = 0
-    }
-
-    private val mainTextPaint = Paint().apply {
+    // Used to paint the pie slice data label.
+    private val textPaint = Paint().apply {
         isAntiAlias = true
         color = Color.BLACK
-        alpha = 0
+        textAlign = Paint.Align.CENTER
+        typeface = Typeface.create("", Typeface.BOLD)
     }
 
-    private var indicatorCircleRadius = 0f
-    private val oval = RectF()
+    // Used to set the radius of the markers on each pie slice
+    private var markerRadius = 0f
 
+    // Used to define the bounds of the complete pie chart circle.
+    private val oval = RectF()
 
     /**
      * Populates the data object and sets up the view based off the new data.
-     * @param data the new set of data to be represented by the pie chart,
+     * @param data the new set of data to be represented by the pie chart.
      */
     fun setData(data: PieData) {
         this.data = data
@@ -68,33 +73,41 @@ class PieChart @JvmOverloads constructor(
      * Calculates and sets the dimensions of the pie slices in the pie chart.
      */
     private fun setPieSliceDimensions() {
+        // We can think of the pie chart as a unit circle that goes from 0˚ to 360˚,
+        // and the pie slices as arcs on that circle. First, we need to keep track
+        // where the last slice ended and the next slice begins. This is what last
+        // angle does.
         var lastAngle = 0f
         data?.pieSlices?.forEach {
-            // Starting angle is the location of the last angle drawn.
+            // Set the start angle of the current slice to the end of the last one.
             it.value.startAngle = lastAngle
 
-            it.value.sweepAngle = (((it.value.value / data?.totalValue!!)) * 360f).toFloat()
+            // Calculate the sweep angle: (currentValue / totalValueOfPieChart) * 360f
+            it.value.sweepAngle = ((it.value.value / data?.totalValue!!) * 360f).toFloat()
+
+            // Update last angle, so we know where to start the next slice.
             lastAngle += it.value.sweepAngle
 
-            setIndicatorLocation(it.key)
+            // Determine the coordinates for the marker indicator.
+            setMarkerCoordinates(it.key)
         }
     }
 
-    /**
-     * Use the angle between the start and sweep angles to help get position of the indicator circle
-     * formula for x pos: (length of line) * cos(middleAngle) + (distance from left edge of screen)
-     * formula for y pos: (length of line) * sin(middleAngle) + (distance from top edge of screen)
-     *
-     * @param key key of pie slice being altered
-     */
-    private fun setIndicatorLocation(key: String) {
-        data?.pieSlices?.get(key)?.let {
-            val middleAngle = it.sweepAngle / 2 + it.startAngle
-            val middleAngleRadians = Math.toRadians(middleAngle.toDouble())
-            val lineLen = layoutParams.height.toFloat() / 2 - layoutParams.height / 8
 
-            it.markerPosition.x = lineLen * cos(middleAngleRadians).toFloat() + width / 2
-            it.markerPosition.y = lineLen * sin(middleAngleRadians).toFloat() + layoutParams.height / 2
+    private fun setMarkerCoordinates(key: String) {
+        data?.pieSlices?.get(key)?.let {
+            // Find the middle angle of the current pie slice to calculate where
+            // the marker will be placed: (sweepAngle / 2) + startAngle
+            val middleAngle = Math.toRadians((it.sweepAngle / 2 + it.startAngle).toDouble())
+
+            // Calculate the distance the marker will be placed from the center
+            // of the pie chart (here, 3/8ths of the pie chart distance from the edge)
+            val fromPieCentre = 4 * layoutParams.height / 9
+
+            // Note: a point at angle theta on the circle whose centre is (x0,y0) and whose
+            // radius is r has the following coordinates: (x0 + r cos theta, y0 + r sin theta)
+            it.markerPosition.x = fromPieCentre * cos(middleAngle).toFloat() + width / 2
+            it.markerPosition.y = fromPieCentre * sin(middleAngle).toFloat() + height / 2
         }
     }
 
@@ -122,10 +135,10 @@ class PieChart @JvmOverloads constructor(
      * Sets the text sizes and thickness of graphics used in the view.
      */
     private fun setGraphicSizes() {
-        mainTextPaint.textSize = height / 15f
+        textPaint.textSize = height / 15f
         borderPaint.strokeWidth = height / 80f
         linePaint.strokeWidth = height / 120f
-        indicatorCircleRadius = height / 70f
+        markerRadius = height / 70f
     }
 
     /**
@@ -136,7 +149,7 @@ class PieChart @JvmOverloads constructor(
         setCircleBounds()
         setGraphicSizes()
         data?.pieSlices?.forEach {
-            setIndicatorLocation(it.key)
+            setMarkerCoordinates(it.key)
         }
     }
 
@@ -180,8 +193,8 @@ class PieChart @JvmOverloads constructor(
         canvas?.drawCircle(
             pieItem.markerPosition.x,
             pieItem.markerPosition.y,
-            indicatorCircleRadius,
-            indicatorCirclePaint
+            markerRadius,
+            markerPaint
         )
     }
 
@@ -221,17 +234,17 @@ class PieChart @JvmOverloads constructor(
         }
 
         if (alignment == IndicatorAlignment.LEFT) {
-            mainTextPaint.textAlign = Paint.Align.LEFT
+            textPaint.textAlign = Paint.Align.LEFT
         }
         else {
-            mainTextPaint.textAlign = Paint.Align.RIGHT
+            textPaint.textAlign = Paint.Align.RIGHT
         }
 
         canvas?.drawText(
             pieItem.label,
             pieItem.markerPosition.x + xOffset,
             pieItem.markerPosition.y - 10,
-            mainTextPaint
+            textPaint
         )
     }
 }

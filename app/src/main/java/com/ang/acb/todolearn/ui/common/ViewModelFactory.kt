@@ -6,6 +6,7 @@ import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.ui.details.AddEditTaskViewModel
 import com.ang.acb.todolearn.ui.details.TaskDetailsViewModel
 import com.ang.acb.todolearn.ui.list.TasksViewModel
+import com.ang.acb.todolearn.ui.statistics.PieViewModel
 import com.ang.acb.todolearn.ui.statistics.StatisticsViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -22,6 +23,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(StatisticsViewModel::class.java) -> {
                 StatisticsViewModel(tasksRepository) as T
+            }
+            modelClass.isAssignableFrom(PieViewModel::class.java) -> {
+                PieViewModel(tasksRepository) as T
             }
             else -> throw IllegalArgumentException("Unable to construct view model")
         }

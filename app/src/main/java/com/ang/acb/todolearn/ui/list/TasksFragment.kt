@@ -74,6 +74,9 @@ class TasksFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+        // FIXME: On config changes from PieFragment:
+        //  RuntimeException: Unable to destroy activity
+        //  lateinit property preferences has not been initialized
         preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
