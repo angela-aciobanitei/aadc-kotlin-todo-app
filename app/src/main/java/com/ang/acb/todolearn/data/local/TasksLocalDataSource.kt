@@ -3,6 +3,9 @@ package com.ang.acb.todolearn.data.local
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.map
+import androidx.paging.Config
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,6 +21,10 @@ class TasksLocalDataSource(
 
     suspend fun saveTask(task: Task) = withContext(ioDispatcher) {
         tasksDao.insert(task)
+    }
+
+    suspend fun saveTasks(tasks: List<Task>) = withContext(ioDispatcher) {
+        tasksDao.insertAll(tasks)
     }
 
     suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
@@ -79,4 +86,25 @@ class TasksLocalDataSource(
     fun getLiveTasks(): LiveData<Result<List<Task>>> = tasksDao.getLiveTasks().map {
         Result.Success(it)
     }
+
+    fun getAllPagedTasks(): LiveData<PagedList<Task>> =
+        tasksDao.getAllPagedTasks().toLiveData(Config(
+            pageSize = 50,
+            enablePlaceholders = true,
+            maxSize = 200
+        ))
+
+    fun getCompletedPagedTasks(): LiveData<PagedList<Task>> =
+        tasksDao.getCompletedPagedTasks().toLiveData(Config(
+            pageSize = 50,
+            enablePlaceholders = true,
+            maxSize = 200
+        ))
+
+    fun getActivePagedTasks(): LiveData<PagedList<Task>> =
+        tasksDao.getActivePagedTasks().toLiveData(Config(
+            pageSize = 50,
+            enablePlaceholders = true,
+            maxSize = 200
+        ))
 }

@@ -10,8 +10,8 @@ import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
+import androidx.paging.PagedList
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.receiver.AlarmReceiver
@@ -20,6 +20,7 @@ import com.ang.acb.todolearn.ui.common.DELETE_RESULT_OK
 import com.ang.acb.todolearn.util.Event
 import com.ang.acb.todolearn.util.cancelNotifications
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 
 private const val ALARM_REQUEST_CODE = 0
@@ -51,26 +52,11 @@ class TasksViewModel(
     private var alarmOn : Boolean = false
     private val testingTime = 10_000L // seconds
 
-    private val allTasks = tasksRepository.getLiveTasks().map { resultTask ->
-        if (resultTask is Result.Success) {
-            resultTask.data
-        } else {
-            _snackbarText.value = Event(R.string.error_loading_task_message)
-            emptyList()
-        }
-    }
+    private val allTasks : LiveData<PagedList<Task>> = tasksRepository.getAllPagedTasks()
+    private val activeTasks = tasksRepository.getActivePagedTasks()
+    private val completedTasks = tasksRepository.getCompletedPagedTasks()
 
-    private val activeTasks = allTasks.map { taskList ->
-        taskList.filter { !it.isCompleted }
-    }
-
-    private val completedTasks = allTasks.map { taskList ->
-        taskList.filter { it.isCompleted }
-    }
-
-    val tasks = _currentFilter.switchMap {
-        getFilteredTasks(it)
-    }
+    val tasks = _currentFilter.switchMap(::filterTasks)
 
     val empty: LiveData<Boolean> = tasks.map { it.isNullOrEmpty() }
 
@@ -104,13 +90,16 @@ class TasksViewModel(
             // already exist, then simply return null instead of creating it.
             PendingIntent.FLAG_NO_CREATE
         ) != null
+
+        // TODO: REMOVE THIS, DEBUG ONLY
+        insertTestData()
     }
 
     fun updateFilter(filter: TasksFilter) {
         _currentFilter.value = filter.value
     }
 
-    private fun getFilteredTasks(filter: Int) :  LiveData<List<Task>>{
+    private fun filterTasks(filter: Int) :  LiveData<PagedList<Task>>{
         return when (filter) {
             TasksFilter.ACTIVE_TASKS.value -> activeTasks
             TasksFilter.COMPLETED_TASKS.value -> completedTasks
@@ -213,6 +202,23 @@ class TasksViewModel(
         viewModelScope.launch {
             tasksRepository.deleteCompletedTasks()
             _snackbarText.value = Event(R.string.completed_tasks_cleared_message)
+        }
+    }
+
+
+    private fun insertTestData() {
+        viewModelScope.launch {
+            val tasks = (0 until 500).map {
+                Task(
+                    title = "title$it",
+                    description = "description$it",
+                    isCompleted = Random.nextBoolean(),
+                    id = "id$it"
+                )
+            }
+
+            tasksRepository.saveTasks(tasks)
+
         }
     }
 }

@@ -61,7 +61,6 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
 
     // ViewModel & LiveData
-
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version_lifecycle"
@@ -75,6 +74,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$version_room"
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$version_room"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime:$version_paging"
+    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
 
     // WorkManager
     implementation "android.arch.work:work-runtime-ktx:$version_work"

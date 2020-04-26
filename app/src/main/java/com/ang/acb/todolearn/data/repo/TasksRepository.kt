@@ -2,6 +2,7 @@ package com.ang.acb.todolearn.data.repo
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.local.TasksDatabase
@@ -45,6 +46,10 @@ class TasksRepository private constructor(
         launch { tasksLocalDataSource.saveTask(task) }
     }
 
+    suspend fun saveTasks(tasks: List<Task>) = coroutineScope {
+        launch { tasksLocalDataSource.saveTasks(tasks) }
+    }
+
     suspend fun updateTask(task: Task) = coroutineScope {
         launch { tasksLocalDataSource.updateTask(task) }
     }
@@ -80,4 +85,10 @@ class TasksRepository private constructor(
     fun getLiveTask(taskId: String): LiveData<Result<Task>> = tasksLocalDataSource.getLiveTask(taskId)
 
     fun getLiveTasks(): LiveData<Result<List<Task>>> = tasksLocalDataSource.getLiveTasks()
+
+    fun getAllPagedTasks(): LiveData<PagedList<Task>> = tasksLocalDataSource.getAllPagedTasks()
+
+    fun getCompletedPagedTasks(): LiveData<PagedList<Task>> = tasksLocalDataSource.getCompletedPagedTasks()
+
+    fun getActivePagedTasks(): LiveData<PagedList<Task>> = tasksLocalDataSource.getActivePagedTasks()
 }

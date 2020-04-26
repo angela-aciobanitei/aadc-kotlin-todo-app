@@ -14,5 +14,3 @@ data class Task(
     @PrimaryKey
     val id: String = UUID.randomUUID().toString()
 )
-
-// See: https://developer.android.com/reference/kotlin/java/util/UUID

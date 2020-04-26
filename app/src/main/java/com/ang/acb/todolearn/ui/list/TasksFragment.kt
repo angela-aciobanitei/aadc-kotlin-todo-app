@@ -88,7 +88,7 @@ class TasksFragment : Fragment() {
         binding.rvTasks.adapter = tasksAdapter
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer { tasksResult ->
-            tasksResult?.let { tasksAdapter.submitList(it) }
+            tasksResult?.let(tasksAdapter::submitList)
         })
     }
 

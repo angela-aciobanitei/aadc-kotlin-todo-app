@@ -1,6 +1,7 @@
 package com.ang.acb.todolearn.data.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 
 @Dao
@@ -8,6 +9,15 @@ interface TasksDao {
 
     @Query("SELECT * FROM tasks")
     fun getLiveTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM tasks")
+    fun getAllPagedTasks(): DataSource.Factory<Int, Task>
+
+    @Query("SELECT * FROM tasks WHERE completed = 1")
+    fun getCompletedPagedTasks(): DataSource.Factory<Int, Task>
+
+    @Query("SELECT * FROM tasks WHERE completed = 0")
+    fun getActivePagedTasks(): DataSource.Factory<Int, Task>
 
     @Query("SELECT * FROM tasks WHERE id = :taskId")
     fun getLiveTaskById(taskId: String): LiveData<Task>
@@ -22,7 +32,7 @@ interface TasksDao {
     suspend fun insert(task: Task)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg task: Task)
+    suspend fun insertAll(tasks: List<Task>)
 
     @Update
     suspend fun update(task: Task)
