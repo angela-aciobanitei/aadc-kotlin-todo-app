@@ -105,6 +105,7 @@ dependencies {
 
     // Dependencies for instrumented tests
     androidTestImplementation "junit:junit:$version_junit"
+    androidTestImplementation "org.hamcrest:hamcrest-all:$version_hamcrest"
     androidTestImplementation "androidx.arch.core:core-testing:$version_arch_testing"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
     androidTestImplementation "org.mockito:mockito-core:$version_mockito"
