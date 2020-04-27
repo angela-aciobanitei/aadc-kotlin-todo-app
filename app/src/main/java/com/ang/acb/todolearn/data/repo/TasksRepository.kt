@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.data.local.TasksDataSource
 import com.ang.acb.todolearn.data.local.TasksLocalDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
  * Repository module for handling data operations.
  */
 class TasksRepository (
-    private val tasksLocalDataSource: TasksLocalDataSource,
+    private val tasksLocalDataSource: TasksDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
