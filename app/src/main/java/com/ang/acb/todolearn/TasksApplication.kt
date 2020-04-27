@@ -1,14 +1,17 @@
 package com.ang.acb.todolearn
 
 import android.app.Application
+import com.ang.acb.todolearn.data.repo.TasksRepository
 import timber.log.Timber
 
-class TodoApplication : Application() {
+class TasksApplication : Application() {
+
+    val taskRepository: TasksRepository
+        get() = ServiceLocator.provideTasksRepository(this)
 
     override fun onCreate() {
         super.onCreate()
 
-        // Plant a tree
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 }

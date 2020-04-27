@@ -1,6 +1,5 @@
 package com.ang.acb.todolearn.ui.details
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -10,19 +9,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.TasksApplication
+import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.databinding.TaskDetailsFragmentBinding
 import com.ang.acb.todolearn.ui.common.DELETE_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.NonCancellable.cancel
 
+
+/**
+ * Main screen for displaying the [Task] details.
+ */
 class TaskDetailsFragment : Fragment() {
 
     private val viewModel: TaskDetailsViewModel by lazy {
         val factory = ViewModelFactory(
-            TasksRepository.getInstance(requireContext().applicationContext)
+            (requireContext().applicationContext as TasksApplication).taskRepository
         )
         ViewModelProvider(this, factory).get(TaskDetailsViewModel::class.java)
     }

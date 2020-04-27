@@ -50,13 +50,13 @@ class TasksViewModel(
 
     private var resultMessageShown: Boolean = false
     private var alarmOn : Boolean = false
-    private val testingTime = 10_000L // seconds
+    private val testingTime = 10_000L // 10 seconds
 
     private val allTasks : LiveData<PagedList<Task>> = tasksRepository.getAllPagedTasks()
-    private val activeTasks = tasksRepository.getActivePagedTasks()
-    private val completedTasks = tasksRepository.getCompletedPagedTasks()
+    private val activeTasks : LiveData<PagedList<Task>>  = tasksRepository.getActivePagedTasks()
+    private val completedTasks : LiveData<PagedList<Task>> = tasksRepository.getCompletedPagedTasks()
 
-    val tasks = _currentFilter.switchMap(::filterTasks)
+    val tasks : LiveData<PagedList<Task>> = _currentFilter.switchMap(::filterTasks)
 
     val empty: LiveData<Boolean> = tasks.map { it.isNullOrEmpty() }
 
@@ -205,7 +205,6 @@ class TasksViewModel(
         }
     }
 
-
     private fun insertTestData() {
         viewModelScope.launch {
             val tasks = (0 until 500).map {
@@ -218,17 +217,20 @@ class TasksViewModel(
             }
 
             tasksRepository.saveTasks(tasks)
-
         }
     }
 }
 
 
-@Suppress("UNCHECKED_CAST")
+/**
+ * A [ViewModelProvider.Factory] for creating a [TasksViewModel].
+ */
 class TasksViewModelFactory(
     private val app : Application,
     private val tasksRepository: TasksRepository
 ): ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
             return TasksViewModel(app, tasksRepository) as T

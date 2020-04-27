@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
+/**
+ * Immutable model class for a task item.
+ */
 @Entity(tableName = "tasks")
 data class Task(
     val title: String = "",

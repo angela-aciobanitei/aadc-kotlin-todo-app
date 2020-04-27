@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.TasksApplication
 import com.ang.acb.todolearn.databinding.StatisticsFragmentBinding
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 
+
+/**
+ * Main UI for the statistics screen.
+ */
 class StatisticsFragment : Fragment() {
 
     private val viewModel: StatisticsViewModel by lazy {
         val factory = ViewModelFactory(
-            TasksRepository.getInstance(requireActivity().applicationContext)
+            (requireContext().applicationContext as TasksApplication).taskRepository
         )
         ViewModelProvider(this, factory).get(StatisticsViewModel::class.java)
     }

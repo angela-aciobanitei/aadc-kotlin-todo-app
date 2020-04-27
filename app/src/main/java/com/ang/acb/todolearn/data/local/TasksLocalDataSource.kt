@@ -3,6 +3,7 @@ package com.ang.acb.todolearn.data.local
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.map
+import androidx.room.RoomDatabase
 import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
@@ -12,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 
 /**
- * Concrete implementation of a data source as a database.
+ * Concrete implementation of a data source as a [RoomDatabase].
  */
 class TasksLocalDataSource(
     private val tasksDao: TasksDao,
@@ -88,23 +89,28 @@ class TasksLocalDataSource(
     }
 
     fun getAllPagedTasks(): LiveData<PagedList<Task>> =
-        tasksDao.getAllPagedTasks().toLiveData(Config(
-            pageSize = 50,
+        tasksDao.getAllPagedTasks().toLiveData( Config(
+            pageSize = PAGE_SIZE,
             enablePlaceholders = true,
-            maxSize = 200
+            maxSize = MAX_SIZE
         ))
 
     fun getCompletedPagedTasks(): LiveData<PagedList<Task>> =
-        tasksDao.getCompletedPagedTasks().toLiveData(Config(
-            pageSize = 50,
+        tasksDao.getCompletedPagedTasks().toLiveData( Config(
+            pageSize = PAGE_SIZE,
             enablePlaceholders = true,
-            maxSize = 200
+            maxSize = MAX_SIZE
         ))
 
     fun getActivePagedTasks(): LiveData<PagedList<Task>> =
-        tasksDao.getActivePagedTasks().toLiveData(Config(
-            pageSize = 50,
+        tasksDao.getActivePagedTasks().toLiveData( Config(
+            pageSize = PAGE_SIZE,
             enablePlaceholders = true,
-            maxSize = 200
+            maxSize = MAX_SIZE
         ))
+
+    companion object {
+        private const val PAGE_SIZE = 50
+        private const val MAX_SIZE = 200
+    }
 }

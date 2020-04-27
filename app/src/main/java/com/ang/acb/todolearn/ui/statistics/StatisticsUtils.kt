@@ -1,6 +1,5 @@
 package com.ang.acb.todolearn.ui.statistics
 
-import androidx.databinding.BindingAdapter
 import com.ang.acb.todolearn.data.local.Task
 
 

@@ -23,13 +23,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_margin="@dimen/margin_normal"
                 android:text="@string/no_tasks_yet"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold"
                 app:visibleGone="@{tasksViewModel.empty}" />
 
             <TextView
@@ -37,11 +33,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/margin_small"
                 android:text="@{tasksViewModel.currentFilter}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold"
                 app:visibleGone="@{!tasksViewModel.empty}"
                 tools:text="All Tasks"/>
 

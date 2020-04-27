@@ -5,14 +5,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.ui.details.AddEditTaskViewModel
 import com.ang.acb.todolearn.ui.details.TaskDetailsViewModel
-import com.ang.acb.todolearn.ui.list.TasksViewModel
 import com.ang.acb.todolearn.ui.statistics.PieViewModel
 import com.ang.acb.todolearn.ui.statistics.StatisticsViewModel
 
-@Suppress("UNCHECKED_CAST")
+
+/**
+ * A [ViewModelProvider.Factory] for creating view models for this app.
+ */
 class ViewModelFactory(
     private val tasksRepository: TasksRepository
 ): ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(AddEditTaskViewModel::class.java) -> {

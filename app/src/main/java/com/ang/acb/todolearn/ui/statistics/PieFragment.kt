@@ -8,15 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.TasksApplication
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import kotlinx.android.synthetic.main.pie_fragment.*
 
+
+/**
+ * Displays tasks statistics (percentage of active vs completed tasks)
+ * using a custom view, [PieChart].
+ */
 class PieFragment : Fragment() {
 
     private val viewModel: PieViewModel by lazy {
         val factory = ViewModelFactory(
-            TasksRepository.getInstance(requireActivity().applicationContext)
+            (requireContext().applicationContext as TasksApplication).taskRepository
         )
         ViewModelProvider(this, factory).get(PieViewModel::class.java)
     }
@@ -49,5 +54,4 @@ class PieFragment : Fragment() {
             }
         })
     }
-
 }

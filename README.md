@@ -17,7 +17,7 @@ A toy app created when preparing for the AADC Exam
 *   Display items in a [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 *   Bind local data to a RecyclerView list using the [Paging Library](https://codelabs.developers.google.com/codelabs/android-paging) 
 *   Handle user preferences with a [Settings screen](https://developer.android.com/guide/topics/ui/settings) and [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences)
-
+*   Use the [Service Locator](https://developer.android.com/training/dependency-injection#di-alternatives) design pattern for providing dependencies.
 
 ## [Exam Study Guide Kotlin](https://developers.google.com/certification/associate-android-developer/study-guide)
 ### Android Core

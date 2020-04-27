@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-
 import com.ang.acb.todolearn.R
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.TasksApplication
+import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
 import com.ang.acb.todolearn.util.EventObserver
 import com.ang.acb.todolearn.util.createChannel
@@ -22,12 +21,15 @@ import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 
+/**
+ * Displays a list of [Task] items. Users can choose to view all, active or completed tasks.
+ */
 class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
         val factory = TasksViewModelFactory(
             requireActivity().application,
-            TasksRepository.getInstance(requireActivity().applicationContext)
+            (requireContext().applicationContext as TasksApplication).taskRepository
         )
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
     }

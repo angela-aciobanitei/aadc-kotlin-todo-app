@@ -1,43 +1,23 @@
 package com.ang.acb.todolearn.data.repo
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.local.TasksDatabase
 import com.ang.acb.todolearn.data.local.TasksLocalDataSource
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-class TasksRepository private constructor(
+
+/**
+ * Repository module for handling data operations.
+ */
+class TasksRepository (
     private val tasksLocalDataSource: TasksLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-
-    companion object {
-        @Volatile
-        private var INSTANCE: TasksRepository? = null
-
-        fun getInstance(context: Context): TasksRepository {
-            synchronized(this) {
-                var repository =
-                    INSTANCE
-                if (repository == null) {
-                    repository = TasksRepository(
-                        TasksLocalDataSource(
-                            TasksDatabase.getInstance(
-                                context
-                            ).tasksDao, Dispatchers.IO
-                        )
-                    )
-
-                    INSTANCE = repository
-                }
-
-                return repository
-            }
-        }
-    }
 
     // Note: The `coroutineScope` builder creates a coroutine scope and
     // does not complete until all launched children complete.

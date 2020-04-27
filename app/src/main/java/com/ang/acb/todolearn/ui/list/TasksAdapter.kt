@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ang.acb.todolearn.data.local.Task
@@ -45,7 +44,7 @@ class TaskViewHolder private constructor(val binding: ItemTaskBinding)
     : RecyclerView.ViewHolder(binding.root) {
 
     /**
-     * Items might be null if they are not paged in yet. PagedListAdapter
+     * Items might be null if they are not paged in yet. [PagedListAdapter]
      * will re-bind the ViewHolder when Item is loaded.
      */
     fun bind(viewModel: TasksViewModel, item: Task?) {
@@ -65,12 +64,17 @@ class TaskViewHolder private constructor(val binding: ItemTaskBinding)
 }
 
 
+/**
+ * Callback for calculating the diff between two non-null items in a list. Used by
+ * [PagedListAdapter] to calculate the minimum number of changes between and old list
+ * and a new list that's been passed to `submitList`.
+ *
+ * https://codelabs.developers.google.com/codelabs/kotlin-android-training-diffutil-databinding
+ * https://developer.android.com/topic/libraries/architecture/paging/ui#implement-diffing-callback
+ */
 class TaskDiff: DiffUtil.ItemCallback<Task>() {
-    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-        return oldItem.id == newItem.id
-    }
 
-    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-        return oldItem == newItem
-    }
+    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean = oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean = oldItem == newItem
 }

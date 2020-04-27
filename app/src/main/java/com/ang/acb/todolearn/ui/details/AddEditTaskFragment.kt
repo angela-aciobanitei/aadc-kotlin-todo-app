@@ -8,14 +8,18 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.ang.acb.todolearn.data.repo.TasksRepository
-
+import com.ang.acb.todolearn.TasksApplication
+import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.databinding.AddEditTaskFragmentBinding
 import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
 
+
+/**
+ * Main screen for adding or editing a [Task] item.
+ */
 class AddEditTaskFragment : Fragment() {
 
     private lateinit var binding: AddEditTaskFragmentBinding
@@ -24,7 +28,7 @@ class AddEditTaskFragment : Fragment() {
 
     private val viewModel: AddEditTaskViewModel by lazy {
         val factory = ViewModelFactory(
-            TasksRepository.getInstance(requireActivity().applicationContext)
+            (requireContext().applicationContext as TasksApplication).taskRepository
         )
         ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
     }

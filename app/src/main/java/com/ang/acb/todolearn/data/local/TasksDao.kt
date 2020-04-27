@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 
+
+/**
+ * Interface for database access on [Task] related operations.
+ */
 @Dao
 interface TasksDao {
 

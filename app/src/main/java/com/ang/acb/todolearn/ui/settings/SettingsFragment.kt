@@ -5,6 +5,8 @@ import androidx.preference.PreferenceFragmentCompat
 import com.ang.acb.todolearn.R
 
 /**
+ * The Settings screen. User can choose to receive notifications from this app or not.
+ *
  * See: https://developer.android.com/guide/topics/ui/settings
  * See: https://codelabs.developers.google.com/codelabs/android-training-adding-settings-to-app
  */
