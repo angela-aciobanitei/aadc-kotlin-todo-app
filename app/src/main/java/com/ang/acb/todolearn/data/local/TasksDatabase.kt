@@ -11,5 +11,5 @@ import androidx.room.RoomDatabase
 @Database(entities = [Task::class], version = 5, exportSchema = false)
 abstract class TasksDatabase: RoomDatabase() {
 
-    abstract val tasksDao: TasksDao
+    abstract fun tasksDao(): TasksDao
 }

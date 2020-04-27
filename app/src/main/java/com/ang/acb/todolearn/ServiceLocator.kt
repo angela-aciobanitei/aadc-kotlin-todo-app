@@ -42,7 +42,7 @@ object ServiceLocator {
 
     private fun createTasksLocalDataSource(context: Context) : TasksLocalDataSource{
         val tasksDatabase = database ?: createDb(context)
-        return TasksLocalDataSource(tasksDatabase.tasksDao)
+        return TasksLocalDataSource(tasksDatabase.tasksDao())
     }
 
     private fun createDb(context: Context): TasksDatabase {
@@ -60,7 +60,7 @@ object ServiceLocator {
     fun resetRepository() {
         synchronized(lock) {
             runBlocking {
-                database?.tasksDao?.deleteAllTasks()
+                database?.tasksDao()?.deleteAllTasks()
             }
             // Clear all data to avoid test pollution.
             database?.apply {
