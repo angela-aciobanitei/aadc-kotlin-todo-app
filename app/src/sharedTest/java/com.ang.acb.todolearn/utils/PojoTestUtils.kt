@@ -1,9 +1,9 @@
-package com.ang.acb.todolearn.util
+package com.ang.acb.todolearn
 
 import com.ang.acb.todolearn.data.local.Task
 import kotlin.random.Random
 
-object TestUtil {
+object PojoTestUtils {
 
     fun createTasks(count : Int) :  List<Task> = (0 until count).map {
         Task(

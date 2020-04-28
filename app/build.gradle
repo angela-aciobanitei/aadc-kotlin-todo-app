@@ -42,6 +42,17 @@ android {
         includeAndroidResources = true
     }
 
+    // Sharing code between unit tests and instrumentation tests
+    // https://blog.danlew.net/2015/11/02/sharing-code-between-unit-tests-and-instrumentation-tests-on-android/
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/sharedTest/java"
+        }
+        test {
+            java.srcDirs += "src/sharedTest/java"
+        }
+    }
+
 }
 
 dependencies {
@@ -110,7 +121,6 @@ dependencies {
 
     // Dependencies for instrumented tests
     androidTestImplementation "junit:junit:$version_junit"
-    androidTestImplementation "org.hamcrest:hamcrest-all:$version_hamcrest"
     androidTestImplementation "androidx.arch.core:core-testing:$version_arch_testing"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
     androidTestImplementation "org.mockito:mockito-core:$version_mockito"

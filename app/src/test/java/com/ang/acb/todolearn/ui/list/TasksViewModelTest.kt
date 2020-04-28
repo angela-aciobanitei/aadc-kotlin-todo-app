@@ -6,10 +6,10 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.repo.FakeTasksRepository
+import com.ang.acb.todolearn.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.util.MainCoroutineRule
-import com.ang.acb.todolearn.util.getOrAwaitValue
+import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.*

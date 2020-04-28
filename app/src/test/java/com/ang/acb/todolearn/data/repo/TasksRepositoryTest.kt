@@ -1,9 +1,10 @@
 package com.ang.acb.todolearn.data.repo
 
+import com.ang.acb.todolearn.FakeDataSource
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.util.MainCoroutineRule
-import com.ang.acb.todolearn.util.TestUtil
+import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.PojoTestUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -38,7 +39,8 @@ class TasksRepositoryTest {
 
     @Before
     fun initRepo() {
-        tasksDataSource = FakeDataSource(localTasks.toMutableList())
+        tasksDataSource =
+            FakeDataSource(localTasks.toMutableList())
         tasksRepository = TasksRepository(tasksDataSource, Dispatchers.Main)
     }
 
@@ -60,7 +62,7 @@ class TasksRepositoryTest {
     @Test
     fun saveTasks_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - save 3 tasks
-        val tasks = TestUtil.createTasks(3)
+        val tasks = PojoTestUtils.createTasks(3)
         tasksRepository.saveTasks(tasks)
 
         // WHEN - tasks are requested from the tasks repository

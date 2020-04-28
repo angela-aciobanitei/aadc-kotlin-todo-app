@@ -3,10 +3,10 @@ package com.ang.acb.todolearn.ui.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.repo.FakeTasksRepository
+import com.ang.acb.todolearn.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.util.MainCoroutineRule
-import com.ang.acb.todolearn.util.getOrAwaitValue
+import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat

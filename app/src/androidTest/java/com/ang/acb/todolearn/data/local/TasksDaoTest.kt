@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.ang.acb.todolearn.data.util.TestUtils
+import com.ang.acb.todolearn.PojoTestUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
@@ -96,7 +96,7 @@ class TasksDaoTest {
     @Test
     fun insertTasksAndLoadAll() = runBlockingTest {
         // GIVEN - insert 50 tasks
-        val tasks = TestUtils.createTasks(50)
+        val tasks = PojoTestUtils.createTasks(50)
 
         database.tasksDao().insertAll(tasks)
 
@@ -111,7 +111,7 @@ class TasksDaoTest {
     @Test
     fun insertTasksAndDeleteOne() = runBlockingTest {
         // GIVEN - insert 2 tasks
-        val tasks = TestUtils.createTasks(2)
+        val tasks = PojoTestUtils.createTasks(2)
         database.tasksDao().insertAll(tasks)
 
         // WHEN - one task is deleted
@@ -126,7 +126,7 @@ class TasksDaoTest {
     @Test
     fun insertTasksAndDeleteAll() = runBlockingTest {
         // GIVEN - insert 10 tasks
-        val tasks = TestUtils.createTasks(10)
+        val tasks = PojoTestUtils.createTasks(10)
         database.tasksDao().insertAll(tasks)
 
         // WHEN - all tasks are deleted
@@ -141,8 +141,8 @@ class TasksDaoTest {
     @Test
     fun insertTasksAndDeleteCompleted() = runBlockingTest {
         // GIVEN - insert 15 active tasks and 10 completed tasks
-        val active = TestUtils.createActiveTasks(15)
-        val completed = TestUtils.createCompletedTasks(10)
+        val active = PojoTestUtils.createActiveTasks(15)
+        val completed = PojoTestUtils.createCompletedTasks(10)
         database.tasksDao().insertAll(active)
         database.tasksDao().insertAll(completed)
 

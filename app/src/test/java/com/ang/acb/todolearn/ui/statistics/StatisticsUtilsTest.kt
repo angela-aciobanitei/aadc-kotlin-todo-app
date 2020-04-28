@@ -1,9 +1,8 @@
 package com.ang.acb.todolearn.ui.statistics
 
 
+import com.ang.acb.todolearn.PojoTestUtils
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.ui.statistics.getTasksStats
-import com.ang.acb.todolearn.util.TestUtil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Test
@@ -16,7 +15,7 @@ class StatisticsUtilsTest {
     @Test
     fun getTasksStats_noCompletedTasks_returnsHundredAndZero() {
         // Given a task list with 10 active tasks
-        val tasks = TestUtil.createActiveTasks(10)
+        val tasks = PojoTestUtils.createActiveTasks(10)
 
         // When the task stats is computed with no completed tasks
         val result = getTasksStats(tasks)
@@ -29,7 +28,7 @@ class StatisticsUtilsTest {
     @Test
     fun getTasksStats_noActive_returnsZeroAndHundred() {
         // Given a task list with 10 completed tasks
-        val tasks = TestUtil.createCompletedTasks(10)
+        val tasks = PojoTestUtils.createCompletedTasks(10)
 
         // When the task stats is computed with no active tasks
         val result = getTasksStats(tasks)
