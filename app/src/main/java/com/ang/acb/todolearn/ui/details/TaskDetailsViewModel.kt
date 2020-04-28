@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 import com.ang.acb.todolearn.util.Event
 import kotlinx.coroutines.launch
 
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 /**
  * The [ViewModel] for [TaskDetailsFragment].
  */
-class TaskDetailsViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class TaskDetailsViewModel(private val tasksRepository: ITasksRepository) : ViewModel() {
 
     private val _taskId = MutableLiveData<String>()
 
@@ -41,7 +41,7 @@ class TaskDetailsViewModel(private val tasksRepository: TasksRepository) : ViewM
      * Called by Data Binding in the task_details_fragment.xml layout
      * when the Edit Task FloatingActionButton is clicked.
      */
-    fun navigateToEditTask(taskId: String) {
+    fun editTaskEvent(taskId: String) {
         _editTaskEvent.value = Event(taskId)
     }
 

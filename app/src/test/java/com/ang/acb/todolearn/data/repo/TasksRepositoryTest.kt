@@ -32,7 +32,7 @@ class TasksRepositoryTest {
     private val completedTasks : List<Task> = listOf(task4, task5, task6).sortedBy { it.id }
     private val localTasks : List<Task> = activeTasks + completedTasks
 
-    // Sets the main coroutines dispatcher to a TestCoroutineScope.
+    // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 

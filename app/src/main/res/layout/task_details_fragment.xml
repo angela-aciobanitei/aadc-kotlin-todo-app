@@ -82,7 +82,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_edit"
             android:contentDescription="@string/edit_task"
-            android:onClick="@{() -> taskDetailsViewModel.navigateToEditTask(task.id)}"/>
+            android:onClick="@{() -> taskDetailsViewModel.editTaskEvent(task.id)}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

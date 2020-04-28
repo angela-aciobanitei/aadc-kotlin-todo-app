@@ -1,12 +1,12 @@
 package com.ang.acb.todolearn.ui.statistics
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.ang.acb.todolearn.data.local.Result
-import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.repo.TasksRepository
-import kotlinx.coroutines.launch
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 
-class StatisticsViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class StatisticsViewModel(private val tasksRepository: ITasksRepository) : ViewModel() {
 
     private val tasks  = tasksRepository.getLiveTasks()
 

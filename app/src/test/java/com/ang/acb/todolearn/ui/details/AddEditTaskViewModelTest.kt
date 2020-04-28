@@ -28,7 +28,7 @@ class AddEditTaskViewModelTest {
     @get: Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    // Sets the main coroutines dispatcher to a TestCoroutineScope.
+    // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
