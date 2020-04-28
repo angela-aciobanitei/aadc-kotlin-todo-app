@@ -1,6 +1,5 @@
 package com.ang.acb.todolearn.data.repo
 
-import androidx.test.filters.SmallTest
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.util.TestUtil
@@ -13,7 +12,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 
-@SmallTest
+
 @ExperimentalCoroutinesApi
 class TasksRepositoryTest {
 

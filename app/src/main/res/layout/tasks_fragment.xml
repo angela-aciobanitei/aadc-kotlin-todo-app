@@ -59,7 +59,7 @@
             android:layout_gravity="bottom|end"
             android:src="@drawable/ic_add"
             android:contentDescription="@string/add_new_task"
-            android:onClick="@{() -> tasksViewModel.navigateToAddTask()}"/>
+            android:onClick="@{() -> tasksViewModel.addNewTaskEvent()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

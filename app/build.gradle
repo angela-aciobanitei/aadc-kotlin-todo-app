@@ -37,6 +37,11 @@ android {
         jvmTarget = "1.8"
     }
 
+    // Fix the "No such manifest file: ./AndroidManifest.xml" Robolectric warning
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
 }
 
 dependencies {

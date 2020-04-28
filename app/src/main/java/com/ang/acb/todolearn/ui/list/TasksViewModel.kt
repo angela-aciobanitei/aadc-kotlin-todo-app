@@ -13,6 +13,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.receiver.AlarmReceiver
 import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
@@ -30,7 +31,7 @@ private const val ALARM_REQUEST_CODE = 0
  */
 class TasksViewModel(
     private val app: Application,
-    private val tasksRepository: TasksRepository
+    private val tasksRepository: ITasksRepository
 ) : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
@@ -90,9 +91,6 @@ class TasksViewModel(
             // already exist, then simply return null instead of creating it.
             PendingIntent.FLAG_NO_CREATE
         ) != null
-
-        // TODO: REMOVE THIS, DEBUG ONLY
-        insertTestData()
     }
 
     fun updateFilter(filter: TasksFilter) {
@@ -150,7 +148,7 @@ class TasksViewModel(
      * Called by Data Binding in the tasks_fragment.xml layout
      * when the Add New Task FloatingActionButton is clicked.
      */
-    fun navigateToAddTask() {
+    fun addNewTaskEvent() {
         _newTaskEvent.value = Event(Unit)
     }
 
@@ -158,11 +156,11 @@ class TasksViewModel(
      * Called by Data Binding in the item_task.xml layout when
      * a Task item is clicked.
      */
-    fun navigateToTaskDetails(id: String) {
+    fun openTaskDetailsEvent(id: String) {
         _openTaskDetails.value = Event(id)
     }
 
-    fun navigateToSettingsScreen() {
+    fun openSettingsEvent() {
         _openSettingsEvent.value = Event(Unit)
     }
 
