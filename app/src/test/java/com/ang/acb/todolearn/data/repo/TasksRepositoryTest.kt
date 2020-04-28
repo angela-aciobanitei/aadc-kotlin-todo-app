@@ -2,6 +2,7 @@ package com.ang.acb.todolearn.data.repo
 
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.util.MainCoroutineRule
 import com.ang.acb.todolearn.util.TestUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,6 +11,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 
@@ -30,15 +32,19 @@ class TasksRepositoryTest {
     private val completedTasks : List<Task> = listOf(task4, task5, task6).sortedBy { it.id }
     private val localTasks : List<Task> = activeTasks + completedTasks
 
+    // Sets the main coroutines dispatcher to a TestCoroutineScope.
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
     @Before
     fun initRepo() {
         tasksDataSource = FakeDataSource(localTasks.toMutableList())
-        tasksRepository = TasksRepository(tasksDataSource, Dispatchers.Unconfined)
+        tasksRepository = TasksRepository(tasksDataSource, Dispatchers.Main)
     }
 
 
     @Test
-    fun saveTask_getTasks() = runBlockingTest {
+    fun saveTask_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - save a task
         val task = Task("Title7", "Description7")
         tasksRepository.saveTask(task)
@@ -52,7 +58,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun saveTasks_getTasks() = runBlockingTest {
+    fun saveTasks_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - save 3 tasks
         val tasks = TestUtil.createTasks(3)
         tasksRepository.saveTasks(tasks)
@@ -66,7 +72,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun deleteTask_getTasks() = runBlockingTest {
+    fun deleteTask_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - delete a task
         tasksRepository.deleteTask(task3)
 
@@ -79,7 +85,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun deleteAllTasks_getTasks() = runBlockingTest {
+    fun deleteAllTasks_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - delete all tasks
         tasksRepository.deleteAllTasks()
 
@@ -92,7 +98,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun deleteCompletedTasks_getTasks() = runBlockingTest {
+    fun deleteCompletedTasks_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - delete completed tasks
         tasksRepository.deleteCompletedTasks()
 
@@ -105,7 +111,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun updateTask_getTask() = runBlockingTest{
+    fun updateTask_getTask() = mainCoroutineRule.runBlockingTest{
         // GIVEN - update a task
         val updated = Task("new title", "new description", true, task1.id)
         tasksRepository.updateTask(updated)
@@ -122,7 +128,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun activateTask_getTask() = runBlockingTest{
+    fun activateTask_getTask() = mainCoroutineRule.runBlockingTest{
         // GIVEN - activate a task
         tasksRepository.activateTask(task6)
 
@@ -135,7 +141,7 @@ class TasksRepositoryTest {
     }
 
     @Test
-    fun completeTask_getTask() = runBlockingTest{
+    fun completeTask_getTask() = mainCoroutineRule.runBlockingTest{
         // GIVEN - activate a task
         tasksRepository.completeTask(task2)
 

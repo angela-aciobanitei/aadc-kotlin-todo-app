@@ -8,6 +8,7 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
+import com.ang.acb.todolearn.util.MainCoroutineRule
 import com.ang.acb.todolearn.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -37,7 +38,12 @@ class TasksViewModelTest {
 
     // Swaps the background executor used by the Architecture Components with a
     // different one which executes each task synchronously.
-    @get: Rule var instantTaskExecutorRule = InstantTaskExecutorRule()
+    @get: Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    // Sets the main coroutines dispatcher to a TestCoroutineScope.
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     @Before
     fun setUp() {
@@ -95,7 +101,7 @@ class TasksViewModelTest {
     }
 
     @Test
-    fun clearAllTasks_dataAndSnackbarUpdated() = runBlockingTest {
+    fun clearAllTasks_dataAndSnackbarUpdated() = mainCoroutineRule.runBlockingTest {
         // When all tasks are cleared
         tasksViewModel.clearAllTasks()
 
@@ -108,7 +114,7 @@ class TasksViewModelTest {
     }
 
     @Test
-    fun clearCompletedTasks_dataAndSnackbarUpdated() = runBlockingTest {
+    fun clearCompletedTasks_dataAndSnackbarUpdated() = mainCoroutineRule.runBlockingTest {
         // When completed tasks are cleared
         tasksViewModel.clearCompletedTasks()
 
@@ -120,6 +126,4 @@ class TasksViewModelTest {
         val snackbarText: Event<Int> =  tasksViewModel.snackbarText.getOrAwaitValue()
         assertThat(snackbarText.getContentIfNotHandled(), `is`(R.string.completed_tasks_cleared_message))
     }
-
-
 }
