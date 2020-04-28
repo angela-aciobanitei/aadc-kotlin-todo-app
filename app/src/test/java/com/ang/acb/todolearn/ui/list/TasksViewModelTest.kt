@@ -57,15 +57,16 @@ class TasksViewModelTest {
 
         // Then the new task event is triggered
         val value = tasksViewModel.newTaskEvent.getOrAwaitValue()
-
         assertThat(value.getContentIfNotHandled(), not(nullValue()))
     }
 
     @Test
     fun completeTask_dataAndSnackbarUpdated() {
-        // When an active task is marked as completed
+        // Given a repository containing an active task
         val task = Task("Title", "Description")
         fakeTasksRepository.addTasks(task)
+
+        // When an active task is marked as completed
         tasksViewModel.completeTask(task, true)
 
         // Then the actual task is updated
@@ -78,9 +79,11 @@ class TasksViewModelTest {
 
     @Test
     fun activateTask_dataAndSnackbarUpdated() {
-        // When a completed task is marked as active
+        // Given a repository containing a completed task
         val task = Task("Title", "Description")
         fakeTasksRepository.addTasks(task)
+
+        // When a completed task is marked as active
         tasksViewModel.completeTask(task, false)
 
         // Then the actual task is updated

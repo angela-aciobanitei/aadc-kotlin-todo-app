@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.data.repo.TasksRepository
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 import com.ang.acb.todolearn.util.Event
 import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] for the  [AddEditTaskFragment]
  */
-class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
+class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : ViewModel() {
 
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -55,7 +55,6 @@ class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewM
 
     /**
      * Called by Data Binding when the Save Task FloatingActionButton is clicked.
-     *
      */
     fun saveTask(){
         val currentTitle = title.value
@@ -79,13 +78,13 @@ class AddEditTaskViewModel(private val tasksRepository: TasksRepository) : ViewM
         }
     }
 
-    private fun createTask(task: Task) =  viewModelScope.launch {
+    fun createTask(task: Task) =  viewModelScope.launch {
         tasksRepository.saveTask(task)
         _snackbarText.value = Event(R.string.saved_task_message)
         _taskUpdatedEvent.value = Event(Unit)
     }
 
-    private fun updateTask(task: Task) {
+    fun updateTask(task: Task) {
         if (isNewTask) throw RuntimeException("Task is new, cannot call updateTask().")
 
         viewModelScope.launch {
