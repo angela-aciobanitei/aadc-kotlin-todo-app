@@ -3,7 +3,7 @@ package com.ang.acb.todolearn.ui.statistics
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.FakeTasksRepository
-import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
@@ -30,7 +30,7 @@ class StatisticsViewModelTest {
     // Sets the main coroutines dispatcher to a TestCoroutineDispatcher
     // with a TestCoroutineScope.
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainCoroutineRule = TestCoroutineRule()
 
     @Before
     fun setUp() {

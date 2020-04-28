@@ -3,7 +3,7 @@ package com.ang.acb.todolearn.data.repo
 import com.ang.acb.todolearn.FakeDataSource
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.PojoTestUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,7 +35,7 @@ class TasksRepositoryTest {
 
     // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainCoroutineRule = TestCoroutineRule()
 
     @Before
     fun initRepo() {

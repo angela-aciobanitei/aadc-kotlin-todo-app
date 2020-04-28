@@ -8,7 +8,7 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -42,7 +42,7 @@ class TasksViewModelTest {
 
     // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainCoroutineRule = TestCoroutineRule()
 
     @Before
     fun setUp() {

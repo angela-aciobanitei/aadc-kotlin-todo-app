@@ -5,7 +5,7 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.MainCoroutineRule
+import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.*
@@ -30,7 +30,7 @@ class TaskDetailsViewModelTest {
 
     // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainCoroutineRule = TestCoroutineRule()
 
     private val task1 = Task("Title1", "Description1")
     private val task2 = Task("Title2", "Description2", true)

@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.PojoTestUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -25,13 +26,19 @@ class TasksDaoTest {
     // The subject under test
     private lateinit var database : TasksDatabase
 
-    // Swaps the background executor used by the Architecture Components with a
-    // different one which executes each task synchronously.
-    @get: Rule var instantTaskExecutorRule = InstantTaskExecutorRule()
+    // Swaps the background executor used by the Architecture Components
+    // with a different one which executes each task synchronously.
+    @get: Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    // Sets the main coroutines dispatcher to a TestCoroutineDispatcher
+    // with a TestCoroutineScope.
+    @get:Rule
+    var testCoroutineRule = TestCoroutineRule()
 
     @Before
     fun initDb() {
-        // Create an in-memory version of the database to make tests more hermetic
+        // Create an in-memory version of the database
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             TasksDatabase::class.java
@@ -42,7 +49,7 @@ class TasksDaoTest {
     fun closeDb() = database.close()
 
     @Test
-    fun insertTaskAndGetById() = runBlockingTest {
+    fun insertTaskAndGetById() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert a task
         val task = Task("title", "description")
         database.tasksDao().insert(task)
@@ -59,7 +66,7 @@ class TasksDaoTest {
     }
 
     @Test
-    fun updateTaskAndGetById() = runBlockingTest {
+    fun updateTaskAndGetById() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert a task
         val originalTask = Task("title", "description")
         database.tasksDao().insert(originalTask)
@@ -77,7 +84,7 @@ class TasksDaoTest {
     }
 
     @Test
-    fun insertTaskAndComplete() = runBlockingTest {
+    fun insertTaskAndComplete() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert a task
         val task = Task("title", "description")
         database.tasksDao().insert(task)
@@ -94,7 +101,7 @@ class TasksDaoTest {
     }
 
     @Test
-    fun insertTasksAndLoadAll() = runBlockingTest {
+    fun insertTasksAndLoadAll() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert 50 tasks
         val tasks = PojoTestUtils.createTasks(50)
 
@@ -109,7 +116,7 @@ class TasksDaoTest {
     }
 
     @Test
-    fun insertTasksAndDeleteOne() = runBlockingTest {
+    fun insertTasksAndDeleteOne() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert 2 tasks
         val tasks = PojoTestUtils.createTasks(2)
         database.tasksDao().insertAll(tasks)
@@ -121,10 +128,11 @@ class TasksDaoTest {
         val loaded = database.tasksDao().getTasks()
         assertThat(loaded as List<Task>, notNullValue())
         assertThat(loaded.size, `is` (1))
+        assertThat(loaded.contains(tasks[1]), `is` (true))
     }
 
     @Test
-    fun insertTasksAndDeleteAll() = runBlockingTest {
+    fun insertTasksAndDeleteAll() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert 10 tasks
         val tasks = PojoTestUtils.createTasks(10)
         database.tasksDao().insertAll(tasks)
@@ -139,7 +147,7 @@ class TasksDaoTest {
     }
 
     @Test
-    fun insertTasksAndDeleteCompleted() = runBlockingTest {
+    fun insertTasksAndDeleteCompleted() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert 15 active tasks and 10 completed tasks
         val active = PojoTestUtils.createActiveTasks(15)
         val completed = PojoTestUtils.createCompletedTasks(10)
@@ -153,5 +161,6 @@ class TasksDaoTest {
         val loaded = database.tasksDao().getTasks()
         assertThat(loaded as List<Task>, notNullValue())
         assertThat(loaded.size, `is` (15))
+        assertThat(loaded.containsAll(active), `is` (true))
     }
 }

@@ -18,7 +18,7 @@ import org.junit.runner.Description
  *
  * ```
  * @get:Rule
- * var mainCoroutineRule = MainCoroutineRule()
+ * var mainCoroutineRule = TestCoroutineRule()
  * ```
  *
  * Use it directly as a [TestCoroutineScope]:
@@ -30,7 +30,7 @@ import org.junit.runner.Description
  * ```
  */
 @ExperimentalCoroutinesApi
-class MainCoroutineRule(val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()):
+class TestCoroutineRule(val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()):
     TestWatcher(), TestCoroutineScope by TestCoroutineScope(dispatcher) {
 
     override fun starting(description: Description?) {
