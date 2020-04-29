@@ -73,11 +73,11 @@ class AddEditTaskViewModelTest {
 
         // Then the task is actually updated
         val loaded = fakeTasksRepository.tasksMap[task1.id]
-        assertThat(loaded, `is`(notNullValue()))
-        assertThat(loaded?.id, `is`(updated.id))
-        assertThat(loaded?.title, `is`(updated.title))
-        assertThat(loaded?.description, `is`(updated.description))
-        assertThat(loaded?.isCompleted, `is`(updated.isCompleted))
+        assertThat(loaded as Task, `is`(not(nullValue())))
+        assertThat(loaded.id, `is`(updated.id))
+        assertThat(loaded.title, `is`(updated.title))
+        assertThat(loaded.description, `is`(updated.description))
+        assertThat(loaded.isCompleted, `is`(updated.isCompleted))
 
         // Then the snackbar text is updated
         val snackbarText: Event<Int> =  viewModel.snackbarText.getOrAwaitValue()

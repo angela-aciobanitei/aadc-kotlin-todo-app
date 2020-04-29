@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import com.ang.acb.todolearn.data.local.TasksDatabase
 import com.ang.acb.todolearn.data.local.TasksLocalDataSource
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import kotlinx.coroutines.runBlocking
 
@@ -20,21 +21,21 @@ import kotlinx.coroutines.runBlocking
 object ServiceLocator {
 
     @Volatile
-    var tasksRepository : TasksRepository? = null
+    var tasksRepository : ITasksRepository? = null
         // Setter is public only for testing
         @VisibleForTesting set
 
     private var database : TasksDatabase? = null
     private val lock = Any()
 
-    fun provideTasksRepository(context: Context) : TasksRepository {
+    fun provideTasksRepository(context: Context) : ITasksRepository {
         // Thread safety
         synchronized(this) {
             return tasksRepository ?: createTasksRepository(context)
         }
     }
 
-    private fun createTasksRepository(context: Context) : TasksRepository {
+    private fun createTasksRepository(context: Context) : ITasksRepository {
         val newRepository = TasksRepository(createTasksLocalDataSource(context))
         tasksRepository = newRepository
         return newRepository
@@ -59,14 +60,15 @@ object ServiceLocator {
     @VisibleForTesting
     fun resetRepository() {
         synchronized(lock) {
-            runBlocking {
-                database?.tasksDao()?.deleteAllTasks()
-            }
             // Clear all data to avoid test pollution.
-            database?.apply {
-                clearAllTables()
-                close()
+            runBlocking {
+                database?.apply {
+                    tasksDao().deleteAllTasks()
+                    clearAllTables()
+                    close()
+                }
             }
+
             database = null
             tasksRepository = null
         }

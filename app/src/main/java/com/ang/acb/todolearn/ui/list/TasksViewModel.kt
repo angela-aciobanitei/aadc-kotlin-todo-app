@@ -14,7 +14,6 @@ import androidx.paging.PagedList
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.ITasksRepository
-import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.receiver.AlarmReceiver
 import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.DELETE_RESULT_OK
@@ -225,7 +224,7 @@ class TasksViewModel(
  */
 class TasksViewModelFactory(
     private val app : Application,
-    private val tasksRepository: TasksRepository
+    private val tasksRepository: ITasksRepository
 ): ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

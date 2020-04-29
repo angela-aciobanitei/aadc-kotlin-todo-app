@@ -30,14 +30,12 @@ class FakeTasksRepository : ITasksRepository {
 
     override suspend fun saveTask(task: Task) {
         tasksMap[task.id] = task
-        refreshLiveTasks()
     }
 
     override suspend fun saveTasks(tasks: List<Task>) {
         // https://kotlinlang.org/docs/reference/map-operations.html
         val pairs = tasks.map { task -> task.id to task }
         tasksMap.putAll(pairs)
-        refreshLiveTasks()
     }
 
     override suspend fun updateTask(task: Task) {

@@ -17,37 +17,38 @@
             type="com.ang.acb.todolearn.ui.list.TasksViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal"
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
         android:paddingStart="@dimen/margin_normal"
         android:paddingEnd="@dimen/margin_normal"
         android:onClick="@{(view) -> tasksViewModel.openTaskDetailsEvent(task.id)}">
 
+        <CheckBox
+            android:id="@+id/task_item_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="@{task.completed}"
+            android:onClick="@{(view) -> tasksViewModel.completeTask(task, ((CompoundButton) view).isChecked())}"
+            tools:checked="true"/>
+
         <TextView
             android:id="@+id/task_item_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@{task.title}"
-            app:completedTask="@{task.completed}"
             app:layout_constraintEnd_toStartOf="@+id/task_item_completed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="Task Title" />
-
-        <CheckBox
-            android:id="@+id/task_item_completed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:checked="@{task.completed}"
-            android:onClick="@{(view) -> tasksViewModel.completeTask(task, ((CompoundButton) view).isChecked())}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:checked="true"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

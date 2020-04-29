@@ -23,12 +23,13 @@ class TaskDetailsViewModelTest {
     // A fake repository that will be injected in the view model during tests
     private lateinit var fakeTasksRepository: FakeTasksRepository
 
-    // Swaps the background executor used by the Architecture Components with a
-    // different one which executes each task synchronously.
+    // Swaps the background executor used by the Architecture Components
+    // with a different one which executes each task synchronously.
     @get: Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    // Sets the main coroutines dispatcher to a TestCoroutineDispatcher with a TestCoroutineScope.
+    // Sets the main coroutines dispatcher to a TestCoroutineDispatcher
+    // with a TestCoroutineScope.
     @get:Rule
     var mainCoroutineRule = TestCoroutineRule()
 

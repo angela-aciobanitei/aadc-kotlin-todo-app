@@ -1,12 +1,13 @@
 package com.ang.acb.todolearn
 
 import android.app.Application
+import com.ang.acb.todolearn.data.repo.ITasksRepository
 import com.ang.acb.todolearn.data.repo.TasksRepository
 import timber.log.Timber
 
 class TasksApplication : Application() {
 
-    val taskRepository: TasksRepository
+    val taskRepository: ITasksRepository
         get() = ServiceLocator.provideTasksRepository(this)
 
     override fun onCreate() {

@@ -65,6 +65,7 @@ dependencies {
     implementation "androidx.annotation:annotation:$version_androidX_annotations"
     implementation "androidx.fragment:fragment:$version_fragment"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
     implementation "androidx.preference:preference-ktx:$version_preference"
     implementation "androidx.test.espresso:espresso-idling-resource:$version_espresso_idling"
 
