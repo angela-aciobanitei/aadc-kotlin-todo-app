@@ -17,7 +17,12 @@ A toy app created when preparing for the AADC Exam
 *   Display items in a [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 *   Bind local data to a RecyclerView list using the [Paging Library](https://codelabs.developers.google.com/codelabs/android-paging) 
 *   Handle user preferences with a [Settings screen](https://developer.android.com/guide/topics/ui/settings) and [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences)
-*   Use the [Service Locator](https://developer.android.com/training/dependency-injection#di-alternatives) design pattern for providing dependencies.
+*   Use the [Service Locator](https://developer.android.com/training/dependency-injection#di-alternatives) design pattern to handle class dependencies.
+*   Build local unit tests for the repository using test doubles (a fake local data source)
+*   Build local unit test for the existing app view models using [test doubles](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-testing-test-doubles) (a fake repository), since almost each view model depends on a tasks repository.
+*   Add local instrumented tests for Room's DAO and integration tests for the local data source.
+*   Add integration tests for fragment-view models pairs using test doubles (a fake repository), [Mockito](https://github.com/mockito/mockito) to mock the NavController, and [Espresso](https://developer.android.com/training/testing/espresso) to test the UI
+*   Add end to end tests to test the app as a whole and the app navigation 
 
 ## [Exam Study Guide Kotlin](https://developers.google.com/certification/associate-android-developer/study-guide)
 ### Android Core
@@ -59,8 +64,8 @@ A toy app created when preparing for the AADC Exam
 - [x] Use breakpoints and inspect variables using [Android Studio](https://codelabs.developers.google.com/codelabs/android-training-using-debugger)
 
 ### Testing
-- [x] Thoroughly understand the [fundamentals of testing](https://developer.android.com/training/testing/fundamentals)
-- [x] Write useful [local JUnit tests](https://developer.android.com/training/testing/unit-testing/local-unit-tests) 
+- [x] Understand the [fundamentals of testing](https://developer.android.com/training/testing/fundamentals)
+- [x] Write useful [local unit tests](https://developer.android.com/training/testing/unit-testing/local-unit-tests) 
 - [x] Build [instrumented unit tests](https://developer.android.com/training/testing/unit-testing/instrumented-unit-tests)
 - [x] Understand the [Espresso](https://developer.android.com/training/testing/espresso) UI test framework
 - [x] Write useful automated Android tests
