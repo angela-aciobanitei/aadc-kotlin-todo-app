@@ -3,7 +3,7 @@ package com.ang.acb.todolearn.ui.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.FakeTasksRepository
+import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
 import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.getOrAwaitValue

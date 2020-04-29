@@ -27,6 +27,7 @@ buildscript {
         version_nav_safe_args = "2.3.0-alpha04"
         version_mockito = "2.8.9"
         version_mockito_dexmaker = "2.12.1"
+        version_mockk = "1.10.0"
         version_paging = "2.1.2"
         version_preference = "1.1.1"
         version_recyclerview = "1.1.0"

@@ -13,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ang.acb.todolearn.FakeTasksRepository
+import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.ServiceLocator
 import com.ang.acb.todolearn.TestCoroutineRule

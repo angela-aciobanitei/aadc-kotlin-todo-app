@@ -1,4 +1,4 @@
-package com.ang.acb.todolearn
+package com.ang.acb.todolearn.fakes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -119,14 +119,17 @@ class FakeTasksRepository : ITasksRepository {
     }
 
     override fun getAllPagedTasks(): LiveData<PagedList<Task>> {
+        runBlocking { refreshLiveTasks() }
         return pagedTasks
     }
 
     override fun getCompletedPagedTasks(): LiveData<PagedList<Task>> {
+        runBlocking { refreshLiveTasks() }
         return pagedTasks
     }
 
     override fun getActivePagedTasks(): LiveData<PagedList<Task>> {
+        runBlocking { refreshLiveTasks() }
         return pagedTasks
     }
 }

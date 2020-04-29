@@ -126,6 +126,7 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
     androidTestImplementation "org.mockito:mockito-core:$version_mockito"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$version_mockito_dexmaker"
+    androidTestImplementation "io.mockk:mockk-android:$version_mockk"
     androidTestImplementation "androidx.test:core-ktx:$version_androidX_test_core"
     androidTestImplementation "androidx.test.ext:junit:$version_androidX_test_ext_kotlin_runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"

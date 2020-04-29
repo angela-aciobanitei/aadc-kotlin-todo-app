@@ -12,7 +12,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ang.acb.todolearn.FakeTasksRepository
+import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.ServiceLocator
 import com.ang.acb.todolearn.TestCoroutineRule
@@ -86,14 +86,11 @@ class TasksFragmentTest {
     }
 
     /**
-     * To fix this : "IllegalStateException: Can not perform this action after onSaveInstanceState",
+     * To fix this: "IllegalStateException: Can not perform this action after onSaveInstanceState",
      * make sure the device you are running the tests on is unlocked.
      *
      * To fix this: "androidx.test.espresso.PerformException: Animations or transitions are
-     * enabled on the target device." For Espresso UI testing, you should turn animations off.
-     * On your testing device, go to Settings > Developer options and disable these 3 settings:
-     * Window animation scale, Transition animation scale, and Animator duration scale.
-     * https://developer.android.com/training/testing/espresso/setup#set-up-environment
+     * enabled on the target device" make sure you turn animations off on your testing device.
      */
     @Test
     fun clickTaskItem_navigatesToTaskDetailsFragment() = mainCoroutineRule.runBlockingTest {
