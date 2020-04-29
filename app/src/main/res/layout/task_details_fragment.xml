@@ -31,7 +31,7 @@
                 android:layout_margin="@dimen/margin_normal">
 
                 <CheckBox
-                    android:id="@+id/task_details_completed"
+                    android:id="@+id/task_details_completed_checkbox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
@@ -45,7 +45,7 @@
                     tools:checked="true"/>
 
                 <TextView
-                    android:id="@+id/task_details_title"
+                    android:id="@+id/task_details_title_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_small"
@@ -53,22 +53,22 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/task_details_completed"
+                    app:layout_constraintStart_toEndOf="@id/task_details_completed_checkbox"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@tools:sample/lorem" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/task_details_description_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:padding="@dimen/padding_small"
                     android:text="@{task.description}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintTop_toBottomOf="@id/task_details_title"
+                    app:layout_constraintTop_toBottomOf="@id/task_details_title_tv"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/task_details_title"
-                    app:layout_constraintEnd_toEndOf="@+id/task_details_title"
+                    app:layout_constraintStart_toStartOf="@+id/task_details_title_tv"
+                    app:layout_constraintEnd_toEndOf="@+id/task_details_title_tv"
                     tools:text="@tools:sample/lorem/random" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

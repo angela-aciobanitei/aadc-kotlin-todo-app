@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isChecked
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ang.acb.todolearn.FakeTasksRepository
 import com.ang.acb.todolearn.R
@@ -17,6 +20,7 @@ import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.data.local.Task
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -79,5 +83,43 @@ class TaskDetailsFragmentTest {
                 title = getApplicationContext<Context>().getString(R.string.edit_task)
             )
         )
+    }
+
+    @Test
+    fun activeTaskDetails_areDisplayedInUi() = mainCoroutineRule.runBlockingTest{
+        // GIVEN - Add active (incomplete) task to the DB
+        val activeTask = Task("Active Task", "Active Task Description", false)
+        fakeTasksRepository.saveTask(activeTask)
+
+        // WHEN - Details fragment launched to display task
+        val bundle = TaskDetailsFragmentArgs(activeTask.id).toBundle()
+        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.Base_AppTheme)
+
+        // THEN - Task details are displayed on the screen
+        onView(withId(R.id.task_details_title_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_title_tv)).check(matches(withText("Active Task")))
+        onView(withId(R.id.task_details_description_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_description_tv)).check(matches(withText("Active Task Description")))
+        onView(withId(R.id.task_details_completed_checkbox)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_completed_checkbox)).check(matches(not(isChecked())))
+    }
+
+    @Test
+    fun completedTaskDetails_areDisplayedInUi() = mainCoroutineRule.runBlockingTest{
+        // GIVEN - Add completed task to the DB
+        val activeTask = Task("Completed Task", "Completed Task Description", true)
+        fakeTasksRepository.saveTask(activeTask)
+
+        // WHEN - Details fragment launched to display task
+        val bundle = TaskDetailsFragmentArgs(activeTask.id).toBundle()
+        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.Base_AppTheme)
+
+        // THEN - Task details are displayed on the screen
+        onView(withId(R.id.task_details_title_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_title_tv)).check(matches(withText("Completed Task")))
+        onView(withId(R.id.task_details_description_tv)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_description_tv)).check(matches(withText("Completed Task Description")))
+        onView(withId(R.id.task_details_completed_checkbox)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_details_completed_checkbox)).check(matches(isChecked()))
     }
 }
