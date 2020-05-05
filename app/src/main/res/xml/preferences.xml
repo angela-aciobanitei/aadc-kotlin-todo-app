@@ -2,9 +2,45 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="@string/show_notifications_pref_key"
-        app:title="@string/show_notifications_pref_title"
-        app:defaultValue="false"/>
+    <PreferenceCategory app:title="@string/notifications_pref_header">
+
+        <SwitchPreferenceCompat
+            app:key="@string/notifications_pref_key"
+            app:title="@string/notifications_pref_title"
+            app:defaultValue="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/messages_pref_header">
+
+        <EditTextPreference
+            app:key="@string/signature_pref_key"
+            app:title="@string/signature_pref_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="@string/reply_pref_key"
+            app:title="@string/reply_pref_title"
+            app:entries="@array/reply_pref_entries"
+            app:entryValues="@array/reply_pref_values"
+            app:defaultValue="reply"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_pref_header">
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/sync_pref_title"/>
+
+        <SwitchPreferenceCompat
+            app:key="attachment"
+            app:title="@string/attachment_title"
+            app:summaryOn="@string/attachment_summary_on"
+            app:summaryOff="@string/attachment_summary_off"
+            app:dependency="sync"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

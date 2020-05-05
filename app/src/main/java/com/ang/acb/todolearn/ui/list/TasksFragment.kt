@@ -46,7 +46,7 @@ class TasksFragment : Fragment() {
     // https://developer.android.com/guide/topics/ui/settings/use-saved-values
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == resources.getString(R.string.show_notifications_pref_key)) {
+            if (key == resources.getString(R.string.notifications_pref_key)) {
                 triggerNotifications()
             }
         }
@@ -143,7 +143,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun triggerNotifications() {
-        val prefKey = resources.getString(R.string.show_notifications_pref_key)
+        val prefKey = resources.getString(R.string.notifications_pref_key)
         val prefValue = preferences.getBoolean(prefKey, false)
         viewModel.setAlarm(prefValue)
         Timber.d("Preference key = $prefKey, value = $prefValue")
