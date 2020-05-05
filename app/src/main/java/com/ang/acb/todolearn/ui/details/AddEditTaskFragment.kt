@@ -15,6 +15,7 @@ import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 
 
 /**
@@ -30,7 +31,7 @@ class AddEditTaskFragment : Fragment() {
         val factory = ViewModelFactory(
             (requireContext().applicationContext as TasksApplication).taskRepository
         )
-        ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
+        ViewModelProvider(requireActivity(), factory).get(AddEditTaskViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -54,6 +55,7 @@ class AddEditTaskFragment : Fragment() {
 
         setupSnackbar()
         setupNavigation()
+        setTaskDeadline()
     }
 
     private fun setupSnackbar() {
@@ -67,6 +69,12 @@ class AddEditTaskFragment : Fragment() {
             val action = AddEditTaskFragmentDirections
                 .actionAddEditTaskFragmentToTasksFragment(ADD_EDIT_RESULT_OK)
             findNavController().navigate(action)
+        })
+    }
+
+    private fun setTaskDeadline() {
+        viewModel.taskDeadlineEvent.observe(viewLifecycleOwner, EventObserver {
+            TimePickerDialog().show(childFragmentManager, "TIME_PICKER")
         })
     }
 }

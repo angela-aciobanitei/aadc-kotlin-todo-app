@@ -1,8 +1,6 @@
 <resources>
 
     <!-- Base application theme. -->
-    <!-- https://blog.iamsuleiman.com/daynight-theme-android-tutorial-example/
-         https://chris.banes.dev/2016/02/25/daynight/ -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,11 +8,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowActionBarOverlay">false</item>
         <item name="windowNoTitle">true</item>
-<!--        <item name="android:windowBackground">@color/colorBackground</item>-->
-        <item name="android:timePickerDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
     </style>
 
-    <!-- https://medium.com/@suragch/theme-appcompat-vs-themeoverlay-appcompat-in-android-c4abdc4d9683 -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 
 </resources>

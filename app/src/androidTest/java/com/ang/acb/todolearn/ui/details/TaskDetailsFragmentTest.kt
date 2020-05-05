@@ -64,7 +64,7 @@ class TaskDetailsFragmentTest {
         // launch the task details screen
         val scenario = launchFragmentInContainer<TaskDetailsFragment>(
             TaskDetailsFragmentArgs(task.id).toBundle(),
-            R.style.Base_AppTheme
+            R.style.AppTheme
         )
 
         // Mock NavController and associate it with this fragment's view

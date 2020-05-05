@@ -33,11 +33,27 @@
                     android:hint="@string/title_hint"
                     android:imeOptions="flagNoExtractUi"
                     android:importantForAutofill="no"
+                    android:inputType="textShortMessage"
                     android:maxLines="1"
                     android:text="@={addEditTasksViewModel.title}"
                     android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    tools:ignore="TextFields" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <TextView
+                    android:id="@+id/add_task_deadline"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
+                    android:hint="@string/deadline_hint"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="@{addEditTasksViewModel.deadline}"
+                    android:drawableEnd="@drawable/ic_access_time"
+                    android:drawablePadding="@dimen/padding_mini"
+                    android:onClick="@{() -> addEditTasksViewModel.addTaskDeadlineEvent()}"/>
 
                 <EditText
                     android:id="@+id/add_task_description_edit_text"
@@ -49,9 +65,9 @@
                     android:hint="@string/description_hint"
                     android:imeOptions="flagNoExtractUi"
                     android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textLongMessage"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:text="@={addEditTasksViewModel.description}"
-                    tools:ignore="TextFields" />
+                    android:text="@={addEditTasksViewModel.description}" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

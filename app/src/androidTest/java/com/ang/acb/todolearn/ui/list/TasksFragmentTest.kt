@@ -60,7 +60,7 @@ class TasksFragmentTest {
     fun clickAddNewTaskFab_navigatesToAddEditTaskFragment() {
         // Given - Launch TasksFragment
         val scenario = launchFragmentInContainer<TasksFragment>(
-            Bundle(), R.style.Base_AppTheme
+            Bundle(), R.style.AppTheme
         )
 
         // Mock NavController and associate it with this fragment's view.

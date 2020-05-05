@@ -117,12 +117,6 @@ class TasksFragment : Fragment() {
                 .actionTasksFragmentToTaskDetailsFragment(taskId)
             findNavController().navigate(action)
         })
-
-        viewModel.openSettingsEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = TasksFragmentDirections
-                .actionTasksFragmentToSettingsFragment()
-            findNavController().navigate(action)
-        })
     }
 
     private fun setupNotificationChannel() {
@@ -150,17 +144,13 @@ class TasksFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.filter_tasks_menu, menu)
+        inflater.inflate(R.menu.tasks_list_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     // https://developer.android.com/guide/topics/ui/menus#kotlin
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.settings -> {
-                viewModel.openSettingsEvent()
-                true
-            }
             R.id.show_all_tasks ->  {
                 viewModel.updateFilter(TasksFilter.ALL_TASKS)
                 true

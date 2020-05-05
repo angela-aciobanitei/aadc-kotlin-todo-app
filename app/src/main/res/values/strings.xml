@@ -8,7 +8,8 @@
     <string name="no_tasks_yet">You have no tasks yet</string>
 
     <!-- EditText hints-->
-    <string name="title_hint">Task Title</string>
+    <string name="title_hint">Task title</string>
+    <string name="deadline_hint">Set task deadline</string>
     <string name="description_hint">Enter your task here</string>
 
     <!-- User messages shown via Snackbar -->
@@ -77,4 +78,5 @@
     <string name="tasks_header_image_content_description">Tasks header image</string>
     <string name="pie_chart">Pie Chart</string>
 
+    <string name="deadline_title">Deadline %1$s</string>
 </resources>

@@ -14,6 +14,8 @@ data class Task(
     val description: String = "",
     @ColumnInfo(name = "completed")
     val isCompleted: Boolean = false,
+    val created: Long = System.currentTimeMillis(),
+    val deadline: Long = System.currentTimeMillis(),
     @PrimaryKey
     val id: String = UUID.randomUUID().toString()
 )

@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.ang.acb.todolearn.ui.details.TaskDetailsFragment"
-        android:label="TaskDetailsFragment" >
+        android:label="Task Details" >
         <argument
             android:name="taskId"
             app:argType="string" />
@@ -74,6 +74,4 @@
         android:id="@+id/pieFragment"
         android:name="com.ang.acb.todolearn.ui.statistics.PieFragment"
         android:label="@string/pie_chart" />
-
-
 </navigation>

@@ -42,9 +42,6 @@ class TasksViewModel(
     private val _openTaskDetails = MutableLiveData<Event<String>>()
     val openTaskDetails: LiveData<Event<String>> = _openTaskDetails
 
-    private val _openSettingsEvent = MutableLiveData<Event<Unit>>()
-    val openSettingsEvent: LiveData<Event<Unit>> = _openSettingsEvent
-
     private val _currentFilter = MutableLiveData<Int>()
     val currentFilter: LiveData<Int> = _currentFilter
 
@@ -159,9 +156,6 @@ class TasksViewModel(
         _openTaskDetails.value = Event(id)
     }
 
-    fun openSettingsEvent() {
-        _openSettingsEvent.value = Event(Unit)
-    }
 
     /**
      * Called by Data Binding in the item_task.xml layout
