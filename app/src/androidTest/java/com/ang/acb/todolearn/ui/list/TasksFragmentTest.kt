@@ -102,7 +102,7 @@ class TasksFragmentTest {
 
         // Launch the TaskFragment and mock the nav controller
         val scenario=
-            launchFragmentInContainer<TasksFragment>(Bundle(), R.style.Base_AppTheme)
+            launchFragmentInContainer<TasksFragment>(Bundle(), R.style.AppTheme)
         val navController = Mockito.mock(NavController::class.java)
         scenario.onFragment {
             Navigation.setViewNavController(it.view!!, navController)

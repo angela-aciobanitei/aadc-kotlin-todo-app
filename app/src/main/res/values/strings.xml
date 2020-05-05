@@ -40,17 +40,18 @@
     <string name="notifications_pref_header">Notifications</string>
     <string name="notifications_pref_key" translatable="false">notifications_pref_key</string>
     <string name="notifications_pref_title">Enable message notifications</string>
-    <string name="messages_pref_header">Messages</string>
-    <string name="signature_pref_key" translatable="false">pref_signature_key</string>
-    <string name="signature_pref_title">Your signature</string>
-    <string name="reply_pref_key" translatable="false">reply_pref_key</string>
-    <string name="reply_pref_title">Default reply action</string>
-    <string name="sync_pref_header">Sync</string>
-    <string name="sync_pref_key">sync_pref_key</string>
-    <string name="sync_pref_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="notifications_pref_summary">Reminder for tasks deadlines</string>
+    <string name="theme_pref_header">Theme</string>
+    <string name="theme_pref_key" translatable="false">theme_pref_key</string>
+    <string name="theme_pref_title">Night mode</string>
+    <string name="theme_pref_summary">Select a dark or light theme.</string>
+    <string name="theme_pref_dialog_msg">Set Night mode</string>
+    <string name="theme_pref_entry_night_auto" translatable="false">auto</string>
+    <string name="theme_pref_entry_night_on" translatable="false">on</string>
+    <string name="theme_pref_entry_night_off" translatable="false">off</string>
+    <string name="theme_pref_value_night_auto">Automatic</string>
+    <string name="theme_pref_value_night_on">Night mode</string>
+    <string name="theme_pref_value_night_off">Day mode</string>
 
     <!-- Notifications -->
     <string name="notification_title">Your TODOs</string>

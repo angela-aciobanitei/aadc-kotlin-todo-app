@@ -93,7 +93,7 @@ class TaskDetailsFragmentTest {
 
         // WHEN - Details fragment launched to display task
         val bundle = TaskDetailsFragmentArgs(activeTask.id).toBundle()
-        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.Base_AppTheme)
+        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.AppTheme)
 
         // THEN - Task details are displayed on the screen
         onView(withId(R.id.task_details_title_tv)).check(matches(isDisplayed()))
@@ -112,7 +112,7 @@ class TaskDetailsFragmentTest {
 
         // WHEN - Details fragment launched to display task
         val bundle = TaskDetailsFragmentArgs(activeTask.id).toBundle()
-        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.Base_AppTheme)
+        launchFragmentInContainer<TaskDetailsFragment>(bundle, R.style.AppTheme)
 
         // THEN - Task details are displayed on the screen
         onView(withId(R.id.task_details_title_tv)).check(matches(isDisplayed()))

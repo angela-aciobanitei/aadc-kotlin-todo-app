@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/header_height"
     android:orientation="vertical"
-    android:background="@drawable/header_bg_gradient"
+    android:background="?attr/colorAccent"
     android:padding="@dimen/padding_normal"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 

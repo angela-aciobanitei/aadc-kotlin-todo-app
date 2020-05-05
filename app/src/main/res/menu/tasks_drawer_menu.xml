@@ -10,4 +10,9 @@
         android:id="@+id/pieFragment"
         android:icon="@drawable/ic_pie_chart"
         android:title="@string/pie_chart" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings" />
 </menu>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_pref_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+
+    <string-array name="theme_pref_entries">
+        <item>@string/theme_pref_value_night_auto</item>
+        <item>@string/theme_pref_value_night_on</item>
+        <item>@string/theme_pref_value_night_off</item>
     </string-array>
 
-    <string-array name="reply_pref_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="theme_pref_values">
+        <item>@string/theme_pref_entry_night_auto</item>
+        <item>@string/theme_pref_entry_night_on</item>
+        <item>@string/theme_pref_entry_night_off</item>
     </string-array>
+
 </resources>
+

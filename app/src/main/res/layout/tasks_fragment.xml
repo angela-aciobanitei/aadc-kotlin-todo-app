@@ -29,18 +29,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 app:visibleGone="@{tasksViewModel.empty}" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:text="@{tasksViewModel.currentFilter}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                app:visibleGone="@{!tasksViewModel.empty}"
-                tools:text="All Tasks"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tasks"
                 android:layout_width="match_parent"

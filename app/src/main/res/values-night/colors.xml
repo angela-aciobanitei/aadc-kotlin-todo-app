@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night Mode Colors-->
+    <color name="colorPrimary">#263238</color>
+    <color name="colorPrimaryDark">#27272f</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="colorBackground">#263238</color>
+    <color name="colorIcon">#FFFFFFFF</color>
+    <color name="colorLine">#1FFFFFFF</color>
+</resources>
