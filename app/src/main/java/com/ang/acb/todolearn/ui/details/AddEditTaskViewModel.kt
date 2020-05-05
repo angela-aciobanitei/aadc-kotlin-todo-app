@@ -74,7 +74,7 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        
+
         _deadline.value = calendar.timeInMillis
     }
 
@@ -97,38 +97,20 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
             return
         }
 
-        // If new task
         if (isNewTask || currentId == null) {
-            if (currentDeadline == null) {
-                createTask(Task(
-                    title = currentTitle,
-                    description = currentDescription
-                ))
-            } else {
-                createTask(Task(
-                    title = currentTitle,
-                    description = currentDescription,
-                    deadline = currentDeadline
-                ))
-            }
-
-        } else { // Old task to update
-            if (currentDeadline == null) {
-                updateTask(Task(
+            createTask(Task(
+                title = currentTitle,
+                description = currentDescription,
+                deadline = currentDeadline ?: 0L
+            ))
+        } else {
+             updateTask(Task(
                     title = currentTitle,
                     description = currentDescription,
                     isCompleted = isCompleted,
+                    deadline = currentDeadline ?: 0L,
                     id = currentId
                 ))
-            } else {
-                updateTask(Task(
-                    title = currentTitle,
-                    description = currentDescription,
-                    isCompleted = isCompleted,
-                    deadline = currentDeadline,
-                    id = currentId
-                ))
-            }
         }
     }
 
