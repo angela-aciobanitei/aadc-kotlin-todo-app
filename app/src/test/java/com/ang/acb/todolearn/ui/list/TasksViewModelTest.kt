@@ -8,8 +8,8 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.getOrAwaitValue
+import com.ang.acb.todolearn.utils.TestCoroutineRule
+import com.ang.acb.todolearn.utils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.*
@@ -47,9 +47,9 @@ class TasksViewModelTest {
     @Before
     fun setUp() {
         fakeTasksRepository = FakeTasksRepository()
-        val task1 = Task("Title1", "Description1")
-        val task2 = Task("Title2", "Description2", true)
-        val task3 = Task("Title3", "Description3", true)
+        val task1 = Task(title = "Title1", description = "Description1")
+        val task2 = Task(title = "Title2", description = "Description2", isCompleted = true)
+        val task3 = Task(title = "Title3", description = "Description3", isCompleted = true)
         fakeTasksRepository.addTasks(task1, task2, task3)
 
         tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext(), fakeTasksRepository)
@@ -68,7 +68,7 @@ class TasksViewModelTest {
     @Test
     fun completeTask_dataAndSnackbarUpdated() {
         // Given a repository containing an active task
-        val task = Task("Title", "Description", false)
+        val task = Task(title = "Title", description = "Description", isCompleted = false)
         fakeTasksRepository.addTasks(task)
 
         // When an active task is marked as completed
@@ -85,7 +85,7 @@ class TasksViewModelTest {
     @Test
     fun activateTask_dataAndSnackbarUpdated() {
         // Given a repository containing a completed task
-        val task = Task("Title", "Description", true)
+        val task = Task(title = "Title", description = "Description", isCompleted = true)
         fakeTasksRepository.addTasks(task)
 
         // When a completed task is marked as active

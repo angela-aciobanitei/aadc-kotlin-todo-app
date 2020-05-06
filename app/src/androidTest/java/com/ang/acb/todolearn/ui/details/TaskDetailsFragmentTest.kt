@@ -16,8 +16,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.ServiceLocator
-import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.utils.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsNot.not
@@ -58,7 +58,7 @@ class TaskDetailsFragmentTest {
     @Test
     fun clickEditFab_navigatesToAddEditTaskFragment()  = mainCoroutineRule.runBlockingTest{
         // Given - save active task via repository
-        val task = Task("Title", "Description", false)
+        val task = Task(title = "Title", description = "Description", isCompleted = false)
         fakeTasksRepository.saveTask(task)
 
         // launch the task details screen
@@ -88,7 +88,7 @@ class TaskDetailsFragmentTest {
     @Test
     fun activeTaskDetails_areDisplayedInUi() = mainCoroutineRule.runBlockingTest{
         // GIVEN - Add active (incomplete) task to the DB
-        val activeTask = Task("Active Task", "Active Task Description", false)
+        val activeTask = Task(title = "Active Task", description = "Active Task Description", isCompleted = false)
         fakeTasksRepository.saveTask(activeTask)
 
         // WHEN - Details fragment launched to display task
@@ -107,7 +107,7 @@ class TaskDetailsFragmentTest {
     @Test
     fun completedTaskDetails_areDisplayedInUi() = mainCoroutineRule.runBlockingTest{
         // GIVEN - Add completed task to the DB
-        val activeTask = Task("Completed Task", "Completed Task Description", true)
+        val activeTask = Task(title = "Completed Task", description = "Completed Task Description", isCompleted = true)
         fakeTasksRepository.saveTask(activeTask)
 
         // WHEN - Details fragment launched to display task

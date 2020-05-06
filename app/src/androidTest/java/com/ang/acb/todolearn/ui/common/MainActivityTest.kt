@@ -150,9 +150,9 @@ class MainActivityTest {
     @Test
     fun clearCompletedTasks() = runBlocking {
         // Given 3 tasks, one active, two completed
-        repository.saveTask(Task("Title1", "Description1"))
-        repository.saveTask(Task("Title2", "Description2", true))
-        repository.saveTask(Task("Title3", "Description3", true))
+        repository.saveTask(Task(title = "Title1", description = "Description1"))
+        repository.saveTask(Task(title = "Title2", description = "Description2", isCompleted = true))
+        repository.saveTask(Task(title = "Title3", description = "Description3", isCompleted = true))
 
         // Launch the Tasks screen
         val activityScenario
@@ -179,11 +179,11 @@ class MainActivityTest {
     @Test
     fun clearAllTasks() = runBlocking {
         // Given 5 tasks
-        repository.saveTask(Task("Title1", "Description1"))
-        repository.saveTask(Task("Title2", "Description2", true))
-        repository.saveTask(Task("Title3", "Description3", true))
-        repository.saveTask(Task("Title4", "Description4"))
-        repository.saveTask(Task("Title5", "Description5", true))
+        repository.saveTask(Task(title = "Title1", description = "Description1"))
+        repository.saveTask(Task(title = "Title2", description = "Description2", isCompleted = true))
+        repository.saveTask(Task(title = "Title3", description = "Description3", isCompleted = true))
+        repository.saveTask(Task(title = "Title4", description = "Description4"))
+        repository.saveTask(Task(title = "Title5", description = "Description5", isCompleted = true))
 
         // Launch the Tasks screen
         val activityScenario

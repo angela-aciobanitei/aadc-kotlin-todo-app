@@ -1,10 +1,10 @@
 package com.ang.acb.todolearn.data.repo
 
-import com.ang.acb.todolearn.FakeDataSource
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.PojoTestUtils
+import com.ang.acb.todolearn.fakes.FakeDataSource
+import com.ang.acb.todolearn.utils.PojoTestUtils
+import com.ang.acb.todolearn.utils.TestCoroutineRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -23,12 +23,12 @@ class TasksRepositoryTest {
     private lateinit var tasksRepository: TasksRepository
     private lateinit var tasksDataSource: FakeDataSource
 
-    private val task1 = Task("Title1", "Description1")
-    private val task2 = Task("Title2", "Description2")
-    private val task3 = Task("Title3", "Description3")
-    private val task4 = Task("Title4", "Description4", true)
-    private val task5 = Task("Title5", "Description5", true)
-    private val task6 = Task("Title6", "Description6", true)
+    private val task1 = Task(title = "Title1", description = "Description1")
+    private val task2 = Task(title = "Title2", description = "Description2")
+    private val task3 = Task(title = "Title3", description = "Description3")
+    private val task4 = Task(title = "Title4", description = "Description4", isCompleted = true)
+    private val task5 = Task(title = "Title5", description = "Description5", isCompleted = true)
+    private val task6 = Task(title = "Title6", description = "Description6", isCompleted = true)
     private val activeTasks :List<Task> = listOf(task1, task2, task3).sortedBy { it.id }
     private val completedTasks : List<Task> = listOf(task4, task5, task6).sortedBy { it.id }
     private val localTasks : List<Task> = activeTasks + completedTasks
@@ -48,7 +48,7 @@ class TasksRepositoryTest {
     @Test
     fun saveTask_getTasks() = mainCoroutineRule.runBlockingTest {
         // GIVEN - save a task
-        val task = Task("Title7", "Description7")
+        val task = Task(title = "Title7", description = "Description7")
         tasksRepository.saveTask(task)
 
         // WHEN - tasks are requested from the tasks repository
@@ -115,7 +115,12 @@ class TasksRepositoryTest {
     @Test
     fun updateTask_getTask() = mainCoroutineRule.runBlockingTest{
         // GIVEN - update a task
-        val updated = Task("new title", "new description", true, task1.id)
+        val updated = Task(
+            title = "new title",
+            description = "new description",
+            isCompleted = true,
+            id = task1.id
+        )
         tasksRepository.updateTask(updated)
 
         // WHEN - get the task by from the tasks repository

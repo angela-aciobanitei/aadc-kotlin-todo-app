@@ -1,8 +1,8 @@
 package com.ang.acb.todolearn.ui.statistics
 
 
-import com.ang.acb.todolearn.PojoTestUtils
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.utils.PojoTestUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Test
@@ -42,11 +42,11 @@ class StatisticsUtilsTest {
     fun getTasksStats_activeAndCompleted_returnsFortySixty() {
         // Given 3 completed tasks and 2 active tasks
         val tasks = listOf(
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = false),
-            Task("title", "desc", isCompleted = false)
+            Task(title = "title1", description = "desc1", isCompleted = true),
+            Task(title = "title2", description = "desc2", isCompleted = true),
+            Task(title = "title3", description = "desc3", isCompleted = true),
+            Task(title = "title4", description = "desc4", isCompleted = false),
+            Task(title = "title5", description = "desc5", isCompleted = false)
         )
 
         // When the list of tasks is computed

@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.PojoTestUtils
+import com.ang.acb.todolearn.utils.PojoTestUtils
+import com.ang.acb.todolearn.utils.TestCoroutineRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -64,7 +64,7 @@ class TasksLocalDataSourceTest {
     @Test
     fun insertTaskAndGetById() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert a new task
-        val task = Task("title", "description")
+        val task = Task(title = "title", description = "description")
         localDataSource.saveTask(task)
 
         // WHEN - task retrieved by ID
@@ -81,11 +81,19 @@ class TasksLocalDataSourceTest {
     @Test
     fun updateTaskAndGetById() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert a task
-        val originalTask = Task("title", "description")
+        val originalTask = Task(
+            title = "title",
+            description = "description"
+        )
         localDataSource.saveTask(originalTask)
 
         // WHEN - the task is updated
-        val updatedTask = Task("new title", "new description", true, originalTask.id)
+        val updatedTask = Task(
+            title = "new title",
+            description = "new description",
+            isCompleted = true,
+            id = originalTask.id
+        )
         localDataSource.updateTask(updatedTask)
 
         // THEN - the loaded data contains the expected values
@@ -100,7 +108,7 @@ class TasksLocalDataSourceTest {
     @Test
     fun insertTaskAndComplete() = testCoroutineRule.runBlockingTest {
         // GIVEN - insert an active task
-        val task = Task("title", "description")
+        val task = Task(title = "title", description = "description")
         localDataSource.saveTask(task)
 
         // WHEN - the task is updated as completed

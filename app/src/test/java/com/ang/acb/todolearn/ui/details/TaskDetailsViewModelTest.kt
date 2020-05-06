@@ -5,8 +5,8 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.getOrAwaitValue
+import com.ang.acb.todolearn.utils.TestCoroutineRule
+import com.ang.acb.todolearn.utils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -33,9 +33,9 @@ class TaskDetailsViewModelTest {
     @get:Rule
     var mainCoroutineRule = TestCoroutineRule()
 
-    private val task1 = Task("Title1", "Description1")
-    private val task2 = Task("Title2", "Description2", true)
-    private val task3 = Task("Title3", "Description3", true)
+    private val task1 = Task(title = "Title1", description = "Description1")
+    private val task2 = Task(title = "Title2", description = "Description2", isCompleted = true)
+    private val task3 = Task(title = "Title3", description = "Description3", isCompleted = true)
 
     @Before
     fun setUp() {
@@ -47,7 +47,7 @@ class TaskDetailsViewModelTest {
     @Test
     fun editTask_triggersEditTaskEvent() {
         // Given a repository containing an active task
-        val task = Task("Title", "Description")
+        val task = Task(title = "Title", description = "Description")
         fakeTasksRepository.addTasks(task)
 
         // When editing a task
@@ -61,7 +61,7 @@ class TaskDetailsViewModelTest {
     @Test
     fun completeTask_dataAndSnackbarUpdated() {
         // Given a repository containing an active task
-        val task = Task("Title", "Description", false)
+        val task = Task(title = "Title", description = "Description", isCompleted = false)
         fakeTasksRepository.addTasks(task)
 
         // When an active task is marked as completed
@@ -78,7 +78,7 @@ class TaskDetailsViewModelTest {
     @Test
     fun activateTask_dataAndSnackbarUpdated() {
         // Given a repository containing a completed task
-        val task = Task("Title", "Description", true)
+        val task = Task(title = "Title", description = "Description", isCompleted = true)
         fakeTasksRepository.addTasks(task)
 
         // When a completed task is marked as active
@@ -96,7 +96,7 @@ class TaskDetailsViewModelTest {
     @Test
     fun deleteTask_dataAndEventUpdated() {
         // Given a repository containing a completed task
-        val task = Task("Title", "Description")
+        val task = Task(title = "Title", description = "Description")
         fakeTasksRepository.addTasks(task)
 
         // When deleting the task

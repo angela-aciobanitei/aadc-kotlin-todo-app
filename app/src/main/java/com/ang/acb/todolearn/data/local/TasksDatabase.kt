@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * The [Room] database for this app.
  */
-@Database(entities = [Task::class], version = 6, exportSchema = false)
+@Database(entities = [Task::class], version = 7, exportSchema = false)
 abstract class TasksDatabase: RoomDatabase() {
 
     abstract fun tasksDao(): TasksDao

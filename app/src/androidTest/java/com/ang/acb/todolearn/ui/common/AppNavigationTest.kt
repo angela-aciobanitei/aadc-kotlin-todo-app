@@ -77,7 +77,7 @@ class AppNavigationTest {
 
     @Test
     fun taskDetailScreenToEditScreen_doubleUpButton_returnsToHomeScreen() = runBlocking {
-        val task = Task("Title", "Description")
+        val task = Task(title = "Title", description = "Description")
         tasksRepository.saveTask(task)
 
         // Launch Tasks screen
@@ -92,6 +92,7 @@ class AppNavigationTest {
 
         // Check that if we click the Up button once,
         // then we end up back at the task details page.
+        // FIXME: No views in hierarchy found matching: with id task_details_title_tv
         onView(withContentDescription(activityScenario.getToolbarNavigationContentDescription()))
             .perform(click())
           onView(withId(R.id.task_details_title_tv)).check(matches(isDisplayed()))

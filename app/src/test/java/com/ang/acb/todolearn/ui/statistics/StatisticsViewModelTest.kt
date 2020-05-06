@@ -3,8 +3,8 @@ package com.ang.acb.todolearn.ui.statistics
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.getOrAwaitValue
+import com.ang.acb.todolearn.utils.TestCoroutineRule
+import com.ang.acb.todolearn.utils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -48,7 +48,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun noActive_completedTaskPercentIsHundred() {
-        fakeTasksRepository.addTasks(Task("title", "desc", true))
+        fakeTasksRepository.addTasks(Task(title = "title", description = "desc", isCompleted = true))
         assertThat(viewModel.empty.getOrAwaitValue(), `is`(false))
         assertThat(viewModel.activeTasksPercent.getOrAwaitValue(), `is`(0f))
         assertThat(viewModel.completedTasksPercent.getOrAwaitValue(), `is`(100f))
@@ -56,7 +56,7 @@ class StatisticsViewModelTest {
 
     @Test
     fun noCompleted_activeTaskPercentIsHundred() {
-        fakeTasksRepository.addTasks(Task("title", "desc", false))
+        fakeTasksRepository.addTasks(Task(title = "title", description = "desc", isCompleted = false))
         assertThat(viewModel.empty.getOrAwaitValue(), `is`(false))
         assertThat(viewModel.activeTasksPercent.getOrAwaitValue(), `is`(100f))
         assertThat(viewModel.completedTasksPercent.getOrAwaitValue(), `is`(0f))
@@ -66,11 +66,11 @@ class StatisticsViewModelTest {
     fun activeAndCompleted() {
         // Given 3 completed tasks and 2 active tasks
         fakeTasksRepository.addTasks(
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = true),
-            Task("title", "desc", isCompleted = false),
-            Task("title", "desc", isCompleted = false)
+            Task(title = "title1", description = "desc1", isCompleted = true),
+            Task(title = "title2", description = "desc2", isCompleted = true),
+            Task(title = "title3", description = "desc3", isCompleted = true),
+            Task(title = "title4", description = "desc4", isCompleted = false),
+            Task(title = "title5", description = "desc5", isCompleted = false)
         )
 
         assertThat(viewModel.activeTasksPercent.getOrAwaitValue(), `is`(40f))

@@ -8,6 +8,8 @@ import java.util.*
 /**
  * Immutable model class for a task item.
  */
+const val NO_DEADLINE = -1L
+
 @Entity(tableName = "tasks")
 data class Task(
     val title: String = "",
@@ -15,7 +17,7 @@ data class Task(
     @ColumnInfo(name = "completed")
     val isCompleted: Boolean = false,
     val created: Long = System.currentTimeMillis(),
-    val deadline: Long = 0L,
+    val deadline: Long = NO_DEADLINE,
     @PrimaryKey
     val id: String = UUID.randomUUID().toString()
 )

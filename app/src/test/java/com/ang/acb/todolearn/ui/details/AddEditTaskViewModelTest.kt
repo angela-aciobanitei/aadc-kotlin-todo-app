@@ -5,8 +5,8 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.util.Event
-import com.ang.acb.todolearn.TestCoroutineRule
-import com.ang.acb.todolearn.getOrAwaitValue
+import com.ang.acb.todolearn.utils.TestCoroutineRule
+import com.ang.acb.todolearn.utils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -32,9 +32,9 @@ class AddEditTaskViewModelTest {
     @get:Rule
     var mainCoroutineRule = TestCoroutineRule()
 
-    private val task1 = Task("Title1", "Description1")
-    private val task2 = Task("Title2", "Description2", true)
-    private val task3 = Task("Title3", "Description3", true)
+    private val task1 = Task(title = "Title1", description = "Description1")
+    private val task2 = Task(title = "Title2", description = "Description2", isCompleted = true)
+    private val task3 = Task(title = "Title3", description = "Description3", isCompleted = true)
 
     @Before
     fun setUp() {
@@ -46,7 +46,7 @@ class AddEditTaskViewModelTest {
     @Test
     fun addNewTask_savesTaskUpdatesSnackbarAndEvent() {
         // When creating a new task
-        val newTask = Task("new title", "new description")
+        val newTask = Task(title = "new title", description = "new description")
         viewModel.createTask(newTask)
 
         // Then the new task is actually saved via the repository

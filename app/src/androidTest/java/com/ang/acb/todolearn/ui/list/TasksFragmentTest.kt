@@ -15,8 +15,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.ServiceLocator
-import com.ang.acb.todolearn.TestCoroutineRule
 import com.ang.acb.todolearn.data.local.Task
+import com.ang.acb.todolearn.utils.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
@@ -95,10 +95,9 @@ class TasksFragmentTest {
     @Test
     fun clickTaskItem_navigatesToTaskDetailsFragment() = mainCoroutineRule.runBlockingTest {
         // Given - 3 tasks in the repository
-        fakeTasksRepository.saveTasks(listOf(
-            Task("Title1", "Description1", false, "id"),
-            Task("Title2", "Description2", true, "id2"),
-            Task("Title3", "Description3", true, "id3")))
+        fakeTasksRepository.saveTask(Task(title = "Title1", description = "Description1", isCompleted = false, id = "id"))
+        fakeTasksRepository.saveTask(Task(title = "Title2", description = "Description2", isCompleted = true, id = "id2"))
+        fakeTasksRepository.saveTask(Task(title = "Title3", description = "Description3", isCompleted = true, id = "id3"))
 
         // Launch the TaskFragment and mock the nav controller
         val scenario=
