@@ -4,7 +4,7 @@
     android:width="24dp"
     android:viewportHeight="24.0"
     android:viewportWidth="24.0"
-    android:tint="@color/colorIcon">
+    android:tint="?attr/colorControlNormal">
 
     <path
         android:fillColor="#FF000000"

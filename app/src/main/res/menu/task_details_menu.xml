@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- https://medium.com/androiddevelopers/android-styling-common-theme-attributes-8f7c50c9eaba -->
+
     <item
         android:id="@+id/delete_task"
         android:icon="@drawable/ic_delete_forever"
