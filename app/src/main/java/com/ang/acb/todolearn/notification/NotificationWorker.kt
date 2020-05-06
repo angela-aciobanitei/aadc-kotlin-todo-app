@@ -35,6 +35,7 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
         if(shouldNotify) {
             notificationManager.sendNotification(
                 applicationContext,
+                taskId ?: "",
                 taskTitle ?: applicationContext.getString(R.string.task_notification_message)
             )
         } else {

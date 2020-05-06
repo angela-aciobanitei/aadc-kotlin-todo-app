@@ -7,9 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.ui.common.MainActivity
+import com.ang.acb.todolearn.ui.details.TaskDetailsFragmentArgs
 
 const val WORKER_DATA_TASK_ID = "WORKER_DATA_TASK_ID"
 const val WORKER_DATA_TASK_TITLE = "WORKER_DATA_TASK_TITLE"
@@ -46,18 +50,17 @@ fun NotificationManager.createTasksChannel(applicationContext: Context) {
  */
 fun NotificationManager.sendNotification(
     applicationContext: Context,
-    notificationMessage: String
+    taskId: String,
+    taskTitle: String
 ) {
     // For setting notification's tap action.
-    val mainIntent = Intent(applicationContext, MainActivity::class.java)
-    val mainPendingIntent: PendingIntent = PendingIntent.getActivity(
-        applicationContext,
-        NOTIFICATION_ID,
-        mainIntent,
-        // This intent can be reused; keep the existing
-        // intent, and just update its extra data.
-        PendingIntent.FLAG_UPDATE_CURRENT
-    )
+    // https://developer.android.com/guide/navigation/navigation-deep-link#explicit
+    val args = TaskDetailsFragmentArgs(taskId).toBundle()
+    val pendingIntent = NavDeepLinkBuilder(applicationContext)
+        .setGraph(R.navigation.nav_graph)
+        .setDestination(R.id.taskDetailsFragment)
+        .setArguments(args)
+        .createPendingIntent()
 
     // Create the notification builder using NotificationCompat.Builder()
     // and passing in the application context and the unique channel ID (string).
@@ -71,9 +74,9 @@ fun NotificationManager.sendNotification(
         .setSmallIcon(R.drawable.ic_mood)
         // The title and the text message are optional.
         .setContentTitle(applicationContext.getString(R.string.task_notification_title))
-        .setContentText(notificationMessage)
+        .setContentText(taskTitle)
         // Add tap action.
-        .setContentIntent(mainPendingIntent)
+        .setContentIntent(pendingIntent)
         .setAutoCancel(true)
 
     // Build the notification.
