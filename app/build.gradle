@@ -37,9 +37,14 @@ android {
         jvmTarget = "1.8"
     }
 
-    // Fix the "No such manifest file: ./AndroidManifest.xml" Robolectric warning
+
     testOptions.unitTests {
+        // Fix Robolectric Warning: "No such manifest file: ./AndroidManifest.xml"
+        // https://developer.android.com/training/testing/fundamentals#small-tests
         includeAndroidResources = true
+        // Fix Error "Method isEmpty in android.text.TextUtils not mocked"
+        // https://developer.android.com/training/testing/unit-testing/local-unit-tests.html#error-not-mocked
+        returnDefaultValues = true
     }
 
     // Sharing code between unit tests and instrumentation tests
