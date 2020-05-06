@@ -24,6 +24,24 @@
                 android:orientation="vertical"
                 android:layout_margin="@dimen/padding_normal">
 
+                <TextView
+                    android:id="@+id/add_task_deadline"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
+                    android:hint="@string/deadline_hint"
+                    android:textColorHint="@color/colorAccent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="@{addEditTasksViewModel.deadlineText}"
+                    android:drawableEnd="@drawable/ic_access_time"
+                    android:drawablePadding="@dimen/padding_mini"
+                    android:drawableTint="@color/colorAccent"
+                    android:onClick="@{() -> addEditTasksViewModel.addTaskDeadlineEvent()}"/>
+
                 <EditText
                     android:id="@+id/add_task_title_edit_text"
                     android:background="@null"
@@ -38,22 +56,6 @@
                     android:text="@={addEditTasksViewModel.title}"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/add_task_deadline"
-                    android:background="@null"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_small"
-                    android:hint="@string/deadline_hint"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:maxLines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:text="@{addEditTasksViewModel.deadlineText}"
-                    android:drawableEnd="@drawable/ic_access_time"
-                    android:drawablePadding="@dimen/padding_mini"
-                    android:onClick="@{() -> addEditTasksViewModel.addTaskDeadlineEvent()}"/>
 
                 <EditText
                     android:id="@+id/add_task_description_edit_text"

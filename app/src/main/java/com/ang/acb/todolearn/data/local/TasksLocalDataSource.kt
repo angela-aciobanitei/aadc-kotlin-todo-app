@@ -32,17 +32,17 @@ class TasksLocalDataSource(
 
     override suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
         tasksDao.update(task)
-        // No need to cancel previous work, @see ExistingWorkPolicy.KEEP
+        // No need to cancel previous work, @see ExistingWorkPolicy.REPLACE
         NotificationWorker.scheduleNotification(task)
     }
 
     override suspend fun activateTask(task: Task) = withContext(ioDispatcher) {
-        tasksDao.updateCompleted(taskId = task.id, isCompleted = false)
+        tasksDao.update(task.copy(isCompleted = false))
     }
 
     override suspend fun completeTask(task: Task) = withContext(ioDispatcher) {
         NotificationWorker.cancelWork(task)
-        tasksDao.updateCompleted(taskId = task.id, isCompleted = true)
+        tasksDao.update(task.copy(isCompleted = true, deadline = NO_DEADLINE))
     }
     override suspend fun deleteTask(task: Task) = withContext(ioDispatcher) {
         NotificationWorker.cancelWork(task)
@@ -61,7 +61,11 @@ class TasksLocalDataSource(
 
     override suspend fun deleteCompletedTasks() = withContext<Unit>(ioDispatcher) {
         // TODO Cancel notifications for these deleted tasks
-        tasksDao.deleteCompletedTasks()
+        val completed = tasksDao.getCompletedTasks()
+        completed?.let {tasks ->
+            NotificationWorker.cancelWork(tasks)
+            tasksDao.deleteCompletedTasks()
+        }
     }
 
     override suspend fun getTask(taskId: String): Result<Task> = withContext(ioDispatcher) {

@@ -32,11 +32,14 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             applicationContext,
             NotificationManager::class.java) as NotificationManager
 
-        // TODO if(shouldNotify)...
-        notificationManager.sendNotification(
-            applicationContext,
-            taskTitle ?: applicationContext.getString(R.string.task_notification_message)
-        )
+        if(shouldNotify) {
+            notificationManager.sendNotification(
+                applicationContext,
+                taskTitle ?: applicationContext.getString(R.string.task_notification_message)
+            )
+        } else {
+            notificationManager.cancelAll()
+        }
 
         return Result.success()
     }
