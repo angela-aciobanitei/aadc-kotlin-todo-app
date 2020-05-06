@@ -51,6 +51,7 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
        // If task ID is not null, this is a task edit
        isNewTask = false
 
+        // Load task details from the database
        viewModelScope.launch {
            tasksRepository.getTask(id).let { result ->
                if (result is Result.Success) {
@@ -81,7 +82,7 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
     }
 
     /**
-     * Called by Data Binding when the Save Task FloatingActionButton is clicked.
+     * Called by Data Binding when the Save Task FAB is clicked.
      */
     fun saveTask(){
         val currentTitle = title.value

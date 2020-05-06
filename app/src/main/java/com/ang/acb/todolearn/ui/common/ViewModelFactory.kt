@@ -3,9 +3,9 @@ package com.ang.acb.todolearn.ui.common
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ang.acb.todolearn.data.repo.ITasksRepository
-import com.ang.acb.todolearn.data.repo.TasksRepository
 import com.ang.acb.todolearn.ui.details.AddEditTaskViewModel
 import com.ang.acb.todolearn.ui.details.TaskDetailsViewModel
+import com.ang.acb.todolearn.ui.list.TasksViewModel
 import com.ang.acb.todolearn.ui.statistics.PieViewModel
 import com.ang.acb.todolearn.ui.statistics.StatisticsViewModel
 
@@ -22,6 +22,9 @@ class ViewModelFactory(
         return when {
             modelClass.isAssignableFrom(AddEditTaskViewModel::class.java) -> {
                 AddEditTaskViewModel(tasksRepository) as T
+            }
+            modelClass.isAssignableFrom(TasksViewModel::class.java) -> {
+                TasksViewModel(tasksRepository) as T
             }
             modelClass.isAssignableFrom(TaskDetailsViewModel::class.java) -> {
                 TaskDetailsViewModel(tasksRepository) as T

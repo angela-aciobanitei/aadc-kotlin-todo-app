@@ -15,11 +15,9 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.TasksApplication
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
-import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
-import com.ang.acb.todolearn.util.createChannel
+import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 
 
 /**
@@ -29,26 +27,14 @@ class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
         val app = requireContext().applicationContext as TasksApplication
-        val factory = TasksViewModelFactory(app, app.taskRepository)
+        val factory = ViewModelFactory(app.taskRepository)
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
-    }
-
-    private val preferences : SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext)
     }
 
     private val args: TasksFragmentArgs by navArgs()
 
     private lateinit var binding: TasksFragmentBinding
     private lateinit var tasksAdapter: TasksAdapter
-
-    // https://developer.android.com/guide/topics/ui/settings/use-saved-values
-    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == resources.getString(R.string.notifications_pref_key)) {
-                triggerNotifications()
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,20 +54,9 @@ class TasksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setupPreferences()
         setupRecycler()
         setupSnackbar()
         setupNavigation()
-        setupNotificationChannel()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        preferences.unregisterOnSharedPreferenceChangeListener(listener)
-    }
-
-    private fun setupPreferences() {
-        preferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
     private fun setupRecycler() {
@@ -116,30 +91,6 @@ class TasksFragment : Fragment() {
                 .actionTasksFragmentToTaskDetailsFragment(taskId)
             findNavController().navigate(action)
         })
-    }
-
-    private fun setupNotificationChannel() {
-        // If you target Android 8.0 (API level 26) and post a notification without
-        // specifying a channel, the notification will not appear and the system will
-        // log an error message saying "No channel found ...".
-        val notificationManager = ContextCompat.getSystemService(
-            requireContext(),
-            NotificationManager::class.java
-        ) as NotificationManager
-        notificationManager.createChannel(
-            getString(R.string.task_notification_channel_id),
-            getString(R.string.task_notification_channel_name),
-            getString(R.string.task_notification_channel_description)
-        )
-
-        Timber.d("Notification channel created")
-    }
-
-    private fun triggerNotifications() {
-        val prefKey = resources.getString(R.string.notifications_pref_key)
-        val prefValue = preferences.getBoolean(prefKey, false)
-        viewModel.setAlarm(prefValue)
-        Timber.d("Preference key = $prefKey, value = $prefValue")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

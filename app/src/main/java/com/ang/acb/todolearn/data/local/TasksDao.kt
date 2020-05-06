@@ -29,6 +29,9 @@ interface TasksDao {
     @Query("SELECT * FROM tasks")
     suspend fun getTasks(): List<Task>?
 
+    @Query("SELECT * FROM tasks WHERE completed = 1")
+    suspend fun getCompletedTasks(): List<Task>?
+
     @Query("SELECT * FROM tasks WHERE id = :taskId")
     suspend fun getTaskById(taskId: String): Task?
 

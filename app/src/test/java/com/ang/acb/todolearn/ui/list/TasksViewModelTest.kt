@@ -1,9 +1,6 @@
 package com.ang.acb.todolearn.ui.list
 
-import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.fakes.FakeTasksRepository
@@ -17,16 +14,9 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-/**
- * http://robolectric.org/getting-started/
- * https://stackoverflow.com/questions/56821193/does-robolectric-require-java-9
- */
+
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.P])
 class TasksViewModelTest {
 
     // Subject under test
@@ -52,7 +42,7 @@ class TasksViewModelTest {
         val task3 = Task(title = "Title3", description = "Description3", isCompleted = true)
         fakeTasksRepository.addTasks(task1, task2, task3)
 
-        tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext(), fakeTasksRepository)
+        tasksViewModel = TasksViewModel(fakeTasksRepository)
     }
 
     @Test

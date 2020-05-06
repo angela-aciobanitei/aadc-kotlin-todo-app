@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
+import com.ang.acb.todolearn.notification.NotificationWorker
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,6 +23,7 @@ class TasksLocalDataSource(
 
     override suspend fun saveTask(task: Task) = withContext(ioDispatcher) {
         tasksDao.insert(task)
+        NotificationWorker.scheduleNotification(task)
     }
 
     override suspend fun saveTasks(tasks: List<Task>) = withContext(ioDispatcher) {
@@ -30,6 +32,8 @@ class TasksLocalDataSource(
 
     override suspend fun updateTask(task: Task) = withContext(ioDispatcher) {
         tasksDao.update(task)
+        // No need to cancel previous work, @see ExistingWorkPolicy.KEEP
+        NotificationWorker.scheduleNotification(task)
     }
 
     override suspend fun activateTask(task: Task) = withContext(ioDispatcher) {
@@ -37,21 +41,26 @@ class TasksLocalDataSource(
     }
 
     override suspend fun completeTask(task: Task) = withContext(ioDispatcher) {
+        NotificationWorker.cancelWork(task)
         tasksDao.updateCompleted(taskId = task.id, isCompleted = true)
     }
     override suspend fun deleteTask(task: Task) = withContext(ioDispatcher) {
+        NotificationWorker.cancelWork(task)
         tasksDao.delete(task)
     }
 
     override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {
+        NotificationWorker.cancelWork(taskId)
         tasksDao.deleteTaskById(taskId)
     }
 
     override suspend fun deleteAllTasks() = withContext<Unit>(ioDispatcher) {
+        NotificationWorker.cancelAllWork()
         tasksDao.deleteAllTasks()
     }
 
     override suspend fun deleteCompletedTasks() = withContext<Unit>(ioDispatcher) {
+        // TODO Cancel notifications for these deleted tasks
         tasksDao.deleteCompletedTasks()
     }
 
@@ -84,9 +93,10 @@ class TasksLocalDataSource(
         }
     }
 
-    override fun getLiveTasks(): LiveData<Result<List<Task>>> = tasksDao.getLiveTasks().map {
-        Result.Success(it)
-    }
+    override fun getLiveTasks(): LiveData<Result<List<Task>>> =
+        tasksDao.getLiveTasks().map {
+            Result.Success(it)
+        }
 
     override fun getAllPagedTasks(): LiveData<PagedList<Task>> =
         tasksDao.getAllPagedTasks().toLiveData( Config(

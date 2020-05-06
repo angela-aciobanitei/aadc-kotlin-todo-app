@@ -55,11 +55,11 @@
     <string name="theme_pref_value_night_off">Day mode</string>
 
     <!-- Notifications -->
-    <string name="notification_title">Your TODOs</string>
-    <string name="task_notification_channel_id">task_notification_channel_id</string>
-    <string name="task_notification_channel_name" translatable="true">Tasks</string>
+    <string name="task_notification_title">Your TODOs</string>
+    <string name="task_notification_message">"Time to evaluate your priorities today. "</string>
+    <string name="task_notification_channel_id" translatable="false">task_notification_channel_id</string>
+    <string name="task_notification_channel_name">Tasks</string>
     <string name="task_notification_channel_description">Tasks Reminder</string>
-    <string name="notification_message">"Time to evaluate your priorities today. "</string>
 
     <!--Statistics screen -->
     <string name="statistics_title">Statistics</string>
