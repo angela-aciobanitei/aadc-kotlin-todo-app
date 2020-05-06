@@ -2,6 +2,7 @@ package com.ang.acb.todolearn.ui.details
 
 import androidx.lifecycle.*
 import com.ang.acb.todolearn.R
+import com.ang.acb.todolearn.data.local.NO_DEADLINE
 import com.ang.acb.todolearn.data.local.Result
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.data.repo.ITasksRepository
@@ -31,8 +32,9 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
     val taskDeadlineEvent: LiveData<Event<Unit>> = _taskDeadlineEvent
 
     private val _deadline = MutableLiveData<Long>()
-    val deadline: LiveData<String> = _deadline.map {
-        simpleDateFormat.format(_deadline.value)
+    val deadlineText: LiveData<String> = _deadline.map {
+        if (it != NO_DEADLINE) simpleDateFormat.format(_deadline.value)
+        else ""
     }
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
@@ -101,14 +103,14 @@ class AddEditTaskViewModel(private val tasksRepository: ITasksRepository) : View
             createTask(Task(
                 title = currentTitle,
                 description = currentDescription,
-                deadline = currentDeadline ?: 0L
+                deadline = currentDeadline ?: NO_DEADLINE
             ))
         } else {
              updateTask(Task(
                     title = currentTitle,
                     description = currentDescription,
                     isCompleted = isCompleted,
-                    deadline = currentDeadline ?: 0L,
+                    deadline = currentDeadline ?: NO_DEADLINE,
                     id = currentId
                 ))
         }

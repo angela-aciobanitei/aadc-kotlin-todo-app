@@ -1,10 +1,12 @@
 package com.ang.acb.todolearn.ui.details
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,35 +17,33 @@ import com.ang.acb.todolearn.ui.common.ADD_EDIT_RESULT_OK
 import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.google.android.material.snackbar.Snackbar
-import java.text.SimpleDateFormat
 
 
 /**
  * Main screen for adding or editing a [Task] item.
  */
-class AddEditTaskFragment : Fragment() {
-
-    private lateinit var binding: AddEditTaskFragmentBinding
+class AddEditTaskFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
     private val args : AddEditTaskFragmentArgs by navArgs()
 
     private val viewModel: AddEditTaskViewModel by lazy {
-        val factory = ViewModelFactory(
-            (requireContext().applicationContext as TasksApplication).taskRepository
-        )
-        ViewModelProvider(requireActivity(), factory).get(AddEditTaskViewModel::class.java)
+        val app = requireContext().applicationContext as TasksApplication
+        val factory = ViewModelFactory(app.taskRepository)
+        ViewModelProvider(this, factory).get(AddEditTaskViewModel::class.java)
     }
+
+    private lateinit var binding: AddEditTaskFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = AddEditTaskFragmentBinding.inflate(inflater, container, false).apply {
-            // Give DataBinding access to the view model.
-            addEditTasksViewModel = viewModel
-            // Give DataBinding the possibility to observe LiveData.
-            lifecycleOwner = viewLifecycleOwner
-        }
+        binding = AddEditTaskFragmentBinding.inflate(inflater, container, false)
+        // Give DataBinding access to the view model.
+        binding.addEditTasksViewModel = viewModel
+        // Give DataBinding the possibility to observe LiveData.
+        binding.lifecycleOwner = viewLifecycleOwner
+
 
         return binding.root
     }
@@ -74,7 +74,11 @@ class AddEditTaskFragment : Fragment() {
 
     private fun setTaskDeadline() {
         viewModel.taskDeadlineEvent.observe(viewLifecycleOwner, EventObserver {
-            TimePickerDialog().show(childFragmentManager, "TIME_PICKER")
+            DeadlinePickerDialog().show(childFragmentManager, "TIME_PICKER")
         })
+    }
+
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        viewModel.setDeadline(hourOfDay, minute)
     }
 }

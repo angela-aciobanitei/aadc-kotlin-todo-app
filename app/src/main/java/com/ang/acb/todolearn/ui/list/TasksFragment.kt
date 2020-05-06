@@ -15,6 +15,7 @@ import com.ang.acb.todolearn.R
 import com.ang.acb.todolearn.TasksApplication
 import com.ang.acb.todolearn.data.local.Task
 import com.ang.acb.todolearn.databinding.TasksFragmentBinding
+import com.ang.acb.todolearn.ui.common.ViewModelFactory
 import com.ang.acb.todolearn.util.EventObserver
 import com.ang.acb.todolearn.util.createChannel
 import com.google.android.material.snackbar.Snackbar
@@ -27,10 +28,8 @@ import timber.log.Timber
 class TasksFragment : Fragment() {
 
     private val  viewModel: TasksViewModel by lazy {
-        val factory = TasksViewModelFactory(
-            requireActivity().application,
-            (requireContext().applicationContext as TasksApplication).taskRepository
-        )
+        val app = requireContext().applicationContext as TasksApplication
+        val factory = TasksViewModelFactory(app, app.taskRepository)
         ViewModelProvider(this, factory).get(TasksViewModel::class.java)
     }
 

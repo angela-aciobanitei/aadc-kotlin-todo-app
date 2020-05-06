@@ -23,14 +23,13 @@ import com.google.android.material.snackbar.Snackbar
  */
 class TaskDetailsFragment : Fragment() {
 
+    private val args: TaskDetailsFragmentArgs by navArgs()
+
     private val viewModel: TaskDetailsViewModel by lazy {
-        val factory = ViewModelFactory(
-            (requireContext().applicationContext as TasksApplication).taskRepository
-        )
+        val app = requireContext().applicationContext as TasksApplication
+        val factory = ViewModelFactory(app.taskRepository)
         ViewModelProvider(this, factory).get(TaskDetailsViewModel::class.java)
     }
-
-    private val args: TaskDetailsFragmentArgs by navArgs()
 
     private lateinit var binding: TaskDetailsFragmentBinding
 

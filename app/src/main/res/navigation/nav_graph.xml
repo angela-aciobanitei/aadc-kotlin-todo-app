@@ -57,7 +57,8 @@
             app:destination="@id/tasksFragment" />
         <action
             android:id="@+id/action_taskDetailsFragment_to_addEditTaskFragment"
-            app:destination="@id/addEditTaskFragment" />
+            app:destination="@id/addEditTaskFragment"
+            app:popUpTo="@id/tasksFragment"/>
     </fragment>
 
     <fragment
