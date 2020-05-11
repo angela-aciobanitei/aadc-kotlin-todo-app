@@ -11,11 +11,8 @@ A toy app created when preparing for the AADC Exam
 *   Handle app navigation with [Navigation Component](https://developer.android.com/guide/navigation) and [SafeArgs](https://developer.android.com/guide/navigation/navigation-pass-data) 
 *   Display [Menus](https://developer.android.com/guide/topics/ui/menus) and handle [menu-based navigation](https://developer.android.com/guide/navigation/navigation-ui#Tie-navdrawer)
 *   Add a navigation drawer and implement [drawer navigation](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer) 
-*   Display simple messages in a popup using a [Toast](https://developer.android.com/guide/topics/ui/notifiers/toasts) or a [Snackbar](https://developer.android.com/reference/android/support/design/widget/Snackbar)
-*   Display a message outside app's UI using [Notifications](https://developer.android.com/guide/topics/ui/notifiers/notifications)
-*   Schedule repeating alarms with [AlarmManager](https://developer.android.com/training/scheduling/alarms) and [BroadcastReceivers](https://developer.android.com/guide/components/broadcasts)
-*   Display items in a [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
-*   Bind local data to a RecyclerView list using the [Paging Library](https://codelabs.developers.google.com/codelabs/android-paging) 
+*   Schedule [Notifications](https://developer.android.com/guide/topics/ui/notifiers/notifications) with [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) 
+*   Bind local data to a [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview) list using the [Paging Library](https://codelabs.developers.google.com/codelabs/android-paging) 
 *   Handle user preferences with a [Settings screen](https://developer.android.com/guide/topics/ui/settings) and [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences)
 *   Use the [Service Locator](https://developer.android.com/training/dependency-injection#di-alternatives) design pattern to handle class dependencies.
 *   Build local unit tests for the repository using test doubles (a fake local data source)
@@ -32,7 +29,7 @@ A toy app created when preparing for the AADC Exam
 - [x] Display simple messages in a popup using a [Toast](https://developer.android.com/guide/topics/ui/notifiers/toasts) or a [Snackbar](https://developer.android.com/reference/android/support/design/widget/Snackbar)
 - [x] Display a [message](https://developer.android.com/training/notify-user/build-notification) outside your app's UI using [Notifications](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-notifications)
 - [x] Schedule a background task using [JobScheduler](https://codelabs.developers.google.com/codelabs/android-training-job-scheduler) or [WorkManager](https://codelabs.developers.google.com/codelabs/android-workmanager)
-- [ ] Understand how to [localize](https://developer.android.com/guide/topics/resources/localization) an app
+- [x] Understand how to [localize](https://developer.android.com/guide/topics/resources/localization) an app
 
 ### User  Interface
 - [x] Understand the Android activity [lifecycle](https://codelabs.developers.google.com/codelabs/kotlin-android-training-lifecycles-logging)
@@ -45,7 +42,7 @@ A toy app created when preparing for the AADC Exam
 - [x] Implement a [custom](https://codelabs.developers.google.com/codelabs/kotlin-android-training-styles-and-themes) app [theme](https://developer.android.com/guide/topics/ui/look-and-feel/themes)
 - [x] Create a [custom View](https://developer.android.com/guide/topics/ui/custom-components) class and add it to a Layout
 - [ ] Add [accessibility hooks](https://developer.android.com/guide/topics/ui/accessibility/custom-views) to a custom View
-- [ ] Apply content descriptions to views for [accessibility](https://codelabs.developers.google.com/codelabs/basic-android-accessibility)
+- [x] Apply content descriptions to views for [accessibility](https://codelabs.developers.google.com/codelabs/basic-android-accessibility)
 
 ### Data Management
 - [x] Define data using [Room entities](https://developer.android.com/training/data-storage/room/defining-data)
